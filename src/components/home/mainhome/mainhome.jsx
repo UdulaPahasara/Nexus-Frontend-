@@ -1,0 +1,169 @@
+import React, { useState } from 'react';
+import { Box, Drawer } from '@mui/material';
+import SearchBar from '../searchbar/searchbar';
+import ProfileSidebar from '../proffun/profile';
+import Post from '../post/post';
+import Feed from '../feed/feed';
+import Service from '../service/service';
+import ForYou from './foryou/foryou';
+import News from './news/news';
+import FilterBar from '../../chat section/chatfilterbar/filterbar';
+import NoChat from '../../chat section/chatfilterbar/nochat';
+import MessageArea from '../../chat section/messagingarea/messageArea';
+
+const MainHome = () => {
+    // darkMode lives here — controls the entire page
+    const [darkMode, setDarkMode] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('Home'); // Start at Home
+    const [selectedChat, setSelectedChat] = useState(null);
+
+    const toggleDrawer = (open) => (event) => {
+        // ... (lines 15-31 omitted for brevity but they are same)
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    };
+
+    return (
+        <Box sx={{
+            width: '100%',
+            minHeight: '100vh',
+            bgcolor: darkMode ? '#121212' : '#f5f5f5',
+            display: 'flex',
+            flexDirection: 'column',
+            boxSizing: 'border-box',
+            transition: 'background 0.25s'
+        }}>
+            {/* ── TOP: Search Bar ── */}
+            <SearchBar
+                darkMode={darkMode}
+                onToggle={() => setDarkMode(prev => !prev)}
+                onMenuClick={() => setDrawerOpen(true)}
+                activeTab={activeTab === 'forYou' || activeTab === 'news' ? activeTab : 'forYou'}
+                onTabChange={setActiveTab}
+            />
+
+            {/* ── BODY: Responsive Container ── */}
+
+            <Box sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                flex: 1,
+                width: '100%',
+                maxWidth: '1440px', // Standard wide container
+                mx: 'auto',
+                gap: { xs: '15px', md: '20px', lg: '30px' },
+                px: { xs: '10px', sm: '15px', md: '20px' },
+                pt: '20px',
+                pb: '30px',
+                boxSizing: 'border-box',
+                position: 'relative',
+                justifyContent: 'center',
+                alignItems: { xs: 'center', md: 'flex-start' }
+            }}>
+
+                {/* ── LEFT: Desktop Sidebar ── */}
+                <Box sx={{
+                    display: { xs: 'none', lg: 'block' },
+                    width: '230px',
+                    flexShrink: 0,
+                    position: { lg: 'sticky' },
+                    top: '20px'
+                }}>
+                    <ProfileSidebar
+                        darkMode={darkMode}
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                    />
+                </Box>
+
+                {/* ── MOBILE DRAWER for Sidebar ── */}
+                <Drawer
+                    anchor="left"
+                    open={drawerOpen}
+                    onClose={toggleDrawer(false)}
+                    sx={{ '& .MuiDrawer-paper': { width: '250px', bgcolor: darkMode ? '#1e1e2e' : '#fff' } }}
+                >
+                    <ProfileSidebar
+                        darkMode={darkMode}
+                        isMobile
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                    />
+                </Drawer>
+
+                {/* ── CENTER & RIGHT Content ── */}
+                {activeTab === 'Messages' ? (
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        gap: '12px',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        width: '100%'
+                    }}>
+                        <FilterBar darkMode={darkMode} onChatSelect={() => setSelectedChat(true)} />
+                        {selectedChat ? (
+                            <MessageArea darkMode={darkMode} />
+                        ) : (
+                            <NoChat darkMode={darkMode} />
+                        )}
+                    </Box>
+                ) : (
+                    <>
+                        {/* ── CENTER: Main Content Feed ── */}
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '650px', lg: '701px' },
+                            flexGrow: 1,
+                            bgcolor: darkMode ? 'rgba(255,255,255,0.03)' : '#fff',
+                            borderRadius: '15px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '16px',
+                            pt: '20px',
+                            pb: '20px',
+                            boxSizing: 'border-box',
+                            transition: 'all 0.3s ease',
+                            overflowY: 'auto',
+                            minHeight: { xs: 'auto', md: '1990px' },
+                            maxHeight: { xs: 'none', md: '1990px' },
+                            '&::-webkit-scrollbar': { display: 'none' },
+                            'msOverflowStyle': 'none',
+                            'scrollbarWidth': 'none',
+                            boxShadow: darkMode
+                                ? '0px 4px 20px rgba(0,0,0,0.5)'
+                                : '0px 4px 20px rgba(0,0,0,0.05)'
+                        }}>
+                            <Post darkMode={darkMode} />
+                            {activeTab === 'news' ? (
+                                <News darkMode={darkMode} />
+                            ) : (
+                                <ForYou darkMode={darkMode} />
+                            )}
+                        </Box>
+
+                        {/* ── RIGHT: Feed & Service ── */}
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px'
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <Service darkMode={darkMode} />
+                        </Box>
+                    </>
+                )}
+            </Box>
+        </Box>
+    );
+};
+
+export default MainHome;
