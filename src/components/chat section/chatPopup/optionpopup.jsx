@@ -25,7 +25,6 @@ const OptionPopup = ({ onClose }) => {
         <Box
             sx={{
                 width: '176px',
-                height: '233px',
                 bgcolor: '#FFFFFF',
                 borderRadius: '10px',
                 boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
@@ -35,7 +34,7 @@ const OptionPopup = ({ onClose }) => {
                 boxSizing: 'border-box',
                 position: 'absolute',
                 top: '55px',
-                right: '65px',
+                right: { xs: '40px', sm: '65px' },
                 zIndex: 100,
                 opacity: 1
             }}

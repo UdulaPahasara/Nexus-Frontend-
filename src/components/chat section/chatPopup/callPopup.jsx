@@ -18,7 +18,7 @@ const CallPopup = ({ onClose }) => {
                 boxSizing: 'border-box',
                 position: 'absolute',
                 top: '55px',
-                right: '25px',
+                right: { xs: '10px', sm: '25px' },
                 zIndex: 100,
                 opacity: 1
             }}

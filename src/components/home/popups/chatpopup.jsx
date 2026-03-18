@@ -16,6 +16,8 @@ import mp8 from '../../../assets/Home/sevice/chats/messegeprofilepic/mp8.webp';
 import threedots from '../../../assets/Home/sevice/chats/chats_vec/threedots.webp';
 import iconWrite from '../../../assets/Home/sevice/chats/chats_vec/write.webp';
 
+import NewMessage from '../../chat section/chatPopup/newMessage';
+
 const chatData = [
     { id: 1, name: 'Nilantha Jayasuriya', message: 'Nilantha sent a post', time: '17:22 pm', avatar: mp1, online: true },
     { id: 2, name: 'Udaya De Silva', message: 'Nilantha sent a post', time: '17:22 pm', avatar: mp2, online: false },
@@ -27,33 +29,10 @@ const chatData = [
     { id: 8, name: 'Adithya Waliwaththa', message: 'https://workwinkprofilelva .....', time: 'Yesterday', avatar: mp8, online: true },
 ];
 
-const ChatPopup = ({ darkMode, onClose, onChatSelect }) => {
-    const [showNewMessage, setShowNewMessage] = React.useState(false);
+const ChatPopup = ({ darkMode, onClose, onChatSelect, showNewMessage, setShowNewMessage }) => {
 
     if (showNewMessage) {
-        return (
-            <Box
-                sx={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: darkMode ? '#1e1e2e' : '#FFFFFF',
-                    position: 'relative'
-                }}
-            >
-                <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, color: darkMode ? '#fff' : '#000' }}>
-                    New Messages
-                </Typography>
-                <IconButton
-                    onClick={() => setShowNewMessage(false)}
-                    sx={{ position: 'absolute', top: 10, right: 10, color: darkMode ? '#fff' : '#000' }}
-                >
-                    <Typography sx={{ fontSize: '10px' }}>Back</Typography>
-                </IconButton>
-            </Box>
-        );
+        return <NewMessage onClose={() => setShowNewMessage(false)} darkMode={darkMode} />;
     }
 
     return (
@@ -61,14 +40,13 @@ const ChatPopup = ({ darkMode, onClose, onChatSelect }) => {
             sx={{
                 width: '100%',
                 bgcolor: darkMode ? '#1e1e2e' : '#FFFFFF',
-                borderRadius: '25px',
+                borderRadius: '15px',
                 display: 'flex',
                 flexDirection: 'column',
                 boxShadow: darkMode ? '0px 0px 30px rgba(0,0,0,0.6)' : '0px 0px 30px rgba(0,0,0,0.1)',
-                maxHeight: '520px',
+                flex: 1,
                 overflow: 'hidden',
                 border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
-                mb: '10px' // Space between popup and bar
             }}
         >
             {/* Search Bar Row */}

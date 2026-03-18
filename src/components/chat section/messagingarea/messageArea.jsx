@@ -59,10 +59,11 @@ const MessageArea = ({ darkMode = false }) => {
             className="message-area-container"
             onClick={handleCloseAllPopups}
             sx={{
-                width: '767px',
-                height: '580px',
+                width: '100%',
+                height: { xs: 'calc(100vh - 180px)', sm: '580px' },
+                minHeight: { xs: '400px', sm: '580px' },
                 bgcolor: darkMode ? '#1a1a2e' : '#FFFFFF',
-                borderRadius: '15px',
+                borderRadius: { xs: '12px', sm: '15px' },
                 display: 'flex',
                 flexDirection: 'column',
                 boxSizing: 'border-box',
@@ -76,7 +77,7 @@ const MessageArea = ({ darkMode = false }) => {
         >
             {/* --- HEADER (STATIC) --- */}
             <Box sx={{ flexShrink: 0 }}>
-                <Box sx={{ p: '15px 25px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ p: { xs: '10px 14px', sm: '15px 25px' }, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <Avatar src={profilePic} sx={{ width: '40px', height: '40px' }} />
                         <Box>
@@ -124,13 +125,13 @@ const MessageArea = ({ darkMode = false }) => {
                     Last seen 12:00 AM today
                 </Typography>
 
-                <Divider sx={{ mx: '25px', borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }} />
+                <Divider sx={{ mx: { xs: '14px', sm: '25px' }, borderColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }} />
             </Box>
 
             {/* --- SCROLLABLE THREAD --- */}
             <Box sx={{
                 flex: 1,
-                p: '25px',
+                p: { xs: '14px', sm: '25px' },
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '24px',
@@ -149,7 +150,7 @@ const MessageArea = ({ darkMode = false }) => {
                                 p: '10px 18px',
                                 bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5',
                                 borderRadius: '0px 15px 15px 15px',
-                                maxWidth: '300px',
+                                maxWidth: { xs: '75vw', sm: '300px' },
                                 cursor: 'pointer'
                             }}
                         >
@@ -162,7 +163,7 @@ const MessageArea = ({ darkMode = false }) => {
                 </Box>
 
                 {/* Sent Bubble with Reply Asset (if provided) or Quoted Style */}
-                <Box sx={{ alignSelf: 'flex-end', maxWidth: '350px' }}>
+                <Box sx={{ alignSelf: 'flex-end', maxWidth: { xs: '80vw', sm: '350px' } }}>
                     <Box
                         onClick={handleMessageClick}
                         sx={{
@@ -192,7 +193,7 @@ const MessageArea = ({ darkMode = false }) => {
                 {/* Received Image Message with Reaction Asset */}
                 <Box sx={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
-                    <Box sx={{ position: 'relative', width: '240px' }}>
+                    <Box sx={{ position: 'relative', width: { xs: '55vw', sm: '240px' }, maxWidth: '240px' }}>
                         <Box
                             onClick={handleMessageClick}
                             component="img"
@@ -217,7 +218,7 @@ const MessageArea = ({ darkMode = false }) => {
                 </Box>
 
                 {/* Last Sent Message (Asset) */}
-                <Box sx={{ alignSelf: 'flex-end', maxWidth: '300px' }}>
+                <Box sx={{ alignSelf: 'flex-end', maxWidth: { xs: '75vw', sm: '300px' } }}>
                     <Box
                         onClick={handleMessageClick}
                         component="img"
@@ -239,7 +240,7 @@ const MessageArea = ({ darkMode = false }) => {
 
             {/* --- STATIC FOOTER (MESSAGE TYPE AREA) --- */}
             <Box sx={{ flexShrink: 0, bgcolor: darkMode ? '#1a1a2e' : '#fff', zIndex: 10 }}>
-                <Box sx={{ px: '25px', mb: '15px', display: 'flex', gap: '8px', overflowX: 'auto', '&::-webkit-scrollbar': { display: 'none' } }}>
+                <Box sx={{ px: { xs: '14px', sm: '25px' }, mb: '15px', display: 'flex', gap: '8px', overflowX: 'auto', '&::-webkit-scrollbar': { display: 'none' } }}>
                     {quickReplies.map((reply) => (
                         <Button
                             key={reply}
@@ -263,7 +264,7 @@ const MessageArea = ({ darkMode = false }) => {
                 </Box>
 
                 <Box sx={{
-                    p: '0 25px 20px 25px',
+                    p: { xs: '0 14px 16px 14px', sm: '0 25px 20px 25px' },
                     display: 'flex',
                     alignItems: 'center',
                     gap: '12px'

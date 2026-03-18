@@ -23,7 +23,6 @@ const FilePopup = ({ onClose }) => {
         <Box
             sx={{
                 width: '122px',
-                height: '181px',
                 bgcolor: '#FFFFFF',
                 borderRadius: '10px',
                 boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
@@ -32,8 +31,8 @@ const FilePopup = ({ onClose }) => {
                 p: '8px 9px',
                 boxSizing: 'border-box',
                 position: 'absolute',
-                bottom: '70px',
-                left: '25px',
+                bottom: { xs: '60px', sm: '70px' },
+                left: { xs: '10px', sm: '25px' },
                 zIndex: 100,
                 opacity: 1
             }}

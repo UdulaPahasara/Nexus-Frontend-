@@ -99,16 +99,52 @@ const MainHome = () => {
                     <Box sx={{
                         flexGrow: 1,
                         display: 'flex',
-                        gap: '12px',
-                        justifyContent: 'center',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: { xs: '0px', md: '12px' },
                         alignItems: 'flex-start',
-                        width: '100%'
+                        width: '100%',
+                        overflow: 'hidden',
                     }}>
-                        <FilterBar darkMode={darkMode} onChatSelect={() => setSelectedChat(true)} />
+                        {/* Chat list — full width on mobile, fixed width on desktop */}
+                        {/* On mobile: show only if no chat selected, hide when chat is open */}
+                        <Box sx={{
+                            display: { xs: selectedChat ? 'none' : 'flex', md: 'flex' },
+                            flexDirection: 'column',
+                            width: { xs: '100%', md: 'auto' },
+                            flexShrink: 0,
+                        }}>
+                            <FilterBar darkMode={darkMode} onChatSelect={() => setSelectedChat(true)} />
+                        </Box>
+
+                        {/* Chat area — full width on mobile, fills remaining space on desktop */}
                         {selectedChat ? (
-                            <MessageArea darkMode={darkMode} />
+                            <Box sx={{ flex: 1, width: { xs: '100%', md: 'auto' }, display: 'flex', flexDirection: 'column' }}>
+                                {/* Back button — mobile only */}
+                                <Box
+                                    sx={{
+                                        display: { xs: 'flex', md: 'none' },
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        p: '10px 14px',
+                                        cursor: 'pointer',
+                                        bgcolor: darkMode ? '#1e1e2e' : '#fff',
+                                        borderRadius: '12px',
+                                        mb: '8px',
+                                        boxShadow: '0px 2px 8px rgba(0,0,0,0.06)',
+                                    }}
+                                    onClick={() => setSelectedChat(null)}
+                                >
+                                    <Box sx={{ fontSize: '18px', lineHeight: 1 }}>←</Box>
+                                    <Box sx={{ fontFamily: 'Poppins', fontSize: '13px', fontWeight: 500, color: darkMode ? '#fff' : '#333' }}>
+                                        Back to Chats
+                                    </Box>
+                                </Box>
+                                <MessageArea darkMode={darkMode} />
+                            </Box>
                         ) : (
-                            <NoChat darkMode={darkMode} />
+                            <Box sx={{ flex: 1, display: { xs: 'none', md: 'flex' } }}>
+                                <NoChat darkMode={darkMode} />
+                            </Box>
                         )}
                     </Box>
                 ) : (

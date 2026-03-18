@@ -8,11 +8,11 @@ const SchedulePopup = ({ onClose, darkMode = false }) => {
     return (
         <Box
             sx={{
-                width: '494px',
-                height: '284px',
+                width: { xs: 'calc(100% - 30px)', sm: '494px' },
+                maxWidth: '494px',
                 bgcolor: darkMode ? '#1a1a2e' : '#FFFFFF',
                 borderRadius: '25px',
-                p: '24px 21px',
+                p: { xs: '18px 16px', sm: '24px 21px' },
                 boxSizing: 'border-box',
                 boxShadow: '0px 10px 40px rgba(0, 0, 0, 0.2)',
                 display: 'flex',
@@ -29,7 +29,7 @@ const SchedulePopup = ({ onClose, darkMode = false }) => {
         >
             {/* Header */}
             <Box sx={{
-                width: '452px',
+                width: '100%',
                 height: '29px',
                 display: 'flex',
                 alignItems: 'center',
