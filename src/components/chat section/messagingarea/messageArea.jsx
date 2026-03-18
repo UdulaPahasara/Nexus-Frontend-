@@ -10,6 +10,9 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 import CallPopup from '../chatPopup/callPopup';
 import OptionPopup from '../chatPopup/optionpopup';
+import SchedulePopup from '../chatPopup/schedulepopup';
+import ReactionPopup from '../chatPopup/reactionpopup';
+import FilePopup from '../chatPopup/filepopups';
 
 // Assets
 import profilePic from '../../../assets/Home/sevice/chats/messegeprofilepic/mp1.webp';
@@ -20,10 +23,41 @@ import myProfilePic from '../../../assets/Home/propffun/profilepic.webp';
 const MessageArea = ({ darkMode = false }) => {
     const [showCallPopup, setShowCallPopup] = React.useState(false);
     const [showOptionPopup, setShowOptionPopup] = React.useState(false);
+    const [showSchedulePopup, setShowSchedulePopup] = React.useState(false);
+    const [showFilePopup, setShowFilePopup] = React.useState(false);
+    const [reactionPopup, setReactionPopup] = React.useState({ show: false, position: { top: 0, left: 0 } });
+
+    const handleMessageClick = (e) => {
+        e.stopPropagation();
+        const rect = e.currentTarget.getBoundingClientRect();
+        // Use the MessageArea Box's bounding rect as reference
+        const parentElement = e.currentTarget.closest('.message-area-container');
+        const parentRect = parentElement.getBoundingClientRect();
+
+        // Calculate position relative to MessageArea container
+        const top = rect.top - parentRect.top + rect.height + 5;
+        const left = rect.left - parentRect.left + (rect.width / 2) - 90; // Center 180px popup
+
+        setReactionPopup({
+            show: true,
+            position: { top, left }
+        });
+    };
+
+    const handleCloseAllPopups = () => {
+        setShowCallPopup(false);
+        setShowOptionPopup(false);
+        setShowSchedulePopup(false);
+        setShowFilePopup(false);
+        setReactionPopup({ ...reactionPopup, show: false });
+    };
+
     const quickReplies = ["Thank You", "Thanks", "Good Bye", "Nice", "Nice Try"];
 
     return (
         <Box
+            className="message-area-container"
+            onClick={handleCloseAllPopups}
             sx={{
                 width: '767px',
                 height: '580px',
@@ -58,15 +92,21 @@ const MessageArea = ({ darkMode = false }) => {
                         <IconButton
                             size="small"
                             sx={{ color: '#00E783' }}
-                            onClick={() => setShowOptionPopup(!showOptionPopup)}
+                            onClick={(e) => { e.stopPropagation(); setShowOptionPopup(!showOptionPopup); }}
                         >
                             <MoreVertIcon sx={{ fontSize: '20px' }} />
                         </IconButton>
-                        <IconButton size="small" sx={{ color: '#00E783' }}><CalendarMonthIcon sx={{ fontSize: '20px' }} /></IconButton>
                         <IconButton
                             size="small"
                             sx={{ color: '#00E783' }}
-                            onClick={() => setShowCallPopup(!showCallPopup)}
+                            onClick={(e) => { e.stopPropagation(); setShowSchedulePopup(!showSchedulePopup); }}
+                        >
+                            <CalendarMonthIcon sx={{ fontSize: '20px' }} />
+                        </IconButton>
+                        <IconButton
+                            size="small"
+                            sx={{ color: '#00E783' }}
+                            onClick={(e) => { e.stopPropagation(); setShowCallPopup(!showCallPopup); }}
                         >
                             <LocalPhoneIcon sx={{ fontSize: '20px' }} />
                         </IconButton>
@@ -103,12 +143,16 @@ const MessageArea = ({ darkMode = false }) => {
                 <Box sx={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
                     <Box>
-                        <Box sx={{
-                            p: '10px 18px',
-                            bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5',
-                            borderRadius: '0px 15px 15px 15px',
-                            maxWidth: '300px'
-                        }}>
+                        <Box
+                            onClick={handleMessageClick}
+                            sx={{
+                                p: '10px 18px',
+                                bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5',
+                                borderRadius: '0px 15px 15px 15px',
+                                maxWidth: '300px',
+                                cursor: 'pointer'
+                            }}
+                        >
                             <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#fff' : '#333' }}>
                                 Hello !
                             </Typography>
@@ -119,12 +163,16 @@ const MessageArea = ({ darkMode = false }) => {
 
                 {/* Sent Bubble with Reply Asset (if provided) or Quoted Style */}
                 <Box sx={{ alignSelf: 'flex-end', maxWidth: '350px' }}>
-                    <Box sx={{
-                        p: '12px 18px',
-                        bgcolor: darkMode ? 'rgba(0, 231, 131, 0.08)' : '#E8FBF3',
-                        borderRadius: '15px 15px 0px 15px',
-                        borderLeft: '3px solid #00E783',
-                    }}>
+                    <Box
+                        onClick={handleMessageClick}
+                        sx={{
+                            p: '12px 18px',
+                            bgcolor: darkMode ? 'rgba(0, 231, 131, 0.08)' : '#E8FBF3',
+                            borderRadius: '15px 15px 0px 15px',
+                            borderLeft: '3px solid #00E783',
+                            cursor: 'pointer'
+                        }}
+                    >
                         <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '12px', color: '#01B96A', mb: '2px' }}>
                             Nilantha Jayasuriya
                         </Typography>
@@ -146,6 +194,7 @@ const MessageArea = ({ darkMode = false }) => {
                     <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
                     <Box sx={{ position: 'relative', width: '240px' }}>
                         <Box
+                            onClick={handleMessageClick}
                             component="img"
                             src={receiveAsset}
                             sx={{
@@ -153,7 +202,8 @@ const MessageArea = ({ darkMode = false }) => {
                                 height: 'auto',
                                 borderRadius: '12px',
                                 border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)',
-                                display: 'block'
+                                display: 'block',
+                                cursor: 'pointer'
                             }}
                         />
                         {/* Reaction Asset Overlay/Row */}
@@ -169,13 +219,15 @@ const MessageArea = ({ darkMode = false }) => {
                 {/* Last Sent Message (Asset) */}
                 <Box sx={{ alignSelf: 'flex-end', maxWidth: '300px' }}>
                     <Box
+                        onClick={handleMessageClick}
                         component="img"
                         src={sentAsset}
                         sx={{
                             width: '100%',
                             height: 'auto',
                             borderRadius: '12px',
-                            display: 'block'
+                            display: 'block',
+                            cursor: 'pointer'
                         }}
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '4px', mt: '4px' }}>
@@ -216,7 +268,10 @@ const MessageArea = ({ darkMode = false }) => {
                     alignItems: 'center',
                     gap: '12px'
                 }}>
-                    <IconButton sx={{ p: 0, color: '#00E783' }}>
+                    <IconButton
+                        sx={{ p: 0, color: '#00E783' }}
+                        onClick={(e) => { e.stopPropagation(); setShowFilePopup(!showFilePopup); }}
+                    >
                         <AddCircleIcon sx={{ fontSize: '42px' }} />
                     </IconButton>
 
@@ -248,6 +303,9 @@ const MessageArea = ({ darkMode = false }) => {
 
             {showCallPopup && <CallPopup onClose={() => setShowCallPopup(false)} />}
             {showOptionPopup && <OptionPopup onClose={() => setShowOptionPopup(false)} />}
+            {showSchedulePopup && <SchedulePopup onClose={() => setShowSchedulePopup(false)} darkMode={darkMode} />}
+            {reactionPopup.show && <ReactionPopup position={reactionPopup.position} />}
+            {showFilePopup && <FilePopup onClose={() => setShowFilePopup(false)} />}
         </Box>
     );
 };

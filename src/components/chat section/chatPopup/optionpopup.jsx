@@ -26,7 +26,7 @@ const OptionPopup = ({ onClose }) => {
             sx={{
                 width: '176px',
                 height: '233px',
-                bgcolor: 'rgba(255, 255, 255, 1)',
+                bgcolor: '#FFFFFF',
                 borderRadius: '10px',
                 boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
                 display: 'flex',
@@ -35,7 +35,7 @@ const OptionPopup = ({ onClose }) => {
                 boxSizing: 'border-box',
                 position: 'absolute',
                 top: '55px',
-                right: '65px', // Adjusted to appear below the three-dot icon
+                right: '65px',
                 zIndex: 100,
                 opacity: 1
             }}
@@ -50,8 +50,7 @@ const OptionPopup = ({ onClose }) => {
                             alignItems: 'center',
                             gap: '5px',
                             cursor: 'pointer',
-                            '&:hover': { opacity: 0.7 },
-                            opacity: 1
+                            '&:hover': { opacity: 0.7 }
                         }}
                     >
                         <Box
