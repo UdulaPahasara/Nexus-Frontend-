@@ -16,21 +16,22 @@ const FilterBar = ({ darkMode = false, onChatSelect }) => {
     return (
         <Box
             sx={{
-                width: '100%',
+                width: showNewMessage ? '305px' : '100%',
                 maxWidth: { xs: '100%', sm: '305px' },
                 minHeight: showNewMessage ? '625px' : { xs: 'auto', sm: '656px' },
                 bgcolor: darkMode ? '#1e1e2e' : 'rgba(255, 255, 255, 1)',
                 borderRadius: { xs: '12px', sm: '15px' },
-                pt: '22px',
-                pb: '22px',
-                pl: { xs: '14px', sm: '12px' },
-                pr: { xs: '14px', sm: '12px' },
+                pt: showNewMessage ? 0 : '22px',
+                pb: showNewMessage ? 0 : '22px',
+                pl: showNewMessage ? 0 : { xs: '14px', sm: '12px' },
+                pr: showNewMessage ? 0 : { xs: '14px', sm: '12px' },
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '10px',
+                gap: showNewMessage ? 0 : '10px',
                 boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                 boxSizing: 'border-box',
                 position: 'relative',
+                overflow: 'hidden',
             }}
         >
             {/* Filter Buttons Row — hidden when New Message popup is open */}

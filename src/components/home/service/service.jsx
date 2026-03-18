@@ -32,6 +32,8 @@ const serviceData = [
 
 const Service = ({ darkMode }) => {
     const [chatOpen, setChatOpen] = useState(false);
+    const [showNewMessage, setShowNewMessage] = useState(false);
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '372px' }}>
 
@@ -133,7 +135,11 @@ const Service = ({ darkMode }) => {
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     visibility: chatOpen ? 'visible' : 'hidden'
                 }}>
-                    <ChatPopup darkMode={darkMode} />
+                    <ChatPopup
+                        darkMode={darkMode}
+                        showNewMessage={showNewMessage}
+                        setShowNewMessage={setShowNewMessage}
+                    />
                 </Box>
 
                 <Box
