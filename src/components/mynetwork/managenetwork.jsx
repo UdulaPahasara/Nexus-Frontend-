@@ -28,15 +28,11 @@ const ManageNetwork = ({ darkMode }) => {
             borderRadius: '15px',
             border: darkMode ? '1px solid #333' : 'none',
             boxShadow: darkMode ? '0px 4px 15px rgba(0,0,0,0.3)' : '0px 2px 10px rgba(0,0,0,0.05)',
-            pt: '15px',
-            pb: '15px',
-            pl: '26px',
-            pr: '26px',
+            p: { xs: '15px 20px', sm: '15px 26px' },
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-
         }}>
             <Box sx={{
                 display: 'flex',
@@ -44,7 +40,7 @@ const ManageNetwork = ({ darkMode }) => {
                 gap: '10px',
                 width: '100%',
                 maxWidth: '649px',
-                height: '90px'
+                minHeight: '90px'
             }}>
                 <Typography sx={{
                     fontFamily: 'Poppins',
@@ -75,7 +71,7 @@ const ManageNetwork = ({ darkMode }) => {
                                 border: darkMode ? '1px solid #444' : '1px solid #E0E0E0',
                                 px: '14px',
                                 py: '4px',
-                                gap: '35px',
+                                gap: { xs: '15px', sm: '35px' },
                                 bgcolor: 'transparent',
                                 transition: 'all 0.2s',
                                 '&:hover': {

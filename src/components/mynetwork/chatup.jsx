@@ -63,10 +63,7 @@ const CatchUp = ({ darkMode }) => {
             height: { xs: 'auto', md: '605px' }, // Responsive height
             bgcolor: darkMode ? '#1e1e2e' : '#FFFFFF',
             borderRadius: '15px',
-            pt: '17px',
-            pb: '17px',
-            pl: '7px',
-            pr: '7px',
+            p: { xs: '15px 8px', sm: '17px 7px' },
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
