@@ -14,6 +14,9 @@ import Invitation from '../../mynetwork/invitation';
 import ManageNetwork from '../../mynetwork/managenetwork';
 import Follow from '../../mynetwork/follow';
 import CatchUp from '../../mynetwork/chatup';
+import Jobs from '../../jobs/jobs';
+
+
 
 const MainHome = () => {
     // darkMode lives here — controls the entire page
@@ -56,7 +59,7 @@ const MainHome = () => {
                 flexDirection: { xs: 'column', md: 'row' },
                 flex: 1,
                 width: '100%',
-                maxWidth: '1440px', // Standard wide container
+                maxWidth: '1440px',
                 mx: 'auto',
                 gap: { xs: '15px', md: '20px', lg: '30px' },
                 px: { xs: '10px', sm: '15px', md: '20px' },
@@ -186,12 +189,35 @@ const MainHome = () => {
                             <CatchUp darkMode={darkMode} />
                         </Box>
                     </Box>
+                ) : activeTab === 'Jobs' ? (
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: '20px',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}>
+                        <Jobs darkMode={darkMode} />
+                        {/* ── RIGHT: Feed & Service for Jobs view ── */}
+                        <Box sx={{
+                            display: { xs: 'none', lg: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: '372px',
+                            flexShrink: 0,
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <Service darkMode={darkMode} />
+                        </Box>
+                    </Box>
                 ) : (
                     <>
                         {/* ── CENTER: Main Content Feed ── */}
                         <Box sx={{
                             width: '100%',
-                            maxWidth: { xs: '100%', md: '650px', lg: '701px' },
+                            maxWidth: { xs: '100%', md: '650px', lg: '706px' },
                             flexGrow: 1,
                             bgcolor: darkMode ? 'rgba(255,255,255,0.03)' : '#fff',
                             borderRadius: '15px',
@@ -236,6 +262,7 @@ const MainHome = () => {
                         </Box>
                     </>
                 )}
+
             </Box>
         </Box>
     );
