@@ -7,6 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import MicIcon from '@mui/icons-material/Mic';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import SendIcon from '@mui/icons-material/Send';
 
 import CallPopup from '../chatPopup/callPopup';
 import OptionPopup from '../chatPopup/optionpopup';
@@ -26,6 +27,39 @@ const MessageArea = ({ darkMode = false }) => {
     const [showSchedulePopup, setShowSchedulePopup] = React.useState(false);
     const [showFilePopup, setShowFilePopup] = React.useState(false);
     const [reactionPopup, setReactionPopup] = React.useState({ show: false, position: { top: 0, left: 0 } });
+    const [messages, setMessages] = React.useState([
+        { id: 1, type: 'received', text: 'Hello !', time: '11:30 pm' },
+        { id: 2, type: 'sent', text: 'Lorem ipsum dolor sit amet conse', time: '11:33 pm', replyTo: 'Hello !' },
+        { id: 3, type: 'received', image: receiveAsset, reactions: '😊❤️👍', time: '11:55 pm' },
+        { id: 4, type: 'sent', image: sentAsset, time: '11:58 pm' }
+    ]);
+    const [inputValue, setInputValue] = React.useState('');
+    const scrollRef = React.useRef(null);
+
+    React.useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    const handleSendMessage = () => {
+        if (inputValue.trim()) {
+            const newMessage = {
+                id: Date.now(),
+                type: 'sent',
+                text: inputValue,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase()
+            };
+            setMessages([...messages, newMessage]);
+            setInputValue('');
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage();
+        }
+    };
 
     const handleMessageClick = (e) => {
         e.stopPropagation();
@@ -129,113 +163,132 @@ const MessageArea = ({ darkMode = false }) => {
             </Box>
 
             {/* --- SCROLLABLE THREAD --- */}
-            <Box sx={{
-                flex: 1,
-                p: { xs: '14px', sm: '25px' },
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '24px',
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                '&::-webkit-scrollbar': { width: '4px' },
-                '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '10px' }
-            }}>
-                {/* Received Bubble */}
-                <Box sx={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
-                    <Box>
-                        <Box
-                            onClick={handleMessageClick}
-                            sx={{
-                                p: '10px 18px',
-                                bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5',
-                                borderRadius: '0px 15px 15px 15px',
-                                maxWidth: { xs: '75vw', sm: '300px' },
-                                cursor: 'pointer'
-                            }}
-                        >
-                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#fff' : '#333' }}>
-                                Hello !
-                            </Typography>
-                        </Box>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9', mt: '4px' }}>11:30 pm</Typography>
-                    </Box>
-                </Box>
-
-                {/* Sent Bubble with Reply Asset (if provided) or Quoted Style */}
-                <Box sx={{ alignSelf: 'flex-end', maxWidth: { xs: '80vw', sm: '350px' } }}>
-                    <Box
-                        onClick={handleMessageClick}
-                        sx={{
-                            p: '12px 18px',
-                            bgcolor: darkMode ? 'rgba(0, 231, 131, 0.08)' : '#E8FBF3',
-                            borderRadius: '15px 15px 0px 15px',
-                            borderLeft: '3px solid #00E783',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '12px', color: '#01B96A', mb: '2px' }}>
-                            Nilantha Jayasuriya
-                        </Typography>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '11px', color: '#888', mb: '6px' }}>
-                            Hello !
-                        </Typography>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#fff' : '#000' }}>
-                            Lorem ipsum dolor sit amet conse
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '4px', mt: '4px' }}>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9' }}>11:33 pm</Typography>
-                        <DoneAllIcon sx={{ fontSize: '14px', color: '#01B96A' }} />
-                    </Box>
-                </Box>
-
-                {/* Received Image Message with Reaction Asset */}
-                <Box sx={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
-                    <Box sx={{ position: 'relative', width: { xs: '55vw', sm: '240px' }, maxWidth: '240px' }}>
-                        <Box
-                            onClick={handleMessageClick}
-                            component="img"
-                            src={receiveAsset}
-                            sx={{
-                                width: '100%',
-                                height: 'auto',
-                                borderRadius: '12px',
-                                border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)',
-                                display: 'block',
-                                cursor: 'pointer'
-                            }}
-                        />
-                        {/* Reaction Asset Overlay/Row */}
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '6px' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                <Typography sx={{ fontSize: '12px' }}>😊❤️👍</Typography>
+            <Box
+                ref={scrollRef}
+                sx={{
+                    flex: 1,
+                    p: { xs: '14px', sm: '25px' },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '24px',
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    '&::-webkit-scrollbar': { width: '4px' },
+                    '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(0,0,0,0.05)', borderRadius: '10px' }
+                }}
+            >
+                {messages.map((msg) => (
+                    <Box key={msg.id}>
+                        {msg.type === 'received' ? (
+                            <Box sx={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                                <Avatar src={profilePic} sx={{ width: '32px', height: '32px' }} />
+                                <Box>
+                                    {msg.text && (
+                                        <Box
+                                            onClick={handleMessageClick}
+                                            sx={{
+                                                p: '10px 18px',
+                                                bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5',
+                                                borderRadius: '0px 15px 15px 15px',
+                                                maxWidth: { xs: '75vw', sm: '300px' },
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#fff' : '#333' }}>
+                                                {msg.text}
+                                            </Typography>
+                                        </Box>
+                                    )}
+                                    {msg.image && (
+                                        <Box sx={{ position: 'relative', width: { xs: '55vw', sm: '240px' }, maxWidth: '240px' }}>
+                                            <Box
+                                                onClick={handleMessageClick}
+                                                component="img"
+                                                src={msg.image}
+                                                sx={{
+                                                    width: '100%',
+                                                    height: 'auto',
+                                                    borderRadius: '12px',
+                                                    border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)',
+                                                    display: 'block',
+                                                    cursor: 'pointer'
+                                                }}
+                                            />
+                                            {msg.reactions && (
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', mt: '6px' }}>
+                                                    <Typography sx={{ fontSize: '12px' }}>{msg.reactions}</Typography>
+                                                </Box>
+                                            )}
+                                        </Box>
+                                    )}
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9', mt: '4px' }}>{msg.time}</Typography>
+                                </Box>
                             </Box>
-                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9' }}>11:55 pm</Typography>
-                        </Box>
+                        ) : (
+                            <Box sx={{ alignSelf: 'flex-end', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                {msg.replyTo ? (
+                                    <Box sx={{ maxWidth: { xs: '80vw', sm: '350px' } }}>
+                                        <Box
+                                            onClick={handleMessageClick}
+                                            sx={{
+                                                p: '12px 18px',
+                                                bgcolor: darkMode ? 'rgba(0, 231, 131, 0.08)' : '#E8FBF3',
+                                                borderRadius: '15px 15px 0px 15px',
+                                                borderLeft: '3px solid #00E783',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '12px', color: '#01B96A', mb: '2px' }}>
+                                                Nilantha Jayasuriya
+                                            </Typography>
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '11px', color: '#888', mb: '6px' }}>
+                                                {msg.replyTo}
+                                            </Typography>
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#fff' : '#000' }}>
+                                                {msg.text}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                ) : msg.image ? (
+                                    <Box sx={{ maxWidth: { xs: '75vw', sm: '300px' } }}>
+                                        <Box
+                                            onClick={handleMessageClick}
+                                            component="img"
+                                            src={msg.image}
+                                            sx={{
+                                                width: '100%',
+                                                height: 'auto',
+                                                borderRadius: '12px',
+                                                display: 'block',
+                                                cursor: 'pointer'
+                                            }}
+                                        />
+                                    </Box>
+                                ) : (
+                                    <Box
+                                        onClick={handleMessageClick}
+                                        sx={{
+                                            p: '10px 18px',
+                                            bgcolor: '#00E783',
+                                            color: '#fff',
+                                            borderRadius: '15px 15px 0px 15px',
+                                            maxWidth: { xs: '75vw', sm: '300px' },
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: '#fff' }}>
+                                            {msg.text}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '4px', mt: '4px' }}>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9' }}>{msg.time}</Typography>
+                                    <DoneAllIcon sx={{ fontSize: '14px', color: '#01B96A' }} />
+                                </Box>
+                            </Box>
+                        )}
                     </Box>
-                </Box>
-
-                {/* Last Sent Message (Asset) */}
-                <Box sx={{ alignSelf: 'flex-end', maxWidth: { xs: '75vw', sm: '300px' } }}>
-                    <Box
-                        onClick={handleMessageClick}
-                        component="img"
-                        src={sentAsset}
-                        sx={{
-                            width: '100%',
-                            height: 'auto',
-                            borderRadius: '12px',
-                            display: 'block',
-                            cursor: 'pointer'
-                        }}
-                    />
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '4px', mt: '4px' }}>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#A9A9A9' }}>11:58 pm</Typography>
-                        <DoneAllIcon sx={{ fontSize: '14px', color: '#01B96A' }} />
-                    </Box>
-                </Box>
+                ))}
             </Box>
 
             {/* --- STATIC FOOTER (MESSAGE TYPE AREA) --- */}
@@ -246,15 +299,18 @@ const MessageArea = ({ darkMode = false }) => {
                             key={reply}
                             variant="outlined"
                             sx={{
-                                borderRadius: '20px',
+                                borderRadius: '30px',
                                 textTransform: 'none',
                                 fontFamily: 'Poppins',
+                                fontWeight: 500,
                                 fontSize: '11px',
                                 color: darkMode ? '#ccc' : '#444',
                                 borderColor: darkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)',
                                 whiteSpace: 'nowrap',
-                                p: '3px 14px',
-                                minWidth: 0,
+                                px: '16px',
+                                py: '6px',
+                                minWidth: 'auto',
+                                height: 'auto',
                                 '&:hover': { borderColor: '#00E783', bgcolor: 'transparent' }
                             }}
                         >
@@ -288,6 +344,9 @@ const MessageArea = ({ darkMode = false }) => {
                     }}>
                         <InputBase
                             placeholder="Type Message"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleKeyPress}
                             sx={{
                                 flex: 1,
                                 fontFamily: 'Poppins',
@@ -297,7 +356,7 @@ const MessageArea = ({ darkMode = false }) => {
                             }}
                         />
                         <IconButton size="small" sx={{ color: '#B0B0B0' }}><PhotoCameraIcon sx={{ fontSize: '20px' }} /></IconButton>
-                        <IconButton size="small" sx={{ color: '#B0B0B0' }}><MicIcon sx={{ fontSize: '20px' }} /></IconButton>
+                        <IconButton size="small" sx={{ color: '#00E783' }} onClick={handleSendMessage}><SendIcon sx={{ fontSize: '20px' }} /></IconButton>
                     </Box>
                 </Box>
             </Box>

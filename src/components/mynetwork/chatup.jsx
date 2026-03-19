@@ -63,7 +63,6 @@ const CatchUp = ({ darkMode }) => {
             height: { xs: 'auto', md: '605px' }, // Responsive height
             bgcolor: darkMode ? '#1e1e2e' : '#FFFFFF',
             borderRadius: '15px',
-            border: darkMode ? '1px solid #333' : '2px solid #23A6F0',
             pt: '17px',
             pb: '17px',
             pl: '7px',
@@ -80,7 +79,7 @@ const CatchUp = ({ darkMode }) => {
                 fontWeight: 600,
                 fontSize: '15px',
                 color: darkMode ? '#ffffff' : '#111111',
-                ml: '8px' // Slightly indent to match padding safely
+                ml: '8px'
             }}>
                 Catch Up
             </Typography>
