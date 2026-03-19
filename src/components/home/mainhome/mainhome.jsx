@@ -10,6 +10,10 @@ import News from './news/news';
 import FilterBar from '../../chat section/chatfilterbar/filterbar';
 import NoChat from '../../chat section/chatfilterbar/nochat';
 import MessageArea from '../../chat section/messagingarea/messageArea';
+import Invitation from '../../mynetwork/invitation';
+import ManageNetwork from '../../mynetwork/managenetwork';
+import Follow from '../../mynetwork/follow';
+import CatchUp from '../../mynetwork/chatup';
 
 const MainHome = () => {
     // darkMode lives here — controls the entire page
@@ -147,6 +151,41 @@ const MainHome = () => {
                             </Box>
                         )}
                     </Box>
+                ) : activeTab === 'My Network' ? (
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: { xs: '10px', md: '10px', lg: '10px' },
+                        alignItems: 'flex-start',
+                        width: '100%',
+                    }}>
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '650px', lg: '701px' },
+                            flexGrow: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '20px',
+                        }}>
+                            <Invitation darkMode={darkMode} />
+                            <ManageNetwork darkMode={darkMode} />
+                            <Follow darkMode={darkMode} />
+                        </Box>
+
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '10px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px'
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <CatchUp darkMode={darkMode} />
+                        </Box>
+                    </Box>
                 ) : (
                     <>
                         {/* ── CENTER: Main Content Feed ── */}
@@ -203,3 +242,4 @@ const MainHome = () => {
 };
 
 export default MainHome;
+
