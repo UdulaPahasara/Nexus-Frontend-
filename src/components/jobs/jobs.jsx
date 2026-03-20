@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import PartTime from './parttime';
 
 // Header icons
 import fulltimeIcon from '../../assets/Home/sevice/fulltime.webp';
@@ -174,7 +175,12 @@ const JobCard = ({ job, darkMode }) => (
 );
 
 const Jobs = ({ darkMode }) => {
-    const [activePill, setActivePill] = React.useState('All');
+    const [activePill, setActivePill] = useState('All');
+    const [view, setView] = useState('main');
+
+    if (view === 'parttime') {
+        return <PartTime darkMode={darkMode} onBack={() => setView('main')} />;
+    }
 
     return (
         <Box sx={{
@@ -210,15 +216,19 @@ const Jobs = ({ darkMode }) => {
             }}>
 
                 {HEADER_BUTTONS.map((btn) => (
-                    <Box key={btn.label} sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '10px',
-                        cursor: 'pointer',
-                        flexShrink: 0
-                    }}>
+                    <Box
+                        key={btn.label}
+                        onClick={() => btn.label === 'PartTime' ? setView('parttime') : null}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            cursor: 'pointer',
+                            flexShrink: 0
+                        }}
+                    >
                         <Box
                             component="img"
                             src={btn.icon}
@@ -252,7 +262,10 @@ const Jobs = ({ darkMode }) => {
                 {PILL_FILTERS.map((pill) => (
                     <Box
                         key={pill}
-                        onClick={() => setActivePill(pill)}
+                        onClick={() => {
+                            setActivePill(pill);
+                            if (pill === 'Part time') setView('parttime');
+                        }}
                         sx={{
                             px: '15px',
                             py: '4px',
