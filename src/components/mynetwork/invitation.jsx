@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import inv1 from '../../assets/mynetwork/invitation/invitation1.webp';
 import inv2 from '../../assets/mynetwork/invitation/invitation2.webp';
 
-const invitationsData = [
+const initialInvitations = [
     {
         id: 1,
         name: 'Kamal Gunathilaka',
@@ -24,6 +24,17 @@ const invitationsData = [
 ];
 
 const Invitation = ({ darkMode }) => {
+    const [invitations, setInvitations] = useState(initialInvitations);
+    const [acceptedIds, setAcceptedIds] = useState([]);
+
+    const handleAccept = (id) => {
+        setAcceptedIds(prev => [...prev, id]);
+    };
+
+    const handleReject = (id) => {
+        setInvitations(prev => prev.filter(inv => inv.id !== id));
+    };
+
     return (
         <Box sx={{
             width: '100%',
@@ -33,7 +44,6 @@ const Invitation = ({ darkMode }) => {
             p: '20px',
             boxSizing: 'border-box',
             mb: '-10px'
-
         }}>
             {/* Header */}
             <Box sx={{
@@ -75,7 +85,7 @@ const Invitation = ({ darkMode }) => {
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {invitationsData.map((invitation, index) => (
+                {invitations.map((invitation, index) => (
                     <Box key={invitation.id}>
                         <Box sx={{
                             display: 'flex',
@@ -109,40 +119,62 @@ const Invitation = ({ darkMode }) => {
                                 </Box>
                             </Box>
 
-                            {/* Action buttons */}
+                            {/* Actions or Accepted Status */}
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '10px',
                                 flexShrink: 0,
                                 pt: '5px',
-                                ml: { xs: '65px', sm: 0 } // Align with text on mobile
+                                ml: { xs: '65px', sm: 0 }
                             }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-                                    <Box sx={{
-                                        width: '32px', height: '32px',
-                                        border: '1px solid #FF5C5C',
-                                        borderRadius: '6px',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                {acceptedIds.includes(invitation.id) ? (
+                                    <Typography sx={{
+                                        fontFamily: 'Poppins',
+                                        fontSize: '14px',
+                                        fontWeight: 600,
+                                        color: '#00E783',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '4px'
                                     }}>
-                                        <CloseIcon sx={{ color: '#FF5C5C', fontSize: '18px' }} />
-                                    </Box>
-                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#FF5C5C', mt: '2px' }}>Reject</Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-                                    <Box sx={{
-                                        width: '32px', height: '32px',
-                                        border: '1px solid #00E783',
-                                        borderRadius: '6px',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                    }}>
-                                        <CheckIcon sx={{ color: '#00E783', fontSize: '18px' }} />
-                                    </Box>
-                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#00E783', mt: '2px' }}>Accept</Typography>
-                                </Box>
+                                        <CheckIcon sx={{ fontSize: '18px' }} /> Accepted
+                                    </Typography>
+                                ) : (
+                                    <>
+                                        <Box
+                                            onClick={() => handleReject(invitation.id)}
+                                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}
+                                        >
+                                            <Box sx={{
+                                                width: '32px', height: '32px',
+                                                border: '1px solid #FF5C5C',
+                                                borderRadius: '6px',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                            }}>
+                                                <CloseIcon sx={{ color: '#FF5C5C', fontSize: '18px' }} />
+                                            </Box>
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#FF5C5C', mt: '2px' }}>Reject</Typography>
+                                        </Box>
+                                        <Box
+                                            onClick={() => handleAccept(invitation.id)}
+                                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}
+                                        >
+                                            <Box sx={{
+                                                width: '32px', height: '32px',
+                                                border: '1px solid #00E783',
+                                                borderRadius: '6px',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                            }}>
+                                                <CheckIcon sx={{ color: '#00E783', fontSize: '18px' }} />
+                                            </Box>
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '10px', color: '#00E783', mt: '2px' }}>Accept</Typography>
+                                        </Box>
+                                    </>
+                                )}
                             </Box>
                         </Box>
-                        {index < invitationsData.length - 1 && (
+                        {index < invitations.length - 1 && (
                             <Box sx={{ width: '100%', height: '1px', bgcolor: '#E0E0E0', my: '15px', opacity: 0.5 }} />
                         )}
                     </Box>
@@ -153,3 +185,4 @@ const Invitation = ({ darkMode }) => {
 };
 
 export default Invitation;
+

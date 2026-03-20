@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import DatePosted from './datePosted';
 
 // Company icons (reusing from jobs assets context)
 import comp1 from '../../assets/jobs/company1.webp';
@@ -47,7 +48,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite }) => (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <Typography sx={{
                         fontFamily: 'Poppins',
-                        fontWeight: 600,
+                        fontWeight: 500,
                         fontSize: '16px',
                         color: darkMode ? '#fff' : '#000',
                     }}>
@@ -60,7 +61,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite }) => (
                         py: '2px',
                         borderRadius: '12px',
                         fontSize: '10px',
-                        fontWeight: 600,
+                        fontWeight: 500,
                         display: 'flex',
                         alignItems: 'center',
                         gap: '4px'
@@ -73,7 +74,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite }) => (
                     </Box>
                 </Box>
                 <Box onClick={() => onToggleFavorite(job.id)} sx={{ cursor: 'pointer' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24"
+                    <svg width="15" height="15" viewBox="0 0 24 24"
                         fill={isFavorite ? (darkMode ? "#fff" : "#000") : "none"}
                         stroke={isFavorite ? (darkMode ? "#fff" : "#000") : (darkMode ? "#888" : "#333")}
                         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -145,6 +146,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite }) => (
 const PartTime = ({ darkMode, onBack }) => {
     const [favorites, setFavorites] = useState([]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+    const [showDateFilter, setShowDateFilter] = useState(false);
 
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
@@ -193,24 +195,26 @@ const PartTime = ({ darkMode, onBack }) => {
                         </svg>
                     </Box>
 
-                    <Button sx={{
-                        textTransform: 'none',
-                        color: darkMode ? '#fff' : '#000',
-                        fontFamily: 'Poppins',
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        border: '1px solid #eee',
-                        borderRadius: '25px',
-                        px: '20px',
-                        height: '38px',
-                        '&:hover': { border: '1px solid #ddd' }
-                    }}>
+                    <Button
+                        onClick={() => setShowDateFilter(true)}
+                        sx={{
+                            textTransform: 'none',
+                            color: darkMode ? '#fff' : '#000',
+                            fontFamily: 'Poppins',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            border: '1px solid #eee',
+                            borderRadius: '25px',
+                            px: '20px',
+                            height: '38px',
+                            '&:hover': { border: '1px solid #ddd' }
+                        }}>
                         Date Posted
                     </Button>
                 </Box>
 
                 <Box sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         {/* Down Arrow */}
                         <path d="M6 5v14"></path>
                         <path d="M3 16l3 3 3-3"></path>
@@ -227,14 +231,30 @@ const PartTime = ({ darkMode, onBack }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                px: '30px',
+                px: { xs: '15px', sm: '30px' },
                 py: '10px',
                 gap: '10px',
+                width: '100%',
+                boxSizing: 'border-box'
             }}>
-                {/* Left side icons */}
-                <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <Box sx={{ width: '40px', height: '40px', bgcolor: darkMode ? '#333' : '#eee', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                {/* Left side icons - Scrollable on mobile if needed */}
+                <Box sx={{
+                    display: 'flex',
+                    gap: { xs: '8px', sm: '12px' },
+                    alignItems: 'center',
+                    flexShrink: 0
+                }}>
+                    <Box sx={{
+                        width: { xs: '24px', sm: '27px' },
+                        height: { xs: '20px', sm: '23px' },
+                        bgcolor: darkMode ? '#333' : '#eee',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer'
+                    }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="4" y1="7" x2="20" y2="7"></line>
                             <line x1="8" y1="12" x2="16" y2="12"></line>
                             <line x1="11" y1="17" x2="13" y2="17"></line>
@@ -243,18 +263,19 @@ const PartTime = ({ darkMode, onBack }) => {
                     <Box
                         onClick={() => setShowOnlyFavorites(prev => !prev)}
                         sx={{
-                            width: '38px',
-                            height: '38px',
+                            width: { xs: '32px', sm: '38px' },
+                            height: { xs: '32px', sm: '38px' },
                             bgcolor: showOnlyFavorites ? (darkMode ? '#fff' : '#000') : (darkMode ? '#333' : '#eee'),
                             borderRadius: '50%',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
-                            transition: 'all 0.2s'
+                            transition: 'all 0.2s',
+                            flexShrink: 0
                         }}
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24"
+                        <svg width="16" height="16" viewBox="0 0 24 24"
                             fill={showOnlyFavorites ? (darkMode ? '#000' : '#fff') : "none"}
                             stroke={showOnlyFavorites ? (darkMode ? '#000' : '#fff') : (darkMode ? "#fff" : "#333")}
                             strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
@@ -262,27 +283,48 @@ const PartTime = ({ darkMode, onBack }) => {
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
                     </Box>
-                    <Box sx={{ bgcolor: darkMode ? '#333' : '#eee', px: '24px', height: '40px', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                        <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#fff' : '#333', fontFamily: 'Poppins' }}>All</Typography>
+                    <Box sx={{
+                        bgcolor: darkMode ? '#333' : '#eee',
+                        px: { xs: '16px', sm: '24px' },
+                        height: { xs: '32px', sm: '40px' },
+                        borderRadius: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        flexShrink: 0
+                    }}>
+                        <Typography sx={{ fontSize: { xs: '12px', sm: '14px' }, fontWeight: 600, color: darkMode ? '#fff' : '#333', fontFamily: 'Poppins' }}>All</Typography>
                     </Box>
                 </Box>
 
-                {/* Right side filter buttons */}
-                <Box sx={{ display: 'flex', gap: '10px', overflowX: 'auto', '&::-webkit-scrollbar': { display: 'none' } }}>
+                {/* Right side filter buttons - Scrollable */}
+                <Box sx={{
+                    display: 'flex',
+                    gap: '8px',
+                    overflowX: 'auto',
+                    flex: 1,
+                    justifyContent: { xs: 'flex-start', sm: 'flex-end' },
+                    ml: '10px',
+                    '&::-webkit-scrollbar': { display: 'none' },
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none',
+                    WebkitOverflowScrolling: 'touch' // Smooth scroll for iOS
+                }}>
                     {['Easy Apply', 'Remote', 'Job type'].map((filter) => (
                         <Button key={filter} sx={{
                             textTransform: 'none',
                             color: darkMode ? '#fff' : '#000',
                             fontFamily: 'Poppins',
-                            fontSize: '14px',
+                            fontSize: { xs: '11px', sm: '13px' },
                             fontWeight: 600,
-                            border: '1.5px solid #eee',
+                            border: '1px solid #eee',
                             borderRadius: '25px',
-                            px: '18px',
-                            height: '38px',
+                            px: { xs: '12px', sm: '18px' },
+                            height: { xs: '30px', sm: '36px' },
+                            flexShrink: 0,
                             whiteSpace: 'nowrap',
-                            bgcolor: 'transparent',
-                            '&:hover': { bgcolor: 'rgba(0,0,0,0.02)' }
+                            '&:hover': { border: '1px solid #ddd' }
                         }}>
                             {filter}
                         </Button>
@@ -323,6 +365,29 @@ const PartTime = ({ darkMode, onBack }) => {
                         />
                     ))}
             </Box>
+
+            {/* Date Filter Popup Overlay */}
+            {showDateFilter && (
+                <Box sx={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    bgcolor: 'rgba(0,0,0,0.4)',
+                    zIndex: 2000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    p: '10px'
+                }}>
+                    <DatePosted
+                        darkMode={darkMode}
+                        onClose={() => setShowDateFilter(false)}
+                        onNext={() => setShowDateFilter(false)}
+                    />
+                </Box>
+            )}
         </Box>
     );
 };
