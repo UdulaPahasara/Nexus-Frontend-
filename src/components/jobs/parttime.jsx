@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import DatePosted from './datePosted';
+import Country from './country';
 
 // Company icons (reusing from jobs assets context)
 import comp1 from '../../assets/jobs/company1.webp';
@@ -147,6 +148,8 @@ const PartTime = ({ darkMode, onBack }) => {
     const [favorites, setFavorites] = useState([]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
     const [showDateFilter, setShowDateFilter] = useState(false);
+    const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState(null);
 
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
@@ -168,31 +171,52 @@ const PartTime = ({ darkMode, onBack }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                px: '30px',
+                px: { xs: '15px', sm: '30px' },
                 pt: '25px',
                 pb: '10px',
             }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                     {/* Flag and dropdown */}
-                    <Box onClick={onBack} sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <Box sx={{
-                            width: '32px',
-                            height: '24px',
-                            bgcolor: '#31764A',
-                            borderRadius: '4px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'relative',
-                            overflow: 'hidden'
-                        }}>
-                            {/* Simple Saudi flag representation */}
-                            <Box sx={{ width: '100%', height: '100%', bgcolor: '#006C35' }} />
-                            <Box sx={{ position: 'absolute', color: '#fff', fontSize: '6px', fontWeight: 700 }}>NEXUS</Box>
+                    <Box sx={{ position: 'relative' }}>
+                        <Box
+                            onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                            sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', p: '4px', borderRadius: '4px', '&:hover': { bgcolor: 'rgba(0,0,0,0.02)' } }}
+                        >
+                            <Box sx={{
+                                width: '32px',
+                                height: '24px',
+                                bgcolor: '#31764A',
+                                borderRadius: '4px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                position: 'relative',
+                                overflow: 'hidden'
+                            }}>
+                                {/* Simple Saudi flag representation or selected country flag */}
+                                {selectedCountry ? (
+                                    <Box component="img" src={selectedCountry.flag} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                ) : (
+                                    <>
+                                        <Box sx={{ width: '100%', height: '100%', bgcolor: '#006C35' }} />
+                                        <Box sx={{ position: 'absolute', color: '#fff', fontSize: '6px', fontWeight: 700 }}>NEXUS</Box>
+                                    </>
+                                )}
+                            </Box>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#333"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showCountryDropdown ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
                         </Box>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#333"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M6 9l6 6 6-6"></path>
-                        </svg>
+
+                        {showCountryDropdown && (
+                            <Country
+                                darkMode={darkMode}
+                                onSelect={(country) => {
+                                    setSelectedCountry(country);
+                                    setShowCountryDropdown(false);
+                                }}
+                            />
+                        )}
                     </Box>
 
                     <Button
