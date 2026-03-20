@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import DatePosted from './datePosted';
 import Country from './country';
+import UpDownArrowBtn from './updowArowbtn';
 
 // Company icons (reusing from jobs assets context)
 import comp1 from '../../../assets/jobs/company1.webp';
@@ -150,6 +151,8 @@ const PartTime = ({ darkMode, onBack }) => {
     const [showDateFilter, setShowDateFilter] = useState(false);
     const [showCountryDropdown, setShowCountryDropdown] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
+    const [showSortPopup, setShowSortPopup] = useState(false);
+    const [selectedSort, setSelectedSort] = useState('recent');
 
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
@@ -237,16 +240,32 @@ const PartTime = ({ darkMode, onBack }) => {
                     </Button>
                 </Box>
 
-                <Box sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        {/* Down Arrow */}
-                        <path d="M6 5v14"></path>
-                        <path d="M3 16l3 3 3-3"></path>
+                <Box sx={{ position: 'relative' }}>
+                    <Box
+                        onClick={() => setShowSortPopup(!showSortPopup)}
+                        sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                    >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={darkMode ? "#fff" : "#000"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            {/* Down Arrow */}
+                            <path d="M6 5v14"></path>
+                            <path d="M3 16l3 3 3-3"></path>
 
-                        {/* Up Arrow */}
-                        <path d="M18 19V5"></path>
-                        <path d="M15 8l3-3 3 3"></path>
-                    </svg>
+                            {/* Up Arrow */}
+                            <path d="M18 19V5"></path>
+                            <path d="M15 8l3-3 3 3"></path>
+                        </svg>
+                    </Box>
+
+                    {showSortPopup && (
+                        <UpDownArrowBtn
+                            darkMode={darkMode}
+                            selectedSort={selectedSort}
+                            onSelect={(sort) => {
+                                setSelectedSort(sort);
+                                setShowSortPopup(false);
+                            }}
+                        />
+                    )}
                 </Box>
             </Box>
 
