@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Typography, InputBase } from '@mui/material';
 
-import france from '../../assets/jobs/county/france.webp';
-import india from '../../assets/jobs/county/india.webp';
-import korea from '../../assets/jobs/county/korea.webp';
+import france from '../../../assets/jobs/county/france.webp';
+import india from '../../../assets/jobs/county/india.webp';
+import korea from '../../../assets/jobs/county/korea.webp';
 
 const Country = ({ darkMode, onSelect }) => {
     const countries = [

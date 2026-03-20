@@ -4,13 +4,13 @@ import DatePosted from './datePosted';
 import Country from './country';
 
 // Company icons (reusing from jobs assets context)
-import comp1 from '../../assets/jobs/company1.webp';
-import comp2 from '../../assets/jobs/company2.webp';
-import comp3 from '../../assets/jobs/company3.webp';
-import comp4 from '../../assets/jobs/company4.webp';
-import comp5 from '../../assets/jobs/company5.webp';
-import comp6 from '../../assets/jobs/company6.webp';
-import comp7 from '../../assets/jobs/company7.webp';
+import comp1 from '../../../assets/jobs/company1.webp';
+import comp2 from '../../../assets/jobs/company2.webp';
+import comp3 from '../../../assets/jobs/company3.webp';
+import comp4 from '../../../assets/jobs/company4.webp';
+import comp5 from '../../../assets/jobs/company5.webp';
+import comp6 from '../../../assets/jobs/company6.webp';
+import comp7 from '../../../assets/jobs/company7.webp';
 
 // Reuse job data structure
 const JOB_DATA = [

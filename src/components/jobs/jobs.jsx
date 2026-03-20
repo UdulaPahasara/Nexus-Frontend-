@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import PartTime from './parttime';
+import PartTime from './partime/parttime';
 
 // Header icons
 import fulltimeIcon from '../../assets/Home/sevice/fulltime.webp';
