@@ -15,6 +15,8 @@ import ManageNetwork from '../../mynetwork/managenetwork';
 import Follow from '../../mynetwork/follow';
 import CatchUp from '../../mynetwork/chatup';
 import Jobs from '../../jobs/jobs';
+import FeaturedJobs from '../../jobs/partime/rightsidebar/featuredjob';
+import TopRecruits from '../../jobs/partime/rightsidebar/toprecruiers';
 
 
 
@@ -208,8 +210,8 @@ const MainHome = () => {
                             width: '372px',
                             flexShrink: 0,
                         }}>
-                            <Feed darkMode={darkMode} />
-                            <Service darkMode={darkMode} />
+                            <FeaturedJobs darkMode={darkMode} />
+                            <TopRecruits darkMode={darkMode} />
                         </Box>
                     </Box>
                 ) : (
