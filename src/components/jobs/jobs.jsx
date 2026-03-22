@@ -174,9 +174,14 @@ const JobCard = ({ job, darkMode }) => (
     </Box>
 );
 
-const Jobs = ({ darkMode }) => {
+const Jobs = ({ darkMode, onViewChange }) => {
     const [activePill, setActivePill] = useState('All');
-    const [view, setView] = useState('main');
+    const [view, setViewState] = useState('main');
+
+    const setView = (newView) => {
+        setViewState(newView);
+        if (onViewChange) onViewChange(newView);
+    };
 
     if (view === 'parttime') {
         return <PartTime darkMode={darkMode} onBack={() => setView('main')} />;

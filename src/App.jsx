@@ -22,6 +22,11 @@ import Service from './components/home/service/service'
 import ChatPopup from './components/home/popups/chatpopup'
 import FilterBar from './components/chat section/chatfilterbar/filterbar'
 import MessageArea from './components/chat section/messagingarea/messageArea'
+import PartTime from './components/jobs/partime/parttime'
+import JobDetail from './components/jobs/partime/jobdetail/jobdetail'
+
+
+
 
 
 function App() {
@@ -60,6 +65,10 @@ function App() {
         <Route path="/chat" element={<Navigate to="/home" replace />} /> {/* Redirecting since it's a popup now, but keeping for reference if needed */}
         <Route path="/filterbar" element={<FilterBar />} />
         <Route path="/messagearea" element={<MessageArea />} />
+        <Route path="/parttime" element={<PartTime />} />
+        <Route path="/job-detail" element={<JobDetail />} />
+
+
 
 
       </Routes>

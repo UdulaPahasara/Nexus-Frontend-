@@ -140,18 +140,18 @@ const RecruiterCard = ({ user, darkMode }) => (
             left: '50%',
             transform: 'translateX(-50%)',
             width: '95px',
-            height: '20px',
-            bgcolor: '#00e676',
-            borderRadius: '4px',
+            height: '24px',
+            bgcolor: '#00EA8E',
+            borderRadius: '100px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0px 2px 4px rgba(0, 230, 118, 0.2)'
+            boxShadow: 'none'
         }}>
             <Typography sx={{
                 fontFamily: 'Poppins',
                 fontWeight: 600,
-                fontSize: '9px',
+                fontSize: '10px',
                 color: '#000'
             }}>
                 + Follow

@@ -26,6 +26,7 @@ const MainHome = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [activeTab, setActiveTab] = useState('Home'); // Start at Home
     const [selectedChat, setSelectedChat] = useState(null);
+    const [jobsView, setJobsView] = useState('main');
 
     const toggleDrawer = (open) => (event) => {
         // ... (lines 15-31 omitted for brevity but they are same)
@@ -201,18 +202,20 @@ const MainHome = () => {
                         justifyContent: 'center',
                         width: '100%',
                     }}>
-                        <Jobs darkMode={darkMode} />
+                        <Jobs darkMode={darkMode} onViewChange={setJobsView} />
                         {/* ── RIGHT: Feed & Service for Jobs view ── */}
-                        <Box sx={{
-                            display: { xs: 'none', lg: 'flex' },
-                            flexDirection: 'column',
-                            gap: '20px',
-                            width: '372px',
-                            flexShrink: 0,
-                        }}>
-                            <FeaturedJobs darkMode={darkMode} />
-                            <TopRecruits darkMode={darkMode} />
-                        </Box>
+                        {jobsView !== 'parttime' && (
+                            <Box sx={{
+                                display: { xs: 'none', lg: 'flex' },
+                                flexDirection: 'column',
+                                gap: '20px',
+                                width: '372px',
+                                flexShrink: 0,
+                            }}>
+                                <FeaturedJobs darkMode={darkMode} />
+                                <TopRecruits darkMode={darkMode} />
+                            </Box>
+                        )}
                     </Box>
                 ) : (
                     <>
