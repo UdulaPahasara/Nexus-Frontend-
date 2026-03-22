@@ -15,8 +15,8 @@ const Country = ({ darkMode, onSelect }) => {
     return (
         <Box sx={{
             position: 'absolute',
-            top: { xs: '35px', sm: '40px' },
-            left: { xs: '-5px', sm: '0' },
+            top: { xs: '35px', sm: '42px' },
+            left: { xs: '-5px', sm: '-20px' },
             width: { xs: '130px', sm: '110px' },
             height: { xs: '120px', sm: '102px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',

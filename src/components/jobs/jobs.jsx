@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import PartTime from './partime/parttime';
 
@@ -174,17 +174,29 @@ const JobCard = ({ job, darkMode }) => (
     </Box>
 );
 
-const Jobs = ({ darkMode, onViewChange }) => {
+const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
     const [activePill, setActivePill] = useState('All');
     const [view, setViewState] = useState('main');
+
+    useEffect(() => {
+        if (forceView) {
+            setViewState(forceView);
+        }
+    }, [forceView]);
 
     const setView = (newView) => {
         setViewState(newView);
         if (onViewChange) onViewChange(newView);
+        // Reset selection if going away from parttime view
+        if (newView !== 'parttime' && onSelectionChange) onSelectionChange(null);
     };
 
     if (view === 'parttime') {
-        return <PartTime darkMode={darkMode} onBack={() => setView('main')} />;
+        return <PartTime
+            darkMode={darkMode}
+            onBack={() => setView('main')}
+            onSelectionChange={onSelectionChange}
+        />;
     }
 
     return (

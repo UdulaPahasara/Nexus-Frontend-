@@ -29,11 +29,17 @@ const MainHome = () => {
     const [jobsView, setJobsView] = useState('main');
 
     const toggleDrawer = (open) => (event) => {
-        // ... (lines 15-31 omitted for brevity but they are same)
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
         setDrawerOpen(open);
+    };
+
+    const handleTabChange = (tab) => {
+        if (tab === 'Jobs') {
+            setJobsView('main');
+        }
+        setActiveTab(tab);
     };
 
     return (
@@ -52,7 +58,7 @@ const MainHome = () => {
                 onToggle={() => setDarkMode(prev => !prev)}
                 onMenuClick={() => setDrawerOpen(true)}
                 activeTab={activeTab === 'forYou' || activeTab === 'news' ? activeTab : 'forYou'}
-                onTabChange={setActiveTab}
+                onTabChange={handleTabChange}
             />
 
             {/* ── BODY: Responsive Container ── */}
@@ -85,7 +91,7 @@ const MainHome = () => {
                     <ProfileSidebar
                         darkMode={darkMode}
                         activeTab={activeTab}
-                        onTabChange={setActiveTab}
+                        onTabChange={handleTabChange}
                     />
                 </Box>
 
@@ -100,7 +106,7 @@ const MainHome = () => {
                         darkMode={darkMode}
                         isMobile
                         activeTab={activeTab}
-                        onTabChange={setActiveTab}
+                        onTabChange={handleTabChange}
                     />
                 </Drawer>
 
@@ -202,20 +208,32 @@ const MainHome = () => {
                         justifyContent: 'center',
                         width: '100%',
                     }}>
-                        <Jobs darkMode={darkMode} onViewChange={setJobsView} />
-                        {/* ── RIGHT: Feed & Service for Jobs view ── */}
-                        {jobsView !== 'parttime' && (
-                            <Box sx={{
-                                display: { xs: 'none', lg: 'flex' },
-                                flexDirection: 'column',
-                                gap: '20px',
-                                width: '372px',
-                                flexShrink: 0,
-                            }}>
-                                <FeaturedJobs darkMode={darkMode} />
-                                <TopRecruits darkMode={darkMode} />
-                            </Box>
-                        )}
+                        <Jobs
+                            darkMode={darkMode}
+                            onViewChange={setJobsView}
+                            forceView={jobsView}
+                        />
+
+                        {/* ── RIGHT: Sidebar for Jobs view ── */}
+                        <Box sx={{
+                            display: { xs: 'none', lg: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: '372px',
+                            flexShrink: 0,
+                        }}>
+                            {jobsView === 'main' ? (
+                                <>
+                                    <Feed darkMode={darkMode} />
+                                    <Service darkMode={darkMode} />
+                                </>
+                            ) : (
+                                <>
+                                    <FeaturedJobs darkMode={darkMode} />
+                                    <TopRecruits darkMode={darkMode} />
+                                </>
+                            )}
+                        </Box>
                     </Box>
                 ) : (
                     <>
