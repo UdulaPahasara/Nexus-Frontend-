@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, IconButton } from '@mui/material';
 import DatePosted from './datePosted';
 import Country from './country';
 import UpDownArrowBtn from './updowArowbtn';
+import JobDetail from './jobdetail/jobdetail';
+import CloseIcon from '@mui/icons-material/Close';
 import saudiFlag from '../../../assets/jobs/county/france.webp'; // Placeholder
 
 
@@ -28,69 +30,86 @@ const JOB_DATA = [
     { id: 8, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp1, type: 'Part-Time', status: 'easy-apply' },
 ];
 
-const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive }) => (
+const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive, isCompact }) => (
     <Box
         onClick={onClick}
         sx={{
             width: '100%',
             cursor: 'pointer',
             display: 'flex',
-            gap: '12px',
-            py: '20px',
-            px: '15px',
+            gap: isCompact ? '8px' : '12px',
+            py: isCompact ? '12px' : '20px',
+            px: isCompact ? '10px' : '15px',
             borderBottom: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f0f0f0',
             position: 'relative',
-            bgcolor: isActive ? (darkMode ? 'rgba(255,255,255,0.05)' : '#fff') : '#fff',
+            bgcolor: isActive ? (darkMode ? 'rgba(0, 234, 142, 0.05)' : '#F5F5F5') : 'transparent',
             transition: 'all 0.2s',
-            '&:hover': { bgcolor: '#f9f9f9' }
+            // The active state in user image seems to have a faint border-left or just a grey background. 
+            // We use '#F5F5F5' here for lightmode which looks slightly grey like in image.
+            borderLeft: isActive ? '3px solid #00EA8E' : '3px solid transparent',
+            '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.02)' : '#fcfcfc' }
         }}>
 
-        {/* Heart Icon (Top Right) */}
+        {/* Heart Icon (Top Right) or Close Icon if active in split view */}
         <Box
-            onClick={(e) => { e.stopPropagation(); onToggleFavorite(job.id); }}
-            sx={{ position: 'absolute', top: '22px', right: '20px', cursor: 'pointer', color: isFavorite ? '#000' : '#888' }}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!isCompact) onToggleFavorite(job.id);
+            }}
+            sx={{ position: 'absolute', top: isCompact ? '12px' : '22px', right: isCompact ? '12px' : '20px', cursor: 'pointer', color: isFavorite && !isCompact ? '#000' : '#888' }}
         >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
+            {isCompact ? (
+                // In compact view, show CloseIcon on INACTIVE cards, nothing on active card.
+                !isActive && <CloseIcon sx={{ fontSize: '16px', color: '#666' }} />
+            ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            )}
         </Box>
 
         <Box
             component="img"
             src={job.icon}
             sx={{
-                width: '64px',
-                height: '64px',
-                borderRadius: '12px',
+                width: isCompact ? '45px' : '64px',
+                height: isCompact ? '45px' : '64px',
+                borderRadius: '8px',
                 objectFit: 'cover',
+                mt: '2px',
                 flexShrink: 0
             }}
         />
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-            {/* Title Row */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '4px' }}>
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0, pr: isCompact ? '20px' : '30px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
                 <Typography sx={{
                     fontFamily: 'Poppins',
                     fontWeight: 600,
-                    fontSize: '18px',
-                    color: '#333',
-                    lineHeight: 1
+                    fontSize: isCompact ? '13px' : '18px',
+                    color: darkMode ? '#fff' : '#333',
+                    lineHeight: 1.2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
                 }}>
                     {job.title}
                 </Typography>
                 <Box sx={{
                     bgcolor: '#8ED2A4',
-                    color: '#004a1e',
-                    px: '8px',
+                    color: '#000',
+                    px: '6px',
                     py: '2px',
                     borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: 700,
+                    fontSize: '9px',
+                    fontWeight: 600,
+                    fontFamily: 'Poppins',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px'
+                    gap: '2px',
+                    flexShrink: 0
                 }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
@@ -98,73 +117,82 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                 </Box>
             </Box>
 
-            {/* Company Info Row */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '4px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'nowrap' }}>
                 <Typography sx={{
                     fontFamily: 'Poppins',
                     fontWeight: 600,
-                    fontSize: '13px',
-                    color: '#333'
+                    fontSize: isCompact ? '10px' : '13px',
+                    color: darkMode ? '#888' : '#333',
+                    lineHeight: 1.2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
                 }}>
                     {job.company}
                 </Typography>
-                <Box sx={{ width: '14px', height: '14px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
+                <Box sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width={isCompact ? "6" : "8"} height={isCompact ? "6" : "8"} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                 </Box>
                 <Typography sx={{
                     fontFamily: 'Poppins',
                     fontWeight: 400,
-                    fontSize: '13px',
-                    color: '#aaa'
+                    fontSize: isCompact ? '10px' : '13px',
+                    color: '#888',
+                    lineHeight: 1.2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
                 }}>
-                    {job.location}
+                    {isCompact ? job.location.split(',')[0] : job.location}
                 </Typography>
             </Box>
 
-            {/* Description Snippet */}
             <Typography sx={{
                 fontFamily: 'Poppins',
                 fontWeight: 400,
-                fontSize: '12px',
+                fontSize: isCompact ? '10px' : '12px',
                 color: '#888',
-                mb: '8px',
-                lineHeight: 1.2
+                mb: isCompact ? '4px' : '8px',
+                lineHeight: 1.2,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
             }}>
-                Lorem ipsum dolor sit amet consectetur ipsum dolor sit amet consectetur ipsum dolor sit
+                Lorem ipsum dolor sit amet consectetur ipsum dolor sit amet
             </Typography>
 
             {/* Footer Row */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <Typography sx={{ fontSize: '11px', color: '#aaa', fontFamily: 'Poppins' }}>{job.time}</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'nowrap' }}>
+                <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins' }}>{job.time}</Typography>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
                     <Box sx={{ color: '#8ED2A4', display: 'flex', alignItems: 'center' }}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <svg width={isCompact ? "10" : "14"} height={isCompact ? "10" : "14"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                         </svg>
                     </Box>
-                    <Typography sx={{ fontSize: '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                    <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
                 </Box>
 
                 {job.status === 'already-applied' && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
                         <Box sx={{
                             bgcolor: '#00EA8E',
                             color: '#fff',
                             borderRadius: '3px',
-                            width: '14px',
-                            height: '14px',
+                            width: isCompact ? '10px' : '14px',
+                            height: isCompact ? '10px' : '14px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                            <svg width={isCompact ? "6" : "10"} height={isCompact ? "6" : "10"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </Box>
-                        <Typography sx={{ fontSize: '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
+                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
                     </Box>
                 )}
             </Box>
@@ -173,7 +201,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
 );
 
 
-const PartTime = ({ darkMode, onBack }) => {
+const PartTime = ({ darkMode, onBack, onSelectionChange }) => {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState([2]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
@@ -184,53 +212,50 @@ const PartTime = ({ darkMode, onBack }) => {
     const [selectedSort, setSelectedSort] = useState('recent');
     const [selectedJobId, setSelectedJobId] = useState(null);
 
-
-
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
     };
 
+    const handleJobSelect = (id) => {
+        const newId = selectedJobId === id ? null : id;
+        setSelectedJobId(newId);
+        if (onSelectionChange) onSelectionChange(newId);
+    };
+
+    const currentJob = JOB_DATA.find(j => j.id === selectedJobId);
+
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
-            width: '706px',
-            minHeight: 'auto',
+            flexDirection: 'row',
+            width: selectedJobId ? '100%' : '706px',
+            maxWidth: selectedJobId ? '1100px' : '706px',
+            gap: selectedJobId ? '20px' : '0px',
             height: 'auto',
-            bgcolor: darkMode ? '#1e1e2e' : '#fff',
-            borderRadius: '15px',
-            boxSizing: 'border-box',
-            overflow: 'hidden',
-            position: 'relative',
-            boxShadow: darkMode
-                ? '0px 4px 20px rgba(0,0,0,0.5)'
-                : '0px 4px 20px rgba(0,0,0,0.05)',
-            border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)'
+            minHeight: '800px', // Allow full height layout to expand correctly
+            alignItems: 'flex-start',
+            transition: 'width 0.3s ease'
         }}>
-            {/* List column only */}
+            {/* List column */}
             <Box sx={{
-                width: '100%',
+                width: selectedJobId ? '400px' : '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 height: 'auto',
-                boxShadow: '0px 4px 20px rgba(0,0,0,0.05)',
-                flexShrink: 0
+                bgcolor: darkMode ? '#1e1e2e' : '#fff',
+                borderRadius: '15px',
+                boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
+                border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
+                overflow: 'hidden',
+                flexShrink: 0,
+                transition: 'width 0.3s ease'
             }}>
                 {/* Master List Header */}
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>
-                    {/* Row 1: Country, Date Posted, Sort */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: '15px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                            {/* Country Trigger */}
-                            <Box
-                                onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                                sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}
-                            >
-                                <Box
-                                    component="img"
-                                    src={selectedCountry?.flag || saudiFlag}
-                                    sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }}
-                                />
+                            <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
+                                <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
@@ -243,28 +268,16 @@ const PartTime = ({ darkMode, onBack }) => {
                                 )}
                             </Box>
 
-                            {/* Date Posted Trigger */}
-                            <Box
-                                onClick={() => setShowDateFilter(!showDateFilter)}
-                                sx={{
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '20px',
-                                    px: '12px',
-                                    py: '4px',
-                                    cursor: 'pointer',
-                                    bgcolor: '#fff'
-                                }}
-                            >
-                                <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
+                            <Box onClick={() => setShowDateFilter(!showDateFilter)} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '15px', py: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
                             </Box>
                         </Box>
 
-                        {/* Sort Trigger */}
                         <Box sx={{ position: 'relative' }}>
-                            <svg
-                                onClick={() => setShowSortPopup(!showSortPopup)}
-                                width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" style={{ cursor: 'pointer' }}
-                            >
+                            <svg onClick={() => setShowSortPopup(!showSortPopup)} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" style={{ cursor: 'pointer' }}>
                                 <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16"></path>
                             </svg>
                             {showSortPopup && (
@@ -278,38 +291,22 @@ const PartTime = ({ darkMode, onBack }) => {
                         </Box>
                     </Box>
 
-                    {/* Row 2: Filter, Heart, All, etc. */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {/* Filter Icon */}
-                            <Box sx={{ width: '32px', height: '32px', borderRadius: '50%', bgcolor: '#efefef', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Box sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer' }}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5">
                                     <path d="M3 6h18M6 12h12M10 18h4"></path>
                                 </svg>
                             </Box>
-
-                            {/* Heart Icon */}
-                            <Box
-                                onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
-                                sx={{
-                                    width: '32px', height: '32px', borderRadius: '50%',
-                                    bgcolor: showOnlyFavorites ? '#efefef' : '#efefef',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    cursor: 'pointer'
-                                }}
-                            >
+                            <Box onClick={() => setShowOnlyFavorites(!showOnlyFavorites)} sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer' }}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill={showOnlyFavorites ? "#000" : "none"} stroke="#000" strokeWidth="2.5">
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
                             </Box>
-
-                            {/* All Pill */}
-                            <Box sx={{ bgcolor: '#efefef', px: '15px', py: '6px', borderRadius: '20px', fontSize: '12px', color: '#000', fontWeight: 600, cursor: 'pointer' }}>
-                                All
-                            </Box>
+                            <Box sx={{ bgcolor: '#efefef', px: '15px', py: '6px', borderRadius: '20px', fontSize: '12px', color: '#000', fontWeight: 600, cursor: 'pointer' }}>All</Box>
                         </Box>
 
-                        <Box sx={{ display: 'flex', gap: '8px' }}>
+                        <Box sx={{ display: selectedJobId ? 'none' : 'flex', gap: '8px' }}>
                             {['Easy Apply', 'Remote', 'Job type'].map(label => (
                                 <Box key={label} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '12px', py: '6px', cursor: 'pointer', bgcolor: '#fff' }}>
                                     <Typography sx={{ fontSize: '12px', fontWeight: 500, color: '#333', fontFamily: 'Poppins' }}>{label}</Typography>
@@ -317,24 +314,22 @@ const PartTime = ({ darkMode, onBack }) => {
                             ))}
                         </Box>
                     </Box>
+
+                    {selectedJobId && (
+                        <Box sx={{ mt: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px' }}>Top job picks for you</Typography>
+                            <Typography sx={{ fontSize: '11px', color: '#888', cursor: 'pointer', fontFamily: 'Poppins' }}>View All</Typography>
+                        </Box>
+                    )}
                 </Box>
 
-                <Typography sx={{
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: '#888',
-                    mt: '10px',
-                    px: '25px'
-                }}>
-                    43 results found
-                </Typography>
+                {!selectedJobId && (
+                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, color: '#888', mt: '10px', px: '25px' }}>
+                        43 results found
+                    </Typography>
+                )}
 
-                {/* Job List Container */}
-                <Box sx={{
-                    px: '15px',
-                    pb: '20px'
-                }}>
+                <Box sx={{ px: '15px', pb: '20px' }}>
                     {JOB_DATA
                         .filter(job => !showOnlyFavorites || favorites.includes(job.id))
                         .map(job => (
@@ -344,33 +339,37 @@ const PartTime = ({ darkMode, onBack }) => {
                                 darkMode={darkMode}
                                 isFavorite={favorites.includes(job.id)}
                                 onToggleFavorite={toggleFavorite}
-                                onClick={() => setSelectedJobId(job.id)}
+                                onClick={() => handleJobSelect(job.id)}
                                 isActive={selectedJobId === job.id}
+                                isCompact={!!selectedJobId}
                             />
                         ))}
                 </Box>
             </Box>
 
-            {/* Date Filter Popup Overlay */}
-            {showDateFilter && (
+            {selectedJobId && (
                 <Box sx={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    bgcolor: 'rgba(0,0,0,0.4)',
-                    zIndex: 2000,
+                    flex: 1,
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    p: '10px'
+                    flexDirection: 'column',
+                    bgcolor: '#fff',
+                    borderRadius: '15px',
+                    boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
+                    border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
+                    overflow: 'hidden',
+                    height: '800px', // Define fixed height so the JobDetail internal scroll works
                 }}>
-                    <DatePosted
+                    <JobDetail
                         darkMode={darkMode}
-                        onClose={() => setShowDateFilter(false)}
-                        onNext={() => setShowDateFilter(false)}
+                        job={currentJob}
+                        onBack={() => handleJobSelect(selectedJobId)}
                     />
+                </Box>
+            )}
+
+            {showDateFilter && (
+                <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.4)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', p: '10px' }}>
+                    <DatePosted darkMode={darkMode} onClose={() => setShowDateFilter(false)} onNext={() => setShowDateFilter(false)} />
                 </Box>
             )}
         </Box>

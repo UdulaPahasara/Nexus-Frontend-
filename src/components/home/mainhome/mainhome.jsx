@@ -27,6 +27,7 @@ const MainHome = () => {
     const [activeTab, setActiveTab] = useState('Home'); // Start at Home
     const [selectedChat, setSelectedChat] = useState(null);
     const [jobsView, setJobsView] = useState('main');
+    const [selectedJobId, setSelectedJobId] = useState(null);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -212,28 +213,30 @@ const MainHome = () => {
                             darkMode={darkMode}
                             onViewChange={setJobsView}
                             forceView={jobsView}
+                            onSelectionChange={setSelectedJobId}
                         />
 
-                        {/* ── RIGHT: Sidebar for Jobs view ── */}
-                        <Box sx={{
-                            display: { xs: 'none', lg: 'flex' },
-                            flexDirection: 'column',
-                            gap: '20px',
-                            width: '372px',
-                            flexShrink: 0,
-                        }}>
-                            {jobsView === 'main' ? (
-                                <>
-                                    <Feed darkMode={darkMode} />
-                                    <Service darkMode={darkMode} />
-                                </>
-                            ) : (
-                                <>
-                                    <FeaturedJobs darkMode={darkMode} />
-                                    <TopRecruits darkMode={darkMode} />
-                                </>
-                            )}
-                        </Box>
+                        {!(jobsView === 'parttime' && selectedJobId) && (
+                            <Box sx={{
+                                display: { xs: 'none', lg: 'flex' },
+                                flexDirection: 'column',
+                                gap: '20px',
+                                width: '372px',
+                                flexShrink: 0,
+                            }}>
+                                {jobsView === 'main' ? (
+                                    <>
+                                        <Feed darkMode={darkMode} />
+                                        <Service darkMode={darkMode} />
+                                    </>
+                                ) : (
+                                    <>
+                                        <FeaturedJobs darkMode={darkMode} />
+                                        <TopRecruits darkMode={darkMode} />
+                                    </>
+                                )}
+                            </Box>
+                        )}
                     </Box>
                 ) : (
                     <>
