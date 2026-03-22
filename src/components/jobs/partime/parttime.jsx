@@ -201,7 +201,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
 );
 
 
-const PartTime = ({ darkMode, onBack, onSelectionChange }) => {
+const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState([2]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
@@ -363,6 +363,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange }) => {
                         darkMode={darkMode}
                         job={currentJob}
                         onBack={() => handleJobSelect(selectedJobId)}
+                        onApply={onApply}
                     />
                 </Box>
             )}

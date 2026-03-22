@@ -155,13 +155,8 @@ const ApplyJob = ({ darkMode }) => {
     return (
         <Box sx={{
             width: '100%',
-            minHeight: '100vh',
-            bgcolor: darkMode ? '#121212' : '#f5f5f5',
             display: 'flex',
             justifyContent: 'center',
-            pt: { xs: '40px', md: '97px' },
-            pb: '50px',
-            px: { xs: '15px', md: '0px' }
         }}>
             {/* Main Layout Container */}
             <Box sx={{

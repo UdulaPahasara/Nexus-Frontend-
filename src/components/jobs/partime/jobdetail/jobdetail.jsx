@@ -15,7 +15,7 @@ import mp6 from '../../../../assets/Home/sevice/chats/messegeprofilepic/mp6.webp
 
 import { useNavigate } from 'react-router-dom';
 
-const JobDetail = ({ darkMode, onBack, job }) => {
+const JobDetail = ({ darkMode, onBack, job, onApply }) => {
     const navigate = useNavigate();
 
     const currentJob = job || {
@@ -145,6 +145,7 @@ const JobDetail = ({ darkMode, onBack, job }) => {
                 <Button
                     fullWidth
                     variant="contained"
+                    onClick={onApply}
                     sx={{
                         bgcolor: '#00EA8E',
                         color: '#000',

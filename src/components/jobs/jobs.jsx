@@ -18,6 +18,7 @@ import comp4 from '../../assets/jobs/company4.webp';
 import comp5 from '../../assets/jobs/company5.webp';
 import comp6 from '../../assets/jobs/company6.webp';
 import comp7 from '../../assets/jobs/company7.webp';
+import ApplyJob from './applyjob/applyjob';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -196,7 +197,12 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
             darkMode={darkMode}
             onBack={() => setView('main')}
             onSelectionChange={onSelectionChange}
+            onApply={() => setView('apply')}
         />;
+    }
+
+    if (view === 'apply') {
+        return <ApplyJob darkMode={darkMode} onBack={() => setView('parttime')} />;
     }
 
     return (
