@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -29,6 +29,19 @@ const CustomPdfIcon = () => (
 
 const CVPopup = ({ isOpen, onClose, onSave }) => {
     const fileInputRef = useRef(null);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+
+    const handleFileUpload = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+            setUploadedFiles(prev => [...prev, ...files]);
+        }
+        e.target.value = null; // reset input
+    };
+
+    const handleRemoveFile = (indexToRemove) => {
+        setUploadedFiles(prev => prev.filter((_, i) => i !== indexToRemove));
+    };
 
     if (!isOpen) return null;
 
@@ -87,7 +100,7 @@ const CVPopup = ({ isOpen, onClose, onSave }) => {
                     <Typography sx={{ fontSize: { xs: '11px', sm: '12px' }, color: '#111', fontWeight: 500, fontFamily: 'Poppins' }}>
                         Upload Your File From Your Device.
                     </Typography>
-                    <input type="file" hidden ref={fileInputRef} accept=".pdf,.doc,.docx" />
+                    <input type="file" hidden ref={fileInputRef} accept=".pdf,.doc,.docx" onChange={handleFileUpload} multiple />
                     <Button
                         onClick={() => fileInputRef.current.click()}
                         sx={{
@@ -101,8 +114,34 @@ const CVPopup = ({ isOpen, onClose, onSave }) => {
                     </Button>
                 </Box>
 
-                {/* Recent Uploaded (Removed Dummy Data) */}
-                <Box sx={{ flex: 1 }} />
+                {/* Recent Uploaded */}
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {uploadedFiles.length > 0 ? (
+                        <>
+                            <Typography sx={{ fontSize: { xs: '13px', sm: '14px' }, fontWeight: 600, color: '#000', fontFamily: 'Poppins', mt: '5px' }}>
+                                Recent Uploaded
+                            </Typography>
+                            <Box sx={{ display: 'flex', gap: '15px', flexWrap: 'wrap', overflowY: 'auto', maxHeight: '120px', pt: '10px', px: '5px' }}>
+                                {uploadedFiles.map((file, idx) => (
+                                    <Box key={idx} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', position: 'relative', width: '65px' }}>
+                                        <IconButton
+                                            onClick={() => handleRemoveFile(idx)}
+                                            sx={{ position: 'absolute', top: '-8px', right: '-8px', bgcolor: '#fff', p: '3px', border: '1px solid #eee', boxShadow: '0 2px 6px rgba(0,0,0,0.15)', '&:hover': { bgcolor: '#ffe6e6' }, zIndex: 10 }}
+                                        >
+                                            <CloseIcon sx={{ fontSize: '12px', color: '#ff4d4d' }} />
+                                        </IconButton>
+                                        <CustomPdfIcon />
+                                        <Typography sx={{ fontSize: '10px', color: '#888', fontFamily: 'Poppins', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                            {file.name}
+                                        </Typography>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </>
+                    ) : (
+                        <Box sx={{ flex: 1 }} />
+                    )}
+                </Box>
 
                 {/* Footer Buttons */}
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column-reverse', sm: 'row' }, justifyContent: 'space-between', gap: { xs: '10px', sm: '15px' }, mt: { xs: '15px', sm: 'auto' } }}>
