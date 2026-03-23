@@ -339,15 +339,43 @@ const ApplyJob = ({ darkMode }) => {
                                 value={formData.startDate}
                                 onChange={handleInputChange('startDate')}
                                 displayEmpty
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            borderRadius: '12px',
+                                            boxShadow: '0px 4px 20px rgba(0,0,0,0.08)',
+                                            mt: '4px',
+                                            '& .MuiList-root': { padding: 0 }
+                                        }
+                                    }
+                                }}
                                 sx={{
                                     bgcolor: '#F5F5F5', borderRadius: '6px', height: '40px',
                                     '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                                     fontFamily: 'Poppins', fontSize: '13px', color: '#333'
                                 }}
                             >
-                                <MenuItem value="" disabled>select one</MenuItem>
-                                <MenuItem value="immediately">Immediately</MenuItem>
-                                <MenuItem value="two_weeks">In 2 weeks</MenuItem>
+                                <MenuItem value="" disabled sx={{ display: 'none' }}>select one</MenuItem>
+                                {[
+                                    'Immediately', 'Within 1 week', 'Within 2 weeks',
+                                    'Within 1 month', 'After 1 month', 'Upon contract notice period'
+                                ].map((option, index, arr) => (
+                                    <MenuItem
+                                        key={option}
+                                        value={option}
+                                        sx={{
+                                            fontFamily: 'Poppins',
+                                            fontSize: '13px',
+                                            color: '#666',
+                                            py: '12px',
+                                            px: '16px',
+                                            borderBottom: index === arr.length - 1 ? 'none' : '1px solid #f0f0f0',
+                                            '&:hover': { bgcolor: '#f9f9f9' }
+                                        }}
+                                    >
+                                        {option}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Box>
                     </Box>
