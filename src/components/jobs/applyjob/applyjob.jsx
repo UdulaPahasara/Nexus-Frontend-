@@ -414,12 +414,35 @@ const ApplyJob = ({ darkMode }) => {
                         </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#F5F5F5', borderRadius: '6px', height: '40px' }}>
                             <Select
-                                value={formData.salaryCurrency}
+                                value={formData.salaryCurrency || 'SAR'}
                                 onChange={handleInputChange('salaryCurrency')}
-                                sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, fontFamily: 'Poppins', fontSize: '12px', color: '#333', minWidth: '80px' }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            borderRadius: '12px',
+                                            boxShadow: '0px 4px 20px rgba(0,0,0,0.08)',
+                                            mt: '4px',
+                                            minWidth: '100px',
+                                            '& .MuiList-root': { padding: 0 }
+                                        }
+                                    }
+                                }}
+                                sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, fontFamily: 'Poppins', fontSize: '13px', color: '#333', minWidth: '80px' }}
                             >
-                                <MenuItem value="SAR">SAR</MenuItem>
-                                <MenuItem value="USD">USD</MenuItem>
+                                {['SAR', 'USD', 'Dinar', 'Pounds'].map((option, index, arr) => (
+                                    <MenuItem
+                                        key={option}
+                                        value={option}
+                                        sx={{
+                                            fontFamily: 'Poppins', fontSize: '13px', color: '#666',
+                                            py: '10px', px: '16px',
+                                            borderBottom: index === arr.length - 1 ? 'none' : '1px solid #f0f0f0',
+                                            '&:hover': { bgcolor: '#f9f9f9' }
+                                        }}
+                                    >
+                                        {option}
+                                    </MenuItem>
+                                ))}
                             </Select>
                             <Box
                                 component="input"
@@ -430,12 +453,34 @@ const ApplyJob = ({ darkMode }) => {
                                 sx={{ flex: 1, border: 'none', outline: 'none', bgcolor: 'transparent', fontFamily: 'Poppins', fontSize: '12px', color: '#111', py: '10px', width: '50px' }}
                             />
                             <Select
-                                value={formData.salaryPeriod}
+                                value={formData.salaryPeriod || 'Monthly'}
                                 onChange={handleInputChange('salaryPeriod')}
-                                sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, fontFamily: 'Poppins', fontSize: '12px', color: '#333', minWidth: { xs: '90px', sm: '100px' } }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            borderRadius: '12px',
+                                            boxShadow: '0px 4px 20px rgba(0,0,0,0.08)',
+                                            mt: '4px',
+                                            '& .MuiList-root': { padding: 0 }
+                                        }
+                                    }
+                                }}
+                                sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, fontFamily: 'Poppins', fontSize: '13px', color: '#333', minWidth: { xs: '90px', sm: '100px' } }}
                             >
-                                <MenuItem value="Monthly">Monthly</MenuItem>
-                                <MenuItem value="Yearly">Yearly</MenuItem>
+                                {['Monthly', 'Yearly'].map((option, index, arr) => (
+                                    <MenuItem
+                                        key={option}
+                                        value={option}
+                                        sx={{
+                                            fontFamily: 'Poppins', fontSize: '13px', color: '#666',
+                                            py: '10px', px: '16px',
+                                            borderBottom: index === arr.length - 1 ? 'none' : '1px solid #f0f0f0',
+                                            '&:hover': { bgcolor: '#f9f9f9' }
+                                        }}
+                                    >
+                                        {option}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Box>
                     </Box>
