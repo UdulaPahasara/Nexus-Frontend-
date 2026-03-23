@@ -299,15 +299,42 @@ const ApplyJob = ({ darkMode }) => {
                                 value={formData.experience}
                                 onChange={handleInputChange('experience')}
                                 displayEmpty
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            borderRadius: '12px',
+                                            boxShadow: '0px 4px 20px rgba(0,0,0,0.08)',
+                                            mt: '4px',
+                                            '& .MuiList-root': { padding: 0 }
+                                        }
+                                    }
+                                }}
                                 sx={{
                                     bgcolor: '#F5F5F5', borderRadius: '6px', height: '40px',
                                     '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                                     fontFamily: 'Poppins', fontSize: '13px', color: '#333'
                                 }}
                             >
-                                <MenuItem value="" disabled>select years</MenuItem>
-                                <MenuItem value={1}>1 Year</MenuItem>
-                                <MenuItem value={2}>2 Years</MenuItem>
+                                <MenuItem value="" disabled sx={{ display: 'none' }}>select years</MenuItem>
+                                {[
+                                    'Less than 1 year', '1-3 years', '3-5 years', '5+ years'
+                                ].map((option, index, arr) => (
+                                    <MenuItem
+                                        key={option}
+                                        value={option}
+                                        sx={{
+                                            fontFamily: 'Poppins',
+                                            fontSize: '13px',
+                                            color: '#666',
+                                            py: '12px',
+                                            px: '16px',
+                                            borderBottom: index === arr.length - 1 ? 'none' : '1px solid #f0f0f0',
+                                            '&:hover': { bgcolor: '#f9f9f9' }
+                                        }}
+                                    >
+                                        {option}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Box>
 
