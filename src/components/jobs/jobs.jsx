@@ -19,6 +19,7 @@ import comp5 from '../../assets/jobs/company5.webp';
 import comp6 from '../../assets/jobs/company6.webp';
 import comp7 from '../../assets/jobs/company7.webp';
 import ApplyJob from './applyjob/applyjob';
+import FullTime from './fulltimejob/fulltime';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -201,6 +202,15 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
         />;
     }
 
+    if (view === 'fulltime') {
+        return <FullTime
+            darkMode={darkMode}
+            onBack={() => setView('main')}
+            onSelectionChange={onSelectionChange}
+            onApply={() => setView('apply')}
+        />;
+    }
+
     if (view === 'apply') {
         return <ApplyJob darkMode={darkMode} onBack={() => setView('parttime')} />;
     }
@@ -241,7 +251,10 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
                 {HEADER_BUTTONS.map((btn) => (
                     <Box
                         key={btn.label}
-                        onClick={() => btn.label === 'PartTime' ? setView('parttime') : null}
+                        onClick={() => {
+                            if (btn.label === 'PartTime') setView('parttime');
+                            if (btn.label === 'Fulltime') setView('fulltime');
+                        }}
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -288,6 +301,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
                         onClick={() => {
                             setActivePill(pill);
                             if (pill === 'Part time') setView('parttime');
+                            if (pill === 'Full time') setView('fulltime');
                         }}
                         sx={{
                             px: '15px',

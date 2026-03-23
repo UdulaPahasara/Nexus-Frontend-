@@ -1,44 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, IconButton } from '@mui/material';
-import DatePosted from './datePosted';
-import Country from './country';
-import UpDownArrowBtn from './updowArowbtn';
-import JobDetail from './jobdetail/jobdetail';
-import CloseIcon from '@mui/icons-material/Close';
-import saudiFlag from '../../../assets/jobs/county/france.webp'; // Placeholder
-import JobCard from '../shared/JobCard';
+import { Box, Typography } from '@mui/material';
 
+// --- Shared Components for Reusability ---
+import DatePosted from '../partime/datePosted';
+import Country from '../partime/country';
+import UpDownArrowBtn from '../partime/updowArowbtn';
+import JobDetail from '../partime/jobdetail/jobdetail'; // Inheriting JobDetail format completely
+import JobCard from '../shared/JobCard'; // The newly extracted generic JobCard component
 
-// Company icons (reusing from jobs assets context)
-import comp1 from '../../../assets/jobs/company1.webp';
-import comp2 from '../../../assets/jobs/company2.webp';
-import comp3 from '../../../assets/jobs/company3.webp';
-import comp4 from '../../../assets/jobs/company4.webp';
-import comp5 from '../../../assets/jobs/company5.webp';
-import comp6 from '../../../assets/jobs/company6.webp';
-import comp7 from '../../../assets/jobs/company7.webp';
+// Company icons matching the exact mockup
+import compCNN from '../../../assets/jobs/company1.webp';
+import compUpside from '../../../assets/jobs/company2.webp';
+import compSpring from '../../../assets/jobs/company3.webp';
+import compEdge from '../../../assets/jobs/company4.webp';
+import compWord from '../../../assets/jobs/company5.webp';
+import compMe from '../../../assets/jobs/company6.webp';
+import compHelp from '../../../assets/jobs/company7.webp';
+import saudiFlag from '../../../assets/jobs/county/france.webp'; // Placeholder flag
 
-// Reuse job data structure
-const JOB_DATA = [
-    { id: 1, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp1, type: 'Part-Time', status: 'already-applied' },
-    { id: 2, title: 'Graphic Designer (Remote)', company: 'CreativEdge', location: 'Colombo, Sri Lanka | Remote', time: '5 hours ago', icon: comp2, type: 'Part-Time', status: 'easy-apply' },
-    { id: 3, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp3, type: 'Part-Time', status: 'easy-apply' },
-    { id: 4, title: 'Junior Frontend Developer', company: 'CreativEdge', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp4, type: 'Part-Time', status: 'already-applied' },
-    { id: 5, title: 'Content Writer', company: 'WordNest', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp5, type: 'Part-Time', status: 'easy-apply' },
-    { id: 6, title: 'Customer Support Agent', company: 'BrandNova', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp6, type: 'Part-Time', status: 'easy-apply' },
-    { id: 7, title: 'Video Editor', company: 'HelpConnect Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp7, type: 'Part-Time', status: 'already-applied' },
-    { id: 8, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp1, type: 'Part-Time', status: 'easy-apply' },
+/**
+ * FULL-TIME JOBS DATA
+ * 
+ * Pre-configured list of jobs matching the user's uploaded layout mockups.
+ */
+const FULLTIME_JOB_DATA = [
+    { id: 1, title: 'UI/UX Designer (Full-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compCNN, type: 'Full-Time', status: 'already-applied' },
+    { id: 2, title: 'Graphic Designer (Remote)', company: 'CreativEdge', location: 'Colombo, Sri Lanka | Remote', time: '5 hours ago', icon: compUpside, type: 'Full-Time', status: 'easy-apply' },
+    { id: 3, title: 'UI/UX Designer (Full-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compSpring, type: 'Full-Time', status: 'already-applied' },
+    { id: 4, title: 'Junior Frontend Developer', company: 'CreativEdge', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compEdge, type: 'Full-Time', status: 'already-applied' },
+    { id: 5, title: 'Content Writer', company: 'WordNest', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compWord, type: 'Full-Time', status: 'already-applied' },
+    { id: 6, title: 'Customer Support Agent', company: 'BrandNova', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compMe, type: 'Full-Time', status: 'already-applied' },
+    { id: 7, title: 'Video Editor', company: 'HelpConnect Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compHelp, type: 'Full-Time', status: 'already-applied' },
+    { id: 8, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: compCNN, type: 'Part-Time', status: 'already-applied' },
 ];
-const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
+
+/**
+ * FullTime Component
+ * 
+ * Exposes the fully-fleshed out Full-Time Jobs tab layout. 
+ * Responsively matches the part-time equivalent with independent data and state context.
+ */
+const FullTime = ({ darkMode, onApply }) => {
     const navigate = useNavigate();
-    const [favorites, setFavorites] = useState([2]);
+
+    // --- Local State Handling ---
+    const [favorites, setFavorites] = useState([2]); // Default filled heart mockup state
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+
+    // Filter Popups State
     const [showDateFilter, setShowDateFilter] = useState(false);
     const [showCountryDropdown, setShowCountryDropdown] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [showSortPopup, setShowSortPopup] = useState(false);
     const [selectedSort, setSelectedSort] = useState('recent');
+
+    // Detail View Activation State
     const [selectedJobId, setSelectedJobId] = useState(null);
 
     const toggleFavorite = (id) => {
@@ -46,12 +63,10 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
     };
 
     const handleJobSelect = (id) => {
-        const newId = selectedJobId === id ? null : id;
-        setSelectedJobId(newId);
-        if (onSelectionChange) onSelectionChange(newId);
+        setSelectedJobId(selectedJobId === id ? null : id);
     };
 
-    const currentJob = JOB_DATA.find(j => j.id === selectedJobId);
+    const currentJob = FULLTIME_JOB_DATA.find(j => j.id === selectedJobId);
 
     return (
         <Box sx={{
@@ -61,11 +76,11 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
             maxWidth: { xs: '100%', md: selectedJobId ? '1100px' : '706px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
-            minHeight: '800px', // Allow full height layout to expand correctly
+            minHeight: '800px',
             alignItems: 'flex-start',
             transition: 'width 0.3s ease'
         }}>
-            {/* List column */}
+            {/* --- LEFT (OR FULL-WIDTH) JOBS LIST COLUMN --- */}
             <Box sx={{
                 width: { xs: '100%', md: selectedJobId ? '400px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
@@ -79,8 +94,10 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                 flexShrink: 0,
                 transition: 'width 0.3s ease'
             }}>
-                {/* Master List Header */}
+                {/* Headers & Complex Context Filters */}
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>
+
+                    {/* Upper Action Bar: Country & Core Sorting */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: '15px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                             <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
@@ -89,11 +106,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
                                 {showCountryDropdown && (
-                                    <Country
-                                        darkMode={darkMode}
-                                        onClose={() => setShowCountryDropdown(false)}
-                                        onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }}
-                                    />
+                                    <Country darkMode={darkMode} onClose={() => setShowCountryDropdown(false)} onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }} />
                                 )}
                             </Box>
 
@@ -110,16 +123,12 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                                 <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16"></path>
                             </svg>
                             {showSortPopup && (
-                                <UpDownArrowBtn
-                                    darkMode={darkMode}
-                                    onClose={() => setShowSortPopup(false)}
-                                    onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }}
-                                    selectedSort={selectedSort}
-                                />
+                                <UpDownArrowBtn darkMode={darkMode} onClose={() => setShowSortPopup(false)} onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }} selectedSort={selectedSort} />
                             )}
                         </Box>
                     </Box>
 
+                    {/* Highly Responsive Advanced Options Filter Row */}
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -154,35 +163,36 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                     {selectedJobId && (
                         <Box sx={{ mt: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px' }}>Top job picks for you</Typography>
-                            <Typography sx={{ fontSize: '11px', color: '#888', cursor: 'pointer', fontFamily: 'Poppins' }}>View All</Typography>
+                        </Box>
+                    )}
+                    {!selectedJobId && (
+                        <Box sx={{ mt: '20px', display: 'flex' }}>
+                            <Typography sx={{ fontSize: '12px', fontWeight: 500, color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>
+                                43 results found
+                            </Typography>
                         </Box>
                     )}
                 </Box>
 
-                {!selectedJobId && (
-                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, color: '#888', mt: '10px', px: '25px' }}>
-                        43 results found
-                    </Typography>
-                )}
-
-                <Box sx={{ px: '15px', pb: '20px' }}>
-                    {JOB_DATA
-                        .filter(job => !showOnlyFavorites || favorites.includes(job.id))
-                        .map(job => (
-                            <JobCard
-                                key={job.id}
-                                job={job}
-                                darkMode={darkMode}
-                                isFavorite={favorites.includes(job.id)}
-                                onToggleFavorite={toggleFavorite}
-                                onClick={() => handleJobSelect(job.id)}
-                                isActive={selectedJobId === job.id}
-                                isCompact={!!selectedJobId}
-                            />
-                        ))}
+                {/* Job Cards Mapping Loop */}
+                <Box sx={{ flex: 1, overflowY: 'auto', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
+                    {FULLTIME_JOB_DATA.filter(job => !showOnlyFavorites || favorites.includes(job.id)).map((job) => (
+                        <JobCard
+                            key={job.id}
+                            job={job}
+                            jobType={job.type} // Drives FullTime badge dynamically inside shared JobCard
+                            darkMode={darkMode}
+                            isFavorite={favorites.includes(job.id)}
+                            onToggleFavorite={toggleFavorite}
+                            onClick={() => handleJobSelect(job.id)}
+                            isActive={selectedJobId === job.id}
+                            isCompact={!!selectedJobId}
+                        />
+                    ))}
                 </Box>
             </Box>
 
+            {/* --- JOBDETAIL POP-OUT SPLIT VIEW --- */}
             {selectedJobId && (
                 <Box sx={{
                     flex: 1,
@@ -193,7 +203,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                     boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                     border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                     overflow: 'hidden',
-                    height: '800px', // Define fixed height so the JobDetail internal scroll works
+                    height: '800px', // Ensures JobDetail's internal overflow scrolling handles all constraints
                 }}>
                     <JobDetail
                         darkMode={darkMode}
@@ -204,6 +214,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                 </Box>
             )}
 
+            {/* Full-Screen Date Search Modal Rendering Logic */}
             {showDateFilter && (
                 <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.4)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', p: '10px' }}>
                     <DatePosted darkMode={darkMode} onClose={() => setShowDateFilter(false)} onNext={() => setShowDateFilter(false)} />
@@ -213,4 +224,4 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
     );
 };
 
-export default PartTime;
+export default FullTime;

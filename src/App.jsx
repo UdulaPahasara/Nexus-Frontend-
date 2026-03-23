@@ -25,6 +25,20 @@ import MessageArea from './components/chat section/messagingarea/messageArea'
 import PartTime from './components/jobs/partime/parttime'
 import JobDetail from './components/jobs/partime/jobdetail/jobdetail'
 import ApplyJob from './components/jobs/applyjob/applyjob'
+import ShareJob from './components/jobs/partime/sharejob'
+import JobCard from './components/jobs/shared/JobCard'
+import comp1 from './assets/jobs/company1.webp'
+
+const mockJob = {
+  id: 999,
+  title: 'UI/UX Designer Preview',
+  company: 'Pixel Studio Pvt Ltd',
+  location: 'Colombo, Sri Lanka',
+  time: '3 hours ago',
+  icon: comp1,
+  type: 'Full-Time',
+  status: 'easy-apply'
+};
 
 
 
@@ -69,6 +83,12 @@ function App() {
         <Route path="/parttime" element={<PartTime />} />
         <Route path="/job-detail" element={<JobDetail />} />
         <Route path="/applyjob" element={<ApplyJob />} />
+        <Route path="/sharejob" element={<ShareJob open={true} />} />
+        <Route path="/jobcard" element={
+          <div style={{ maxWidth: '600px', margin: '50px auto' }}>
+            <JobCard job={mockJob} onToggleFavorite={() => { }} onClick={() => { }} />
+          </div>
+        } />
 
 
 
