@@ -163,19 +163,18 @@ const FullTime = ({ darkMode, onApply }) => {
                     {selectedJobId && (
                         <Box sx={{ mt: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px' }}>Top job picks for you</Typography>
-                        </Box>
-                    )}
-                    {!selectedJobId && (
-                        <Box sx={{ mt: '20px', display: 'flex' }}>
-                            <Typography sx={{ fontSize: '12px', fontWeight: 500, color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>
-                                43 results found
-                            </Typography>
+                            <Typography sx={{ fontSize: '11px', color: '#888', cursor: 'pointer', fontFamily: 'Poppins' }}>View All</Typography>
                         </Box>
                     )}
                 </Box>
 
-                {/* Job Cards Mapping Loop */}
-                <Box sx={{ flex: 1, overflowY: 'auto', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
+                {!selectedJobId && (
+                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, color: darkMode ? '#aaa' : '#666', mt: '10px', px: '25px' }}>
+                        43 results found
+                    </Typography>
+                )}
+
+                <Box sx={{ px: '15px', pb: '20px' }}>
                     {FULLTIME_JOB_DATA.filter(job => !showOnlyFavorites || favorites.includes(job.id)).map((job) => (
                         <JobCard
                             key={job.id}
