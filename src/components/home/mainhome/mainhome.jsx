@@ -216,7 +216,7 @@ const MainHome = () => {
                             onSelectionChange={setSelectedJobId}
                         />
 
-                        {!(jobsView === 'parttime' && selectedJobId) && jobsView !== 'apply' && (
+                        {!((jobsView === 'parttime' || jobsView === 'fulltime') && selectedJobId) && jobsView !== 'apply' && (
                             <Box sx={{
                                 display: { xs: 'none', lg: 'flex' },
                                 flexDirection: 'column',
