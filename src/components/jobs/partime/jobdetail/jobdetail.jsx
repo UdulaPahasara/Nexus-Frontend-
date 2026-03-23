@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -14,9 +14,11 @@ import mp5 from '../../../../assets/Home/sevice/chats/messegeprofilepic/mp5.webp
 import mp6 from '../../../../assets/Home/sevice/chats/messegeprofilepic/mp6.webp';
 
 import { useNavigate } from 'react-router-dom';
+import ShareJob from '../sharejob';
 
 const JobDetail = ({ darkMode, onBack, job, onApply }) => {
     const navigate = useNavigate();
+    const [shareAnchorEl, setShareAnchorEl] = useState(null);
 
     const currentJob = job || {
         id: 1,
@@ -64,10 +66,17 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                         Jobs / Part time
                     </Typography>
                 </Box>
-                <Box sx={{ color: darkMode ? '#fff' : '#000', cursor: 'pointer' }}>
+                <Box onClick={(e) => setShareAnchorEl(e.currentTarget)} sx={{ color: darkMode ? '#fff' : '#000', cursor: 'pointer' }}>
                     <MoreHorizIcon sx={{ fontSize: '20px' }} />
                 </Box>
             </Box>
+
+            <ShareJob
+                anchorEl={shareAnchorEl}
+                open={Boolean(shareAnchorEl)}
+                onClose={() => setShareAnchorEl(null)}
+                darkMode={darkMode}
+            />
 
             <Box sx={{ flex: 1, overflowY: 'auto', p: '20px', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
                 {/* --- COMPANY BRANDING --- */}
@@ -234,14 +243,14 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                         gap: '10px'
                     }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                            <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Job Posted by</Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', border: '1px dashed #0077B5', p: '2px 6px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                            <Typography sx={{ fontSize: '11px', color: 'rgba(0, 0, 0, 1)', fontWeight: 400, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Job Posted by</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', p: '2px 6px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
                                 <Box component="img" src={mp5} sx={{ width: '20px', height: '20px', borderRadius: '50%' }} />
-                                <Typography sx={{ fontSize: '11px', color: '#0077B5', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Anuradha Perera</Typography>
+                                <Typography sx={{ fontSize: '11px', fontWeight: 500, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Anuradha Perera</Typography>
                             </Box>
                         </Box>
                         <Button sx={{
-                            textTransform: 'none', color: '#666', fontSize: '11px', fontWeight: 600,
+                            textTransform: 'none', color: 'rgba(0, 0, 0, 1)', fontSize: '11px', fontWeight: 400,
                             bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8',
                             borderRadius: '8px', px: '12px', fontFamily: 'Poppins', whiteSpace: 'nowrap',
                             width: { xs: '100%', sm: 'auto' }
