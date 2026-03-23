@@ -101,7 +101,7 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                 </Box>
 
                 {/* --- TITLE & SAVE ROW --- */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '15px' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '8px', sm: '12px' }, mb: '15px', flexWrap: 'wrap' }}>
                     <Button
                         variant="contained"
                         startIcon={<BookmarkBorderIcon sx={{ fontSize: '16px !important' }} />}
@@ -116,15 +116,33 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                             py: '4px',
                             boxShadow: 'none',
                             fontFamily: 'Poppins',
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
+                            order: 1,
                             '&:hover': { bgcolor: '#ddd', boxShadow: 'none' }
                         }}
                     >
                         SAVE JOB
                     </Button>
-                    <Typography sx={{ fontSize: '15px', fontWeight: 600, color: darkMode ? '#fff' : '#000', fontFamily: 'Poppins' }}>
+                    <Typography sx={{
+                        fontSize: { xs: '16px', sm: '15px' },
+                        fontWeight: 600,
+                        color: darkMode ? '#fff' : '#000',
+                        fontFamily: 'Poppins',
+                        flex: { xs: '1 1 100%', sm: 1 },
+                        order: { xs: 3, sm: 2 }
+                    }}>
                         {currentJob.title}
                     </Typography>
-                    <Typography sx={{ fontSize: '12px', color: '#aaa', fontFamily: 'Poppins' }}>
+                    <Typography sx={{
+                        fontSize: '12px',
+                        color: '#aaa',
+                        fontFamily: 'Poppins',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        order: { xs: 2, sm: 3 },
+                        marginLeft: { xs: 'auto', sm: 0 }
+                    }}>
                         {currentJob.time}
                     </Typography>
                 </Box>
@@ -205,15 +223,29 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                         Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna hendrerit mauris id. Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
                     </Typography>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', bgcolor: darkMode ? 'rgba(255,255,255,0.02)' : '#F9F9F9', p: '10px 15px', borderRadius: '12px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 600, fontFamily: 'Poppins' }}>Job Posted by</Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', border: '1px dashed #0077B5', p: '2px 6px', borderRadius: '4px' }}>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        bgcolor: darkMode ? 'rgba(255,255,255,0.02)' : '#F9F9F9',
+                        p: '10px 15px',
+                        borderRadius: '12px',
+                        flexWrap: 'wrap',
+                        gap: '10px'
+                    }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Job Posted by</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', border: '1px dashed #0077B5', p: '2px 6px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
                                 <Box component="img" src={mp5} sx={{ width: '20px', height: '20px', borderRadius: '50%' }} />
-                                <Typography sx={{ fontSize: '11px', color: '#0077B5', fontWeight: 600, fontFamily: 'Poppins' }}>Anuradha Perera</Typography>
+                                <Typography sx={{ fontSize: '11px', color: '#0077B5', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Anuradha Perera</Typography>
                             </Box>
                         </Box>
-                        <Button sx={{ textTransform: 'none', color: '#666', fontSize: '11px', fontWeight: 600, bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8', borderRadius: '8px', px: '12px', fontFamily: 'Poppins' }}>
+                        <Button sx={{
+                            textTransform: 'none', color: '#666', fontSize: '11px', fontWeight: 600,
+                            bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8',
+                            borderRadius: '8px', px: '12px', fontFamily: 'Poppins', whiteSpace: 'nowrap',
+                            width: { xs: '100%', sm: 'auto' }
+                        }}>
                             View company profile
                         </Button>
                     </Box>

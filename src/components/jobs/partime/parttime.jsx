@@ -228,9 +228,9 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
         <Box sx={{
             display: 'flex',
             flexDirection: 'row',
-            width: selectedJobId ? '100%' : '706px',
-            maxWidth: selectedJobId ? '1100px' : '706px',
-            gap: selectedJobId ? '20px' : '0px',
+            width: '100%',
+            maxWidth: { xs: '100%', md: selectedJobId ? '1100px' : '706px' },
+            gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px', // Allow full height layout to expand correctly
             alignItems: 'flex-start',
@@ -238,8 +238,8 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
         }}>
             {/* List column */}
             <Box sx={{
-                width: selectedJobId ? '400px' : '100%',
-                display: 'flex',
+                width: { xs: '100%', md: selectedJobId ? '400px' : '100%' },
+                display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
                 bgcolor: darkMode ? '#1e1e2e' : '#fff',
@@ -291,28 +291,35 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
                         </Box>
                     </Box>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Box sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer' }}>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5">
-                                    <path d="M3 6h18M6 12h12M10 18h4"></path>
-                                </svg>
-                            </Box>
-                            <Box onClick={() => setShowOnlyFavorites(!showOnlyFavorites)} sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer' }}>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill={showOnlyFavorites ? "#000" : "none"} stroke="#000" strokeWidth="2.5">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                </svg>
-                            </Box>
-                            <Box sx={{ bgcolor: '#efefef', px: '15px', py: '6px', borderRadius: '20px', fontSize: '12px', color: '#000', fontWeight: 600, cursor: 'pointer' }}>All</Box>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        overflowX: 'auto',
+                        width: '100%',
+                        pb: '5px',
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        scrollbarWidth: 'none'
+                    }}>
+                        <Box sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5">
+                                <path d="M3 6h18M6 12h12M10 18h4"></path>
+                            </svg>
+                        </Box>
+                        <Box onClick={() => setShowOnlyFavorites(!showOnlyFavorites)} sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill={showOnlyFavorites ? "#000" : "none"} stroke="#000" strokeWidth="2.5">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </Box>
+                        <Box sx={{ bgcolor: '#efefef', px: '15px', py: '6px', borderRadius: '20px', fontSize: '13px', color: '#000', fontWeight: 600, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                            All
                         </Box>
 
-                        <Box sx={{ display: selectedJobId ? 'none' : 'flex', gap: '8px' }}>
-                            {['Easy Apply', 'Remote', 'Job type'].map(label => (
-                                <Box key={label} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '12px', py: '6px', cursor: 'pointer', bgcolor: '#fff' }}>
-                                    <Typography sx={{ fontSize: '12px', fontWeight: 500, color: '#333', fontFamily: 'Poppins' }}>{label}</Typography>
-                                </Box>
-                            ))}
-                        </Box>
+                        {['Easy Apply', 'Remote', 'Job type'].map(label => (
+                            <Box key={label} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '12px', py: '6px', cursor: 'pointer', bgcolor: '#fff', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                                <Typography sx={{ fontSize: '13px', fontWeight: 500, color: '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{label}</Typography>
+                            </Box>
+                        ))}
                     </Box>
 
                     {selectedJobId && (
@@ -350,7 +357,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
             {selectedJobId && (
                 <Box sx={{
                     flex: 1,
-                    display: 'flex',
+                    display: { xs: 'flex', md: 'flex' },
                     flexDirection: 'column',
                     bgcolor: '#fff',
                     borderRadius: '15px',
