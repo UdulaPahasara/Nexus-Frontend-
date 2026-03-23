@@ -3,6 +3,8 @@ import { Box, Typography, Switch, Select, MenuItem, RadioGroup, FormControlLabel
 import DoneIcon from '@mui/icons-material/Done';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CVPopup from './popup/cvpopup';
+import ChooseLetterPopup from './popup/chooseletter';
 
 // Assets
 import companyLogo from '../../../assets/jobs/company1.webp';
@@ -44,7 +46,7 @@ const CustomField = ({ label, value, onChange, type = "text" }) => (
     </Box>
 );
 
-const FileUploadField = ({ label, file, onFileSelect, onRemoveFile, buttonText, noteText, showDefaultSwitch, defaultSwitchValue, onSwitchChange }) => {
+const FileUploadField = ({ label, file, onFileSelect, onRemoveFile, buttonText, noteText, showDefaultSwitch, defaultSwitchValue, onSwitchChange, onClickButton }) => {
     const fileInputRef = useRef(null);
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', mt: '10px' }}>
@@ -88,7 +90,7 @@ const FileUploadField = ({ label, file, onFileSelect, onRemoveFile, buttonText, 
                     accept=".pdf,.doc,.docx,.rtf,.txt"
                 />
                 <Box
-                    onClick={() => fileInputRef.current.click()}
+                    onClick={onClickButton || (() => fileInputRef.current?.click())}
                     sx={{
                         border: '1px solid #00EA8E', borderRadius: '20px',
                         px: '12px', py: '4px', cursor: 'pointer',
@@ -143,6 +145,8 @@ const ApplyJob = ({ darkMode }) => {
     const [alertsEnabled, setAlertsEnabled] = useState(true);
     const [useDefaultCover, setUseDefaultCover] = useState(false);
     const [termsAgreed, setTermsAgreed] = useState(false);
+    const [isCvPopupOpen, setIsCvPopupOpen] = useState(false);
+    const [isLetterPopupOpen, setIsLetterPopupOpen] = useState(false);
 
     // File States
     const [resumeFile, setResumeFile] = useState(null);
@@ -254,6 +258,7 @@ const ApplyJob = ({ darkMode }) => {
                         file={resumeFile}
                         onFileSelect={(e) => { if (e.target.files[0]) setResumeFile(e.target.files[0]) }}
                         onRemoveFile={() => setResumeFile(null)}
+                        onClickButton={() => setIsCvPopupOpen(true)}
                         buttonText="Choose Resume"
                         noteText="your cv/resume should be under 2mb and should be a pdf, doc, docx, rtf or a txt file."
                     />
@@ -269,6 +274,7 @@ const ApplyJob = ({ darkMode }) => {
                         file={coverFile}
                         onFileSelect={(e) => { if (e.target.files[0]) setCoverFile(e.target.files[0]) }}
                         onRemoveFile={() => setCoverFile(null)}
+                        onClickButton={() => setIsLetterPopupOpen(true)}
                         buttonText="Choose Cover letter"
                         noteText="your cv/resume should be under 2mb and should be a pdf, doc, docx, rtf or a txt file."
                         showDefaultSwitch={true}
@@ -433,6 +439,18 @@ const ApplyJob = ({ darkMode }) => {
                     </Box>
                 </Box>
             </Box>
+
+            {/* Popups */}
+            <CVPopup
+                isOpen={isCvPopupOpen}
+                onClose={() => setIsCvPopupOpen(false)}
+                onSave={() => setResumeFile({ name: 'selected_cv_from_popup.pdf' })}
+            />
+            <ChooseLetterPopup
+                isOpen={isLetterPopupOpen}
+                onClose={() => setIsLetterPopupOpen(false)}
+                onSave={() => setCoverFile({ name: 'selected_cover_letter.pdf' })}
+            />
         </Box>
     );
 };
