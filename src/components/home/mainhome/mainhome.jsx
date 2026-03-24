@@ -222,7 +222,7 @@ const MainHome = () => {
                             selectedJobId={selectedJobId}
                         />
 
-                        {!((jobsView === 'parttime' || jobsView === 'fulltime') && selectedJobId) && jobsView !== 'apply' && (
+                        {!((jobsView === 'parttime' || jobsView === 'fulltime' || jobsView === 'freelance') && selectedJobId) && jobsView !== 'apply' && (
                             <Box sx={{
                                 display: { xs: 'none', lg: 'flex' },
                                 flexDirection: 'column',

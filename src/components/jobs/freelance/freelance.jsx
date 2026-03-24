@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import DatePosted from '../partime/datePosted';
 import Country from '../partime/country';
 import UpDownArrowBtn from '../partime/updowArowbtn';
-import JobDetail from '../partime/jobdetail/jobdetail';
+import FreelanceJobDetail from './freelancejobdetail';
 import FreelanceJobCard from '../shared/FreelanceJobCard';
 
 // Company icons
@@ -218,11 +218,10 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                     overflow: 'hidden',
                     height: '800px',
                 }}>
-                    <JobDetail
+                    <FreelanceJobDetail
                         darkMode={darkMode}
                         job={currentJob}
                         onBack={() => handleJobSelect(selectedJobId)}
-                        onApply={onApply}
                     />
                 </Box>
             )}

@@ -2,21 +2,6 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import easyApplyIcon from '../../../assets/login/login.webp';
 
-/**
- * FreelanceJobCard
- *
- * A dedicated card layout for Freelance jobs, matching the Figma design precisely.
- *
- * Layout:
- *  ┌──────┬────────────────────────────────────────┬──────────────┬───┐
- *  │ Logo │ Company Name ✓                         │ [Freelance ✱]│ ♡ │
- *  │      │ Lorem ipsum description...             │              │   │
- *  │      │ ⭐⭐⭐⭐⭐ 20k+ · 📍 Location · Onsite ·italic Ongoing│   │
- *  ├──────┴──────────────────────────────────────────────────────┴───┤
- *  │  Project Title (bold)                     Budget LKR 550,000    │
- *  │  2 hours ago · 👤 Person works here · [logo] Easy Apply         │
- *  └─────────────────────────────────────────────────────────────────┘
- */
 const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive, isCompact }) => {
     const rating = job.rating ?? 4;
     const ratingCount = job.ratingCount ?? '20k+';
@@ -77,7 +62,7 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
 
                         {/* Right side: Freelance pill + heart */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                            {/* Freelance Pill — bright green per Figma */}
+
                             <Box sx={{
                                 bgcolor: '#00EA8E',
                                 color: '#000',
@@ -115,32 +100,33 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
                         Lorem ipsum dolor sit amet consectetur ipsum kdfke ipsum dolor sit amet consectetur ipsum kdfke
                     </Typography>
 
-                    {/* Stars + Location + Work mode */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap', overflow: 'hidden' }}>
-                        {/* Stars */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1px', flexShrink: 0 }}>
-                            {[1, 2, 3, 4, 5].map(star => (
-                                <svg key={star} width={isCompact ? '9' : '11'} height={isCompact ? '9' : '11'} viewBox="0 0 24 24" fill={star <= rating ? '#F59E0B' : 'none'} stroke="#F59E0B" strokeWidth="2">
-                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            ))}
-                            <Typography sx={{ fontSize: isCompact ? '9px' : '10px', color: '#888', fontFamily: 'Poppins', ml: '2px', flexShrink: 0 }}>
-                                {ratingCount}
-                            </Typography>
-                        </Box>
-
-                        <Typography sx={{ color: '#ccc', fontSize: '10px' }}>·</Typography>
-
-                        {/* Location + work mode */}
+                    {/* Location + Work mode */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden' }}>
+                        <svg width={isCompact ? '10' : '12'} height={isCompact ? '10' : '12'} viewBox="0 0 24 24" fill="none" stroke={darkMode ? '#aaa' : '#777'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
                         <Typography sx={{
                             fontSize: isCompact ? '9px' : '11px', color: darkMode ? '#aaa' : '#777',
                             fontFamily: 'Poppins', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
                         }}>
-                            📍 {job.location}&nbsp;
+                            {job.location}&nbsp;
                             <Box component="span" sx={{ fontStyle: 'italic', fontWeight: 600 }}>Ongoing</Box>
                         </Typography>
                     </Box>
                 </Box>
+            </Box>
+
+            {/* ── STAR RATING ROW — below logo+content block ── */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '2px', mt: '6px' }}>
+                {[1, 2, 3, 4, 5].map(star => (
+                    <svg key={star} width={isCompact ? '11' : '14'} height={isCompact ? '11' : '14'} viewBox="0 0 24 24" fill={star <= rating ? (darkMode ? '#fff' : '#111') : 'none'} stroke={star <= rating ? (darkMode ? '#fff' : '#111') : '#D1D5DB'} strokeWidth="2">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                ))}
+                <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: darkMode ? '#aaa' : '#555', fontFamily: 'Poppins', ml: '4px' }}>
+                    {ratingCount}
+                </Typography>
             </Box>
 
             {/* ── BOTTOM SECTION: Project Title + Budget ── */}
