@@ -167,8 +167,8 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                 </Typography>
 
                 {/* Footer Metrics (Time & Tags) */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'nowrap' }}>
-                    <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins' }}>{job.time}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'wrap' }}>
+                    <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
                         <Box sx={{ color: '#8ED2A4', display: 'flex', alignItems: 'center' }}>
