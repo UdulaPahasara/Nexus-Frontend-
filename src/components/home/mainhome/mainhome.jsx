@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Drawer } from '@mui/material';
 import SearchBar from '../searchbar/searchbar';
 import ProfileSidebar from '../proffun/profile';
@@ -28,6 +28,11 @@ const MainHome = () => {
     const [selectedChat, setSelectedChat] = useState(null);
     const [jobsView, setJobsView] = useState('main');
     const [selectedJobId, setSelectedJobId] = useState(null);
+
+    // Scroll to top whenever the user switches an internal "tab" or "view"
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, [activeTab, jobsView, selectedJobId, selectedChat]);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

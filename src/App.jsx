@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import './App.css'
 import Login from './components/login/login'
 import Individuals from './components/signup/individual/inviduals'
@@ -28,6 +28,7 @@ import ApplyJob from './components/jobs/applyjob/applyjob'
 import ShareJob from './components/jobs/partime/sharejob'
 import JobCard from './components/jobs/shared/JobCard'
 import comp1 from './assets/jobs/company1.webp'
+import ScrollToTop from './components/shared/ScrollToTop'
 
 const mockJob = {
   id: 999,
@@ -45,10 +46,12 @@ const mockJob = {
 
 
 function App() {
+  const location = useLocation();
 
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <ScrollToTop />
+      <Routes key={location.key}>
         {/* Default route redirects to login */}
         <Route path="/" element={<Navigate to="/hero" replace />} />
 
@@ -94,8 +97,7 @@ function App() {
 
 
       </Routes>
-
-    </BrowserRouter>
+    </>
   )
 }
 
