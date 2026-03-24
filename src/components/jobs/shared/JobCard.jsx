@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import easyApplyIcon from '../../../assets/login/login.webp';
 
 /**
  * JobCard Component
@@ -20,6 +21,15 @@ import CloseIcon from '@mui/icons-material/Close';
 const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive, isCompact, forcedType }) => {
     const jobTypeLabel = forcedType || job.type || 'Part-Time';
     const isFullTime = jobTypeLabel === 'Full-Time';
+    const isFreelance = jobTypeLabel === 'Freelance';
+
+    // Badge styling per type — Freelance uses the same green as Part-Time (per Figma design)
+    const badgeBg = '#8ED2A4';
+    const badgeColor = '#000';
+
+    // Star rating stored in job.rating (1-5), defaults to 4
+    const rating = job.rating ?? 4;
+    const ratingCount = job.ratingCount ?? '20k+';
 
     return (
         <Box
@@ -90,8 +100,8 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
 
                     {/* Dynamic Job Type Badge */}
                     <Box sx={{
-                        bgcolor: '#8ED2A4',
-                        color: '#000',
+                        bgcolor: badgeBg,
+                        color: badgeColor,
                         px: '6px',
                         py: '2px',
                         borderRadius: '12px',
@@ -103,7 +113,11 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         gap: '3px',
                         flexShrink: 0
                     }}>
-                        {isFullTime ? (
+                        {isFreelance ? (
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        ) : isFullTime ? (
                             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -166,39 +180,56 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                     Lorem ipsum dolor sit amet consectetur ipsum dolor sit amet
                 </Typography>
 
-                {/* Footer Metrics (Time & Tags) */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'wrap' }}>
-                    <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
-                        <Box sx={{ color: '#8ED2A4', display: 'flex', alignItems: 'center' }}>
-                            <svg width={isCompact ? "10" : "14"} height={isCompact ? "10" : "14"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                            </svg>
-                        </Box>
-                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
-                    </Box>
-
-                    {job.status === 'already-applied' && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
-                            <Box sx={{
-                                bgcolor: '#00EA8E',
-                                color: '#fff',
-                                borderRadius: '3px',
-                                width: isCompact ? '10px' : '14px',
-                                height: isCompact ? '10px' : '14px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <svg width={isCompact ? "6" : "10"} height={isCompact ? "6" : "10"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
+                {/* Footer Metrics: star rating for Freelance, else standard tags */}
+                {isFreelance ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '6px' : '10px', flexWrap: 'wrap' }}>
+                        {/* Star Rating */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                            {[1, 2, 3, 4, 5].map(star => (
+                                <svg key={star} width={isCompact ? '10' : '13'} height={isCompact ? '10' : '13'} viewBox="0 0 24 24" fill={star <= rating ? '#F59E0B' : 'none'} stroke="#F59E0B" strokeWidth="2">
+                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                 </svg>
-                            </Box>
-                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
+                            ))}
+                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#888', fontFamily: 'Poppins', ml: '4px' }}>{rating}.0 ({ratingCount})</Typography>
                         </Box>
-                    )}
-                </Box>
+                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{job.time}</Typography>
+                        {job.budget && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, ml: 'auto', pr: isCompact ? '20px' : '30px' }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg>
+                                <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Budget LKR {job.budget}</Typography>
+                            </Box>
+                        )}
+                    </Box>
+                ) : (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'wrap' }}>
+                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                            <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', objectFit: 'contain' }} />
+                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                        </Box>
+
+                        {job.status === 'already-applied' && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                                <Box sx={{
+                                    bgcolor: '#00EA8E',
+                                    color: '#fff',
+                                    borderRadius: '3px',
+                                    width: isCompact ? '10px' : '14px',
+                                    height: isCompact ? '10px' : '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <svg width={isCompact ? "6" : "10"} height={isCompact ? "6" : "10"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </Box>
+                                <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
+                            </Box>
+                        )}
+                    </Box>
+                )}
             </Box>
         </Box>
     );
