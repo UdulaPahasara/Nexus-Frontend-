@@ -15,6 +15,7 @@ import mp6 from '../../../../assets/Home/sevice/chats/messegeprofilepic/mp6.webp
 
 import { useNavigate } from 'react-router-dom';
 import ShareJob from '../sharejob';
+import easyApplyIcon from '../../../../assets/login/login.webp';
 
 const JobDetail = ({ darkMode, onBack, job, onApply }) => {
     const navigate = useNavigate();
@@ -170,24 +171,32 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
                 </Box>
 
                 <Button
-                    fullWidth
                     variant="contained"
                     onClick={onApply}
+                    startIcon={currentJob.type === 'Full-Time' ? <Box component="img" src={easyApplyIcon} sx={{ width: '23px', height: '20px' }} /> : null}
                     sx={{
-                        bgcolor: '#00EA8E',
-                        color: '#000',
+                        width: '224px',
+                        height: '30px',
+                        bgcolor: currentJob.type === 'Full-Time' ? '#000' : '#00EA8E',
+                        color: currentJob.type === 'Full-Time' ? '#fff' : '#000',
                         borderRadius: '100px',
                         fontWeight: 700,
                         fontSize: '14px',
                         textTransform: 'none',
-                        py: '10px',
-                        mb: '30px',
+                        p: '7px 37px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        opacity: 1,
                         fontFamily: 'Poppins',
                         boxShadow: 'none',
-                        '&:hover': { bgcolor: '#00d682', boxShadow: 'none' }
+                        mb: '30px',
+                        alignSelf: 'center',
+                        '&:hover': { bgcolor: currentJob.type === 'Full-Time' ? 'rgba(0,0,0,0.8)' : '#00d682', boxShadow: 'none' }
                     }}
                 >
-                    APPLY NOW
+                    {currentJob.type === 'Full-Time' ? 'EASY APPLY' : 'APPLY NOW'}
                 </Button>
 
                 {/* --- ABOUT JOB SECTION --- */}

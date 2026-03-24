@@ -176,7 +176,7 @@ const JobCard = ({ job, darkMode }) => (
     </Box>
 );
 
-const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
+const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJobId }) => {
     const [activePill, setActivePill] = useState('All');
     const [view, setViewState] = useState('main');
 
@@ -199,6 +199,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
             onBack={() => setView('main')}
             onSelectionChange={onSelectionChange}
             onApply={() => setView('apply')}
+            selectedJobId={selectedJobId}
         />;
     }
 
@@ -208,6 +209,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange }) => {
             onBack={() => setView('main')}
             onSelectionChange={onSelectionChange}
             onApply={() => setView('apply')}
+            selectedJobId={selectedJobId}
         />;
     }
 

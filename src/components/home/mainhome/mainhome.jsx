@@ -214,6 +214,7 @@ const MainHome = () => {
                             onViewChange={setJobsView}
                             forceView={jobsView}
                             onSelectionChange={setSelectedJobId}
+                            selectedJobId={selectedJobId}
                         />
 
                         {!((jobsView === 'parttime' || jobsView === 'fulltime') && selectedJobId) && jobsView !== 'apply' && (

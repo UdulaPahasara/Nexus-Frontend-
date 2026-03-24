@@ -41,7 +41,7 @@ const FULLTIME_JOB_DATA = [
  * Exposes the fully-fleshed out Full-Time Jobs tab layout. 
  * Responsively matches the part-time equivalent with independent data and state context.
  */
-const FullTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
+const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId }) => {
     const navigate = useNavigate();
 
     // --- Local State Handling ---
@@ -55,16 +55,12 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
     const [showSortPopup, setShowSortPopup] = useState(false);
     const [selectedSort, setSelectedSort] = useState('recent');
 
-    // Detail View Activation State
-    const [selectedJobId, setSelectedJobId] = useState(null);
-
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
     };
 
     const handleJobSelect = (id) => {
         const newId = selectedJobId === id ? null : id;
-        setSelectedJobId(newId);
         if (onSelectionChange) onSelectionChange(newId);
     };
 

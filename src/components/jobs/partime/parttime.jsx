@@ -30,7 +30,7 @@ const JOB_DATA = [
     { id: 7, title: 'Video Editor', company: 'HelpConnect Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp7, type: 'Part-Time', status: 'already-applied' },
     { id: 8, title: 'UI/UX Designer (Part-Time)', company: 'Pixel Studio Pvt Ltd', location: 'Colombo, Sri Lanka', time: '3 hours ago', icon: comp1, type: 'Part-Time', status: 'easy-apply' },
 ];
-const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
+const PartTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId }) => {
     const navigate = useNavigate();
     const [favorites, setFavorites] = useState([2]);
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
@@ -39,7 +39,6 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [showSortPopup, setShowSortPopup] = useState(false);
     const [selectedSort, setSelectedSort] = useState('recent');
-    const [selectedJobId, setSelectedJobId] = useState(null);
 
     const toggleFavorite = (id) => {
         setFavorites(prev => prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]);
@@ -47,7 +46,6 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply }) => {
 
     const handleJobSelect = (id) => {
         const newId = selectedJobId === id ? null : id;
-        setSelectedJobId(newId);
         if (onSelectionChange) onSelectionChange(newId);
     };
 
