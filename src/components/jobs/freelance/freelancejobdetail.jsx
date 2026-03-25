@@ -13,6 +13,21 @@ import mp6 from '../../../assets/Home/sevice/chats/messegeprofilepic/mp6.webp';
 import easyApplyIcon from '../../../assets/login/login.webp';
 import ShareJob from '../partime/sharejob';
 
+// Tool Icons
+import figmaIcon from '../../../assets/jobs/freelance/figma.webp';
+import xdIcon from '../../../assets/jobs/freelance/xd.webp';
+import adobeIcon from '../../../assets/jobs/freelance/adob.webp';
+
+// Previous Project Images
+import post1 from '../../../assets/Home/post/post/post1.0.webp';
+import post1_2 from '../../../assets/Home/post/post/post1.2.webp';
+import post1_3 from '../../../assets/Home/post/post/post1.3.webp';
+import post2 from '../../../assets/Home/post/post/post2.0.webp';
+import post2_1 from '../../../assets/Home/post/post/post2.1.webp';
+import post2_2 from '../../../assets/Home/post/post/post2.2.webp';
+import post2_3 from '../../../assets/Home/post/post/post2.3.webp';
+
+
 // ── Small helper: star row ─────────────────────────────────────────────────────
 const StarRow = ({ rating = 4, ratingCount = '20k+', size = 12, darkMode }) => (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
@@ -30,14 +45,14 @@ const StarRow = ({ rating = 4, ratingCount = '20k+', size = 12, darkMode }) => (
     </Box>
 );
 
-// ── Section header ─────────────────────────────────────────────────────────────
+// ── Section header 
 const SectionTitle = ({ children, darkMode }) => (
     <Typography sx={{ fontSize: '15px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins', mb: '12px' }}>
         {children}
     </Typography>
 );
 
-// ── Key-value row used in Project Overview ─────────────────────────────────────
+// ── Key-value row used in Project Overview 
 const InfoRow = ({ label, children, darkMode }) => (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '8px' }}>
         <Typography sx={{ fontSize: '12px', fontWeight: 600, color: darkMode ? '#888' : '#444', fontFamily: 'Poppins', minWidth: '100px' }}>
@@ -50,34 +65,56 @@ const InfoRow = ({ label, children, darkMode }) => (
 );
 
 // ── Previous project card ──────────────────────────────────────────────────────
-const PrevProjectCard = ({ title, darkMode, thumbs }) => (
+const PrevProjectCard = ({ title, role, location, date, desc, darkMode, thumbs, logo }) => (
     <Box sx={{
-        border: darkMode ? '1px solid rgba(255,255,255,0.07)' : '1px solid #efefef',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        mb: '16px',
+        bgcolor: darkMode ? 'rgba(255,255,255,0.03)' : '#F5F5F5',
+        borderRadius: '20px',
+        p: '20px',
+        mb: '20px',
     }}>
-        {/* Thumbnail strip */}
-        <Box sx={{ display: 'flex', height: '80px', overflow: 'hidden' }}>
-            {thumbs.map((src, i) => (
-                <Box key={i} component="img" src={src}
-                    sx={{ flex: 1, objectFit: 'cover', borderRight: i < thumbs.length - 1 ? '2px solid #fff' : 'none' }} />
-            ))}
-        </Box>
-        {/* Info */}
-        <Box sx={{ p: '10px 14px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: '4px' }}>
-                <Typography sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '13px', color: darkMode ? '#fff' : '#111' }}>
-                    {title}
-                </Typography>
-                <Box sx={{ bgcolor: '#00EA8E', color: '#000', px: '8px', py: '1px', borderRadius: '20px', fontSize: '9px', fontWeight: 700, fontFamily: 'Poppins' }}>
-                    Completed
+        {/* Header Row */}
+        <Box sx={{ display: 'flex', gap: '15px', mb: '10px', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' } }}>
+            <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center', flex: 1, width: '100%' }}>
+                <Box component="img" src={logo}
+                    sx={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} />
+                <Box sx={{ flex: 1 }}>
+                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: { xs: '16px', sm: '18px' }, color: darkMode ? '#fff' : '#111', lineHeight: 1.2 }}>
+                        {title}
+                    </Typography>
+                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888', mt: '2px' }}>
+                        Role: {role}
+                    </Typography>
                 </Box>
             </Box>
-            <Typography sx={{ fontFamily: 'Poppins', fontSize: '11px', color: '#888', lineHeight: 1.5 }}>
-                Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna hendrerit mauris id.
-                Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'row', sm: 'column' }, alignItems: { xs: 'center', sm: 'flex-end' }, justifyContent: 'space-between', width: { xs: '100%', sm: 'auto' }, gap: '5px' }}>
+                <Box sx={{ bgcolor: '#00EA8E', color: '#000', px: '15px', py: '5px', borderRadius: '20px', fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins', cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,234,142,0.3)', '&:hover': { bgcolor: '#00d682' } }}>
+                    Visit Site
+                </Box>
+                <Typography sx={{ fontFamily: 'Poppins', fontSize: '11px', color: '#aaa' }}>
+                    {location}
+                </Typography>
+            </Box>
+        </Box>
+
+        {/* Description */}
+        <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', color: darkMode ? '#bbb' : '#666', lineHeight: 1.6, mb: '8px' }}>
+            {desc}
+        </Typography>
+        <Typography sx={{ fontFamily: 'Poppins', fontSize: '11px', color: '#aaa', mb: '15px' }}>
+            {date}
+        </Typography>
+
+        {/* Separate Thumbnails */}
+        <Box sx={{
+            display: 'flex', gap: '12px', flexWrap: 'nowrap', overflowX: 'auto',
+            pb: '10px',
+            '&::-webkit-scrollbar': { height: '4px' },
+            '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(0,0,0,0.1)', borderRadius: '10px' }
+        }}>
+            {thumbs.map((src, i) => (
+                <Box key={i} component="img" src={src}
+                    sx={{ width: { xs: '130px', sm: '150px' }, height: { xs: '130px', sm: '150px' }, borderRadius: '15px', objectFit: 'cover', flexShrink: 0 }} />
+            ))}
         </Box>
     </Box>
 );
@@ -254,50 +291,65 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                         </Typography>
                     </InfoRow>
 
-                    {/* Budget badge */}
+                    {/* Visa Sponsored badge */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '4px' }}>
                         <Box sx={{
                             display: 'flex', alignItems: 'center', gap: '6px',
-                            bgcolor: darkMode ? 'rgba(255,255,255,0.06)' : '#F5F5F5',
-                            borderRadius: '8px', px: '12px', py: '6px',
+                            bgcolor: '#E8F5E9',
+                            borderRadius: '20px', px: '15px', py: '6px',
                         }}>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
-                                <rect x="1" y="4" width="22" height="16" rx="2" />
-                                <line x1="1" y1="10" x2="23" y2="10" />
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" strokeWidth="2" strokeLinecap="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
                             </svg>
-                            <Typography sx={{ fontSize: '12px', fontWeight: 700, color: darkMode ? '#ccc' : '#333', fontFamily: 'Poppins' }}>
-                                Via liya bond
+                            <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#2E7D32', fontFamily: 'Poppins' }}>
+                                Visa Sponsored
                             </Typography>
                         </Box>
                     </Box>
                 </Box>
 
-                {/* ── ABOUT THE ROLE ────────────────────────────────────────── */}
+                {/* ── ABOUT THE PROJECT ─────────────────────────────────────── */}
                 <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '20px', mb: '20px' }}>
-                    <SectionTitle darkMode={darkMode}>About the Role</SectionTitle>
-                    <Typography sx={{ fontSize: '12px', color: '#888', lineHeight: 1.6, mb: '16px', fontFamily: 'Poppins' }}>
+                    <SectionTitle darkMode={darkMode}>About the Project</SectionTitle>
+                    <Typography sx={{ fontSize: '13px', color: '#888', lineHeight: 1.6, mb: '20px', fontFamily: 'Poppins' }}>
                         Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna hendrerit mauris id.
-                        Dignissim sit justo velit id. Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna
-                        hendrerit mauris id. Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est
-                        sodales tortor sit nulla.
+                        Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
                     </Typography>
 
-                    <Box sx={{ display: 'flex', gap: '20px', flexWrap: 'wrap', mb: '10px' }}>
-                        {[
-                            ['Requirements', ['2+ years experience', 'Figma / Adobe XD', 'React / Next.js']],
-                            ['Nice to have', ['1. Agile/Scrum experience', '2. Headless CMS', '3. UI Component libraries', '4. Client Management']],
-                        ].map(([heading, items]) => (
-                            <Box key={heading} sx={{ flex: 1, minWidth: '140px' }}>
-                                <Typography sx={{ fontSize: '12px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins', mb: '6px' }}>
-                                    {heading}
+                    <Box sx={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+                        {/* Tools list */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            {[
+                                { name: 'Figma', icon: figmaIcon },
+                                { name: 'AdobeXD', icon: xdIcon },
+                                { name: 'Photoshop', icon: adobeIcon }
+                            ].map((tool) => (
+                                <Box key={tool.name} sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <Box component="img" src={tool.icon}
+                                        sx={{ width: '22px', height: '22px', borderRadius: '4px', objectFit: 'contain' }} />
+                                    <Typography sx={{ fontSize: '13px', color: '#aaa', fontFamily: 'Poppins' }}>{tool.name}</Typography>
+                                </Box>
+                            ))}
+                        </Box>
+
+                        {/* Deliverables list */}
+                        <Box>
+                            <Typography sx={{ fontSize: '13px', color: '#888', fontWeight: 600, mb: '8px', fontFamily: 'Poppins' }}>
+                                Deliverables
+                            </Typography>
+                            {[
+                                '1. Landing page UI in Figma',
+                                '2. Mobile + Web version',
+                                '3. Developer Handoff Files',
+                                '4. Office Infrastructure Setup'
+                            ].map((item, i) => (
+                                <Typography key={i} sx={{ fontSize: '13px', color: '#aaa', fontFamily: 'Poppins', mb: '4px' }}>
+                                    {item}
                                 </Typography>
-                                {items.map((item, i) => (
-                                    <Typography key={i} sx={{ fontSize: '11px', color: '#888', fontFamily: 'Poppins', mb: '3px' }}>
-                                        {item}
-                                    </Typography>
-                                ))}
-                            </Box>
-                        ))}
+                            ))}
+                        </Box>
                     </Box>
                 </Box>
 
@@ -357,7 +409,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 {/* ── SEND MESSAGE ─────────────────────────────────────────── */}
                 <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '20px', mb: '20px' }}>
                     <SectionTitle darkMode={darkMode}>Send Message to Client</SectionTitle>
-                    <Box sx={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
+                    <Box sx={{ display: 'flex', gap: '10px', alignItems: { xs: 'stretch', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' } }}>
                         <Box sx={{
                             flex: 1,
                             border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e0e0e0',
@@ -366,13 +418,13 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                             <textarea
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
-                                placeholder="So you want to talk about..."
-                                rows={3}
+                                placeholder="Hi! I would like to know more about..."
+                                rows={2}
                                 style={{
                                     width: '100%', border: 'none', outline: 'none', resize: 'none',
-                                    padding: '12px 14px', fontFamily: 'Poppins', fontSize: '12px',
+                                    padding: '12px 14px', fontFamily: 'Poppins', fontSize: '13px',
                                     color: darkMode ? '#ccc' : '#333',
-                                    background: darkMode ? 'rgba(255,255,255,0.03)' : '#fafafa',
+                                    background: 'transparent',
                                     boxSizing: 'border-box',
                                 }}
                             />
@@ -380,23 +432,42 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                         <Button
                             variant="contained"
                             sx={{
-                                bgcolor: '#000', color: '#fff',
-                                borderRadius: '10px', px: '18px', py: '10px',
-                                fontWeight: 700, fontSize: '11px', textTransform: 'none',
+                                bgcolor: '#00EA8E', color: '#fff',
+                                borderRadius: '10px', px: '20px', py: { xs: '10px', sm: '12px' },
+                                fontWeight: 700, fontSize: '14px', textTransform: 'none',
                                 fontFamily: 'Poppins', boxShadow: 'none', whiteSpace: 'nowrap', flexShrink: 0,
-                                '&:hover': { bgcolor: '#222', boxShadow: 'none' }
+                                '&:hover': { bgcolor: '#00d682', boxShadow: 'none' }
                             }}>
-                            SEND MESSAGE
+                            SEND MASSAGE
                         </Button>
                     </Box>
 
-                    {/* Phone number hint */}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '8px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', bgcolor: darkMode ? 'rgba(255,255,255,0.04)' : '#F5F5F5', borderRadius: '8px', px: '10px', py: '5px' }}>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-                            </svg>
-                            <Typography sx={{ fontSize: '11px', color: '#666', fontFamily: 'Poppins' }}>+94 761 213 310</Typography>
+                    {/* Contact info row */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '15px', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '15px', sm: '0' } }}>
+                        {/* Email box */}
+                        <Box
+                            onClick={() => window.location.href = 'mailto:anuradesilva@gmail.com'}
+                            sx={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+                        >
+                            <Box sx={{ width: '28px', height: '28px', bgcolor: '#111', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                </svg>
+                            </Box>
+                            <Typography sx={{ fontSize: '13px', color: '#888', fontFamily: 'Poppins', wordBreak: 'break-all' }}>anuradesilva@gmail.com</Typography>
+                        </Box>
+
+                        {/* Phone box */}
+                        <Box
+                            onClick={() => window.location.href = 'tel:+94768867895'}
+                            sx={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', '&:hover': { opacity: 0.8 }, alignSelf: { xs: 'flex-start', sm: 'auto' } }}
+                        >
+                            <Typography sx={{ fontSize: '13px', color: '#888', fontFamily: 'Poppins' }}>+94 768 867 89...</Typography>
+                            <Box sx={{ width: '28px', height: '28px', bgcolor: '#111', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff">
+                                    <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.02c-.36-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.72 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
+                                </svg>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
@@ -407,14 +478,24 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
 
                     <PrevProjectCard
                         title="Spa Ceylon Website Design"
+                        role="UI/UX Designer"
+                        location="Colombo, Western"
+                        date="Jan 2022 - Sep 2022"
+                        desc="Lorem Ipsum Dolor Sit Amet Consectetur. Gravida Eget Amet Elit Massa Sodales At Consequat. Varius Mi Tristique Sapien Et Aenean Magna. Mus Enim Nunc Vestibulum Suspendisse."
                         darkMode={darkMode}
-                        thumbs={[mp1, mp5, mp6, mp1]}
+                        thumbs={[post1, post1_2, post1_3]}
+                        logo={mp1}
                     />
 
                     <PrevProjectCard
                         title="Cool Planet Website Design and Development"
+                        role="UI/UX Designer"
+                        location="Colombo, Western"
+                        date="Jan 2022 - Sep 2022"
+                        desc="Lorem Ipsum Dolor Sit Amet Consectetur. Gravida Eget Amet Elit Massa Sodales At Consequat. Varius Mi Tristique Sapien Et Aenean Magna. Mus Enim Nunc Vestibulum Suspendisse."
                         darkMode={darkMode}
-                        thumbs={[mp5, mp6, mp1, mp5]}
+                        thumbs={[post2, post2_1, post2_2, post2_3]}
+                        logo={mp5}
                     />
                 </Box>
             </Box>
