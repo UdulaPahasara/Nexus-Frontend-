@@ -21,6 +21,7 @@ import comp7 from '../../assets/jobs/company7.webp';
 import ApplyJob from './applyjob/applyjob';
 import FullTime from './fulltimejob/fulltime';
 import Freelance from './freelance/freelance';
+import Internship from './internship/internship';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -224,6 +225,16 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         />;
     }
 
+    if (view === 'internship') {
+        return <Internship
+            darkMode={darkMode}
+            onBack={() => setView('main')}
+            onSelectionChange={onSelectionChange}
+            onApply={() => setView('apply')}
+            selectedJobId={selectedJobId}
+        />;
+    }
+
     if (view === 'apply') {
         return <ApplyJob darkMode={darkMode} onBack={() => setView('parttime')} />;
     }
@@ -268,6 +279,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                             if (btn.label === 'PartTime') setView('parttime');
                             if (btn.label === 'Fulltime') setView('fulltime');
                             if (btn.label === 'Freelance') setView('freelance');
+                            if (btn.label === 'Internship') setView('internship');
                         }}
                         sx={{
                             display: 'flex',
@@ -317,6 +329,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                             if (pill === 'Part time') setView('parttime');
                             if (pill === 'Full time') setView('fulltime');
                             if (pill === 'Freelance') setView('freelance');
+                            if (pill === 'Internship') setView('internship');
                         }}
                         sx={{
                             px: '15px',
@@ -367,7 +380,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                     <JobCard key={job.id} job={job} darkMode={darkMode} />
                 ))}
             </Box>
-        </Box>
+        </Box >
     );
 };
 
