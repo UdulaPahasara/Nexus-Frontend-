@@ -113,7 +113,7 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
                 <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                     <Typography sx={{ fontSize: '10px', color: '#888', fontFamily: 'Poppins' }}>{job.time}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Box component="img" src={easyApplyIcon} sx={{ width: '12px', height: '12px', objectFit: 'contain' }} />
+                        <Box component="img" src={easyApplyIcon} sx={{ width: '13px', height: '13px', objectFit: 'contain' }} />
                         <Typography sx={{ fontSize: '10px', fontWeight: 600, color: '#555', fontFamily: 'Poppins' }}>Easy Apply</Typography>
                     </Box>
                     {job.status === 'already-applied' && (

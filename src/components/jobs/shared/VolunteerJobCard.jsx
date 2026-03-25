@@ -3,6 +3,9 @@ import { Box, Typography, IconButton, Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShareIcon from '@mui/icons-material/Share';
 
+// Assets
+import easyApplyIcon from '../../../assets/login/login.webp';
+
 // Connection picture (placeholder)
 import connPic from '../../../assets/Home/sevice/chats/messegeprofilepic/mp3.webp';
 
@@ -190,10 +193,8 @@ const VolunteerJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px', width: { xs: '100%', sm: 'auto' }, justifyContent: 'space-between' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <Box sx={{ width: '16px', height: '16px', bgcolor: 'rgba(0, 234, 142, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <CheckCircleIcon sx={{ fontSize: '11px', color: '#00EA8E' }} />
-                            </Box>
-                            <Typography sx={{ fontSize: '12px', color: '#00EA8E', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                            <Box component="img" src={easyApplyIcon} sx={{ width: '13px', height: '13px', objectFit: 'contain' }} />
+                            <Typography sx={{ fontSize: '12px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
                         </Box>
 
                         <Button

@@ -150,8 +150,8 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
 
                         {/* Easy Apply */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                            <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '12px' : '16px', height: isCompact ? '12px' : '16px', objectFit: 'contain' }} />
-                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>
+                            <Box component="img" src={easyApplyIcon} sx={{ width: '13px', height: '13px', objectFit: 'contain' }} />
+                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', fontWeight: 600, color: '#555', fontFamily: 'Poppins' }}>
                                 Easy Apply
                             </Typography>
                         </Box>
