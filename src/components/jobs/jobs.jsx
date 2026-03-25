@@ -241,6 +241,9 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         return <Volunteer
             darkMode={darkMode}
             onBack={() => setView('main')}
+            onSelectionChange={onSelectionChange}
+            selectedJobId={selectedJobId}
+            onApply={() => setView('apply')}
         />;
     }
 
