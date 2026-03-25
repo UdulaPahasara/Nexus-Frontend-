@@ -4,7 +4,7 @@ import { Box, Typography, Button, IconButton } from '@mui/material';
 import DatePosted from '../partime/datePosted';
 import Country from '../partime/country';
 import UpDownArrowBtn from '../partime/updowArowbtn';
-import JobDetail from '../partime/jobdetail/jobdetail';
+import InternshipDetail from './InternshipDetail';
 import CloseIcon from '@mui/icons-material/Close';
 import saudiFlag from '../../../assets/jobs/county/france.webp';
 import InternshipJobCard from '../shared/InternshipJobCard';
@@ -172,7 +172,7 @@ const Internship = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobI
                     overflow: 'hidden',
                     height: '800px',
                 }}>
-                    <JobDetail
+                    <InternshipDetail
                         darkMode={darkMode}
                         job={currentJob}
                         onBack={() => handleJobSelect(selectedJobId)}
