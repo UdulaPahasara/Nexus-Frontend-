@@ -84,13 +84,15 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0, pr: isCompact ? '35px' : '45px' }}>
 
                 {/* Title & Type Badge Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <Typography sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
                         fontSize: isCompact ? '13px' : '18px',
                         color: darkMode ? '#fff' : '#333',
                         lineHeight: 1.2,
+                        flex: 1,
+                        minWidth: '120px',
                         display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
                     }}>
                         {job.title}
@@ -131,21 +133,23 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                 </Box>
 
                 {/* Company & Location Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'nowrap' }}>
-                    <Typography sx={{
-                        fontFamily: 'Poppins',
-                        fontWeight: 600,
-                        fontSize: isCompact ? '10px' : '13px',
-                        color: darkMode ? '#888' : '#333',
-                        lineHeight: 1.2,
-                        display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden'
-                    }}>
-                        {job.company}
-                    </Typography>
-                    <Box sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <svg width={isCompact ? "6" : "8"} height={isCompact ? "6" : "8"} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <Typography sx={{
+                            fontFamily: 'Poppins',
+                            fontWeight: 600,
+                            fontSize: isCompact ? '10px' : '13px',
+                            color: darkMode ? '#888' : '#333',
+                            lineHeight: 1.2,
+                            display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                        }}>
+                            {job.company}
+                        </Typography>
+                        <Box sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <svg width={isCompact ? "6" : "8"} height={isCompact ? "6" : "8"} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </Box>
                     </Box>
                     <Typography sx={{
                         fontFamily: 'Poppins',
@@ -154,7 +158,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         color: '#888',
                         lineHeight: 1.2
                     }}>
-                        {isCompact ? job.location.split(',')[0] : job.location}
+                        • {isCompact ? (job.location.includes(',') ? job.location.split(',')[0] : job.location) : job.location}
                     </Typography>
                 </Box>
 
@@ -192,31 +196,31 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         )}
                     </Box>
                 ) : (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'wrap' }}>
-                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: isCompact ? '8px' : '15px', flexWrap: 'wrap', rowGap: '6px' }}>
+                        <Typography sx={{ fontSize: isCompact ? '9.5px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
-                            <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', objectFit: 'contain' }} />
-                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                            <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '12px' : '14px', height: isCompact ? '12px' : '14px', objectFit: 'contain' }} />
+                            <Typography sx={{ fontSize: isCompact ? '9.5px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
                         </Box>
 
                         {job.status === 'already-applied' && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                                 <Box sx={{
                                     bgcolor: '#00EA8E',
                                     color: '#fff',
                                     borderRadius: '3px',
-                                    width: isCompact ? '10px' : '14px',
-                                    height: isCompact ? '10px' : '14px',
+                                    width: isCompact ? '11px' : '14px',
+                                    height: isCompact ? '11px' : '14px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}>
-                                    <svg width={isCompact ? "6" : "10"} height={isCompact ? "6" : "10"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                                    <svg width={isCompact ? "7" : "10"} height={isCompact ? "7" : "10"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
                                         <polyline points="20 6 9 17 4 12"></polyline>
                                     </svg>
                                 </Box>
-                                <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
+                                <Typography sx={{ fontSize: isCompact ? '9.5px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Already Applied</Typography>
                             </Box>
                         )}
                     </Box>

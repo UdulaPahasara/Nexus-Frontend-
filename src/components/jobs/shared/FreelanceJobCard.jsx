@@ -44,9 +44,9 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
                 {/* Content area */}
                 <Box sx={{ flex: 1, minWidth: 0 }}>
                     {/* Company name row + pill + heart */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2px', gap: '8px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '4px', gap: '8px', flexWrap: 'wrap' }}>
                         {/* Company name + verified */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', minWidth: 0 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', minWidth: 0, flex: 1 }}>
                             <Typography sx={{
                                 fontFamily: 'Poppins', fontWeight: 700, fontSize: isCompact ? '12px' : { xs: '13px', sm: '15px' },
                                 color: darkMode ? '#fff' : '#111', lineHeight: 1.2,
@@ -132,8 +132,8 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
                         {job.projectTitle || 'Project Freeze Web Application Lorem Lipsum Isom'}
                     </Typography>
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '6px', sm: '10px' }, flexWrap: 'wrap' }}>
-                        <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '6px', sm: '10px' }, flexWrap: 'wrap', rowGap: '4px' }}>
+                        <Typography sx={{ fontSize: isCompact ? '9.5px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>
                             {job.time}
                         </Typography>
 
@@ -151,7 +151,7 @@ const FreelanceJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick
                         {/* Easy Apply */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                             <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '12px' : '16px', height: isCompact ? '12px' : '16px', objectFit: 'contain' }} />
-                            <Typography sx={{ fontSize: isCompact ? '9px' : '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>
+                            <Typography sx={{ fontSize: isCompact ? '9.5px' : '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>
                                 Easy Apply
                             </Typography>
                         </Box>

@@ -107,21 +107,21 @@ const VolunteerDetail = ({ darkMode, onBack, job, onApply }) => {
 
             <Box sx={{ flex: 1, overflowY: 'auto', p: '24px', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
                 {/* --- COMPANY BRANDING HEADER --- */}
-                <Box sx={{ mb: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <Box sx={{ mb: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: { xs: 'column', sm: 'row' }, gap: '20px' }}>
                     <Box sx={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                         <Box
                             component="img"
                             src={currentJob.companyLogo}
                             sx={{
-                                width: '64px',
-                                height: '64px',
+                                width: { xs: '56px', sm: '64px' },
+                                height: { xs: '56px', sm: '64px' },
                                 borderRadius: '14px',
                                 objectFit: 'cover',
                             }}
                         />
                         <Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <Typography sx={{ fontSize: '22px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>
+                                <Typography sx={{ fontSize: { xs: '18px', sm: '22px' }, fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>
                                     {currentJob.company}
                                 </Typography>
                                 <CheckCircleIcon sx={{ fontSize: '18px', color: '#1B95E0' }} />
@@ -131,13 +131,13 @@ const VolunteerDetail = ({ darkMode, onBack, job, onApply }) => {
                             </Typography>
                         </Box>
                     </Box>
-                    <IconButton sx={{ bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5', p: '10px' }}>
+                    <IconButton sx={{ bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5', p: '10px', display: { xs: 'none', sm: 'inline-flex' } }}>
                         <NotificationsNoneIcon sx={{ fontSize: '24px', color: '#666' }} />
                     </IconButton>
                 </Box>
 
                 {/* --- TITLE & SAVE ROW --- */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '16px' }}>
+                <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, gap: '15px', mb: '16px', flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
                     <Button
                         variant="contained"
                         startIcon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -159,24 +159,30 @@ const VolunteerDetail = ({ darkMode, onBack, job, onApply }) => {
                     >
                         SAVE JOB
                     </Button>
-                    <Typography sx={{
-                        fontSize: '20px',
-                        fontWeight: 700,
-                        color: darkMode ? '#fff' : '#111',
-                        fontFamily: 'Poppins',
-                        flex: 1
-                    }}>
-                        {currentJob.title}
-                    </Typography>
-                    <Typography sx={{
-                        fontSize: '11px',
-                        color: '#aaa',
-                        fontFamily: 'Poppins',
-                        fontWeight: 500,
-                        whiteSpace: 'nowrap'
-                    }}>
-                        {currentJob.time}
-                    </Typography>
+                    <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                            <Typography sx={{
+                                fontSize: { xs: '18px', sm: '20px' },
+                                fontWeight: 700,
+                                color: darkMode ? '#fff' : '#111',
+                                fontFamily: 'Poppins',
+                                lineHeight: 1.2
+                            }}>
+                                {currentJob.title}
+                            </Typography>
+                            <Typography sx={{
+                                fontSize: '11px',
+                                color: '#aaa',
+                                fontFamily: 'Poppins',
+                                fontWeight: 500,
+                                whiteSpace: 'nowrap',
+                                flexShrink: 0,
+                                mt: '4px'
+                            }}>
+                                {currentJob.time}
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Box>
 
                 <Typography sx={{ fontSize: '13px', color: '#888', mb: '16px', lineHeight: 1.6, fontFamily: 'Poppins' }}>
@@ -196,7 +202,7 @@ const VolunteerDetail = ({ darkMode, onBack, job, onApply }) => {
                     variant="contained"
                     onClick={onApply}
                     sx={{
-                        width: '260px',
+                        width: { xs: '100%', sm: '260px' },
                         height: '40px',
                         bgcolor: '#00EA8E',
                         color: '#000',

@@ -46,16 +46,17 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
             {/* Info */}
             <Box sx={{ flex: 1, minWidth: 0, pr: { xs: '35px', sm: '45px' } }}>
                 {/* Title & Pills Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', mb: '4px' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', mb: '6px' }}>
                     <Typography sx={{
-                        fontFamily: 'Poppins', fontWeight: 700, fontSize: isCompact ? '14px' : '18px', color: '#111', lineHeight: 1.2,
-                        display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                        fontFamily: 'Poppins', fontWeight: 700, fontSize: isCompact ? '15px' : '18px', color: '#111', lineHeight: 1.2,
+                        display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                        flexGrow: 1, minWidth: '100px'
                     }}>
                         {job.title}
                     </Typography>
 
                     {/* Pills */}
-                    <Box sx={{ display: 'flex', gap: '5px' }}>
+                    <Box sx={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', bgcolor: '#8ED2A4', px: '8px', py: '1px', borderRadius: '12px' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                 <path d="M22 10L12 5l-10 5l10 5l10-5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" />
@@ -76,16 +77,19 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
                 </Box>
 
                 {/* Company & Location */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', mb: '4px' }}>
-                    <Typography sx={{ fontSize: '13px', fontWeight: 600, fontFamily: 'Poppins', color: '#333' }}>
-                        {job.company}
-                    </Typography>
-                    <Box sx={{ width: '12px', height: '12px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
-                            <polyline points="20 6 9 17 4 12" />
-                        </svg>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '6px', flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Typography sx={{ fontSize: '13px', fontWeight: 600, fontFamily: 'Poppins', color: '#333' }}>
+                            {job.company}
+                        </Typography>
+                        <Box sx={{ width: '12px', height: '12px', bgcolor: '#00A0DC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </Box>
                     </Box>
-                    <Typography sx={{ fontSize: '12px', color: '#888', fontFamily: 'Poppins' }}>
+                    <Typography sx={{ fontSize: '12px', color: '#888', fontFamily: 'Poppins', display: 'flex', alignItems: 'center' }}>
+                        {!isCompact && <span style={{ marginRight: '6px', color: '#ccc', display: 'var(--bullet-display, inline)' }}>•</span>}
                         {job.location}
                     </Typography>
                 </Box>
@@ -110,14 +114,14 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
                 </Box>
 
                 {/* Footer tags */}
-                <Box sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: '15px', columnGap: '15px', rowGap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
                     <Typography sx={{ fontSize: '10px', color: '#888', fontFamily: 'Poppins' }}>{job.time}</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                         <Box component="img" src={easyApplyIcon} sx={{ width: '12px', height: '12px', objectFit: 'contain' }} />
                         <Typography sx={{ fontSize: '10px', fontWeight: 600, color: '#555', fontFamily: 'Poppins' }}>Easy Apply</Typography>
                     </Box>
                     {job.status === 'already-applied' && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                             <Box sx={{ bgcolor: '#00EA8E', color: '#fff', borderRadius: '3px', p: '2px', display: 'flex' }}>
                                 <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
                                     <polyline points="20 6 9 17 4 12" />
