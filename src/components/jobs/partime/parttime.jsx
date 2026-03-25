@@ -56,7 +56,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: selectedJobId ? '1100px' : '706px' },
+            maxWidth: { xs: '100%', md: '580px', lg: '780px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px', // Allow full height layout to expand correctly
@@ -65,7 +65,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
         }}>
             {/* List column */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '400px' : '100%' },
+                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '320px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
@@ -75,7 +75,7 @@ const PartTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
                 border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                 overflow: 'hidden',
                 flexShrink: 0,
-                transition: 'width 0.3s ease'
+                transition: 'all 0.3s ease'
             }}>
                 {/* Master List Header */}
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>

@@ -44,10 +44,13 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
             <Box component="img" src={job.icon} sx={{ width: isCompact ? '48px' : '64px', height: isCompact ? '48px' : '64px', borderRadius: '12px', flexShrink: 0 }} />
 
             {/* Info */}
-            <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Box sx={{ flex: 1, minWidth: 0, pr: { xs: '35px', sm: '45px' } }}>
                 {/* Title & Pills Row */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', mb: '4px' }}>
-                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: isCompact ? '14px' : '18px', color: '#111' }}>
+                    <Typography sx={{
+                        fontFamily: 'Poppins', fontWeight: 700, fontSize: isCompact ? '14px' : '18px', color: '#111', lineHeight: 1.2,
+                        display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                    }}>
                         {job.title}
                     </Typography>
 
@@ -88,12 +91,15 @@ const InternshipJobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClic
                 </Box>
 
                 {/* Description snippet */}
-                <Typography sx={{ fontSize: '11px', color: '#888', mb: '8px', fontFamily: 'Poppins', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <Typography sx={{
+                    fontSize: '11px', color: '#888', mb: '8px', fontFamily: 'Poppins', lineHeight: 1.4,
+                    display: { xs: 'none', sm: '-webkit-box' }, WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                }}>
                     {job.description || "Lorem ipsum dolor sit amet consectetur. Accumsan mi vulputate ut lorem non vivamus sit..."}
                 </Typography>
 
-                {/* Connections Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '8px' }}>
+                {/* Connections Row - Hidden on mobile */}
+                <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: '8px', mb: '8px' }}>
                     <Box sx={{ display: 'flex' }}>
                         <Box component="img" src={mp1} sx={{ width: '18px', height: '18px', borderRadius: '50%', border: '2px solid #fff' }} />
                         <Box component="img" src={mp6} sx={{ width: '18px', height: '18px', borderRadius: '50%', border: '2px solid #fff', ml: '-7px' }} />

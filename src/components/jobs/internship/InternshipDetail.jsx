@@ -81,43 +81,43 @@ const InternshipDetail = ({ darkMode, onBack, job, onApply }) => {
 
             <Box sx={{ flex: 1, overflowY: 'auto', p: '24px', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
                 {/* --- COMPANY BRANDING HEADER --- */}
-                <Box sx={{ mb: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <Box sx={{ mb: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: { xs: 'column', sm: 'row' }, gap: '20px' }}>
                     <Box sx={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                         <Box
                             component="img"
                             src={currentJob.icon}
                             sx={{
-                                width: '64px',
-                                height: '64px',
+                                width: { xs: '50px', sm: '64px' },
+                                height: { xs: '50px', sm: '64px' },
                                 borderRadius: '14px',
                                 objectFit: 'cover',
                             }}
                         />
                         <Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <Typography sx={{ fontSize: '22px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>
+                                <Typography sx={{ fontSize: { xs: '18px', sm: '22px' }, fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>
                                     {currentJob.company}
                                 </Typography>
                                 <CheckCircleIcon sx={{ fontSize: '18px', color: '#00A0DC' }} />
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <Typography sx={{ fontSize: '15px', color: '#888', fontFamily: 'Poppins' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                                <Typography sx={{ fontSize: '13px', color: '#888', fontFamily: 'Poppins' }}>
                                     {currentJob.location}
                                 </Typography>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                     <Box component="img" src={easyApplyIcon} sx={{ width: '14px', height: '14px', objectFit: 'contain' }} />
-                                    <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#555', fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#555', fontFamily: 'Poppins' }}>Easy Apply</Typography>
                                 </Box>
                             </Box>
                         </Box>
                     </Box>
-                    <IconButton sx={{ bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5', p: '10px' }}>
+                    <IconButton sx={{ bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#F5F5F5', p: '10px', display: { xs: 'none', sm: 'inline-flex' } }}>
                         <NotificationsNoneIcon sx={{ fontSize: '24px', color: '#666' }} />
                     </IconButton>
                 </Box>
 
                 {/* --- TITLE & SAVE ROW --- */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '16px', flexWrap: 'wrap' }}>
+                <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, gap: '12px', mb: '16px', flexWrap: 'wrap', flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
                     <Button
                         variant="contained"
                         startIcon={<BookmarkBorderIcon sx={{ fontSize: '18px' }} />}
@@ -137,23 +137,29 @@ const InternshipDetail = ({ darkMode, onBack, job, onApply }) => {
                     >
                         SAVE JOB
                     </Button>
-                    <Typography sx={{
-                        fontSize: '18px',
-                        fontWeight: 700,
-                        color: darkMode ? '#fff' : '#111',
-                        fontFamily: 'Poppins',
-                        flex: 1
-                    }}>
-                        {currentJob.title}
-                    </Typography>
-                    <Typography sx={{
-                        fontSize: '12px',
-                        color: '#aaa',
-                        fontFamily: 'Poppins',
-                        fontWeight: 500
-                    }}>
-                        {currentJob.time}
-                    </Typography>
+                    <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
+                            <Typography sx={{
+                                fontSize: { xs: '18px', sm: '22px' },
+                                fontWeight: 700,
+                                color: darkMode ? '#fff' : '#111',
+                                fontFamily: 'Poppins',
+                                lineHeight: 1.2
+                            }}>
+                                {currentJob.title}
+                            </Typography>
+                            <Typography sx={{
+                                fontSize: '11px',
+                                color: '#aaa',
+                                fontFamily: 'Poppins',
+                                fontWeight: 500,
+                                whiteSpace: 'nowrap',
+                                mt: '6px'
+                            }}>
+                                {currentJob.time}
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Box>
 
                 <Typography sx={{ fontSize: '13px', color: '#888', mb: '16px', lineHeight: 1.6, fontFamily: 'Poppins' }}>
@@ -164,11 +170,11 @@ const InternshipDetail = ({ darkMode, onBack, job, onApply }) => {
                     <Typography sx={{ fontSize: '11px', color: '#aaa', fontFamily: 'Poppins', fontWeight: 500 }}>
                         Over 50 people clicked apply
                     </Typography>
-                    <Box sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '6px', 
-                        color: '#FF0000', 
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#FF0000',
                     }}>
                         <Typography sx={{ fontSize: '15px', color: '#FF0000', fontWeight: 700 }}>⌛</Typography>
                         <Typography sx={{ fontSize: '11px', fontWeight: 700, fontFamily: 'Poppins' }}>
@@ -182,8 +188,8 @@ const InternshipDetail = ({ darkMode, onBack, job, onApply }) => {
                     onClick={onApply}
                     startIcon={<Box component="img" src={easyApplyIcon} sx={{ width: '24px', height: '22px' }} />}
                     sx={{
-                        width: '260px',
-                        height: '35px',
+                        width: { xs: '100%', sm: '260px' },
+                        height: '40px',
                         bgcolor: '#000',
                         color: '#fff',
                         borderRadius: '100px',
@@ -207,34 +213,38 @@ const InternshipDetail = ({ darkMode, onBack, job, onApply }) => {
                 <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '24px', mb: '24px' }}>
                     <Typography sx={{ fontSize: '18px', fontWeight: 700, mb: '20px', color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>About Job</Typography>
 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: '120px' }}>Position :</Typography>
-                            <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>{currentJob.title}</Typography>
-                            <Box sx={{ bgcolor: '#8ED2A4', color: '#000', px: '10px', py: '2px', borderRadius: '12px', fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>Intern</Box>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: '120px' }}>Job Type :</Typography>
-                            <Box sx={{ bgcolor: '#8ED2A4', color: '#000', px: '10px', py: '2px', borderRadius: '12px', fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>On-Site</Box>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: '120px' }}>Location :</Typography>
-                            <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>Colombo Sri Lanka</Typography>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: '120px' }}>Duration :</Typography>
-                            <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>{currentJob.duration || '6 Months'}</Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', border: '1.5px solid #000', px: '10px', py: '2px', borderRadius: '5px' }}>
-                                <WorkOutlineIcon sx={{ fontSize: '14px' }} />
-                                <Typography sx={{ fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>Unpaid Internship</Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '6px', sm: '12px' } }}>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '140px' } }}>Position :</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                                <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>{currentJob.title}</Typography>
+                                <Box sx={{ bgcolor: '#8ED2A4', color: '#000', px: '10px', py: '2px', borderRadius: '12px', fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>Intern</Box>
                             </Box>
                         </Box>
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: '120px' }}>Working Hours :</Typography>
+                        <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '6px', sm: '12px' } }}>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '140px' } }}>Job Type :</Typography>
+                            <Box sx={{ bgcolor: '#8ED2A4', color: '#000', px: '10px', py: '2px', borderRadius: '12px', fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>On-Site</Box>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '6px', sm: '12px' } }}>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '140px' } }}>Location :</Typography>
+                            <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>Colombo Sri Lanka</Typography>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '6px', sm: '12px' } }}>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '140px' } }}>Duration :</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                                <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>{currentJob.duration || '6 Months'}</Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', border: '1.5px solid #000', px: '10px', py: '2px', borderRadius: '5px' }}>
+                                    <WorkOutlineIcon sx={{ fontSize: '14px' }} />
+                                    <Typography sx={{ fontSize: '10px', fontWeight: 700, fontFamily: 'Poppins' }}>Unpaid Internship</Typography>
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '6px', sm: '12px' } }}>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 600, color: darkMode ? '#888' : '#333', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '140px' } }}>Working Hours :</Typography>
                             <Typography sx={{ fontSize: '13px', color: darkMode ? '#aaa' : '#666', fontFamily: 'Poppins' }}>9:00 AM – 1:00 PM (Monday, Wednesday, Friday)</Typography>
                         </Box>
                     </Box>

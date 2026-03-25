@@ -81,7 +81,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
             />
 
             {/* --- CARD METADATA CONTENT --- */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0, pr: isCompact ? '20px' : '30px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0, pr: isCompact ? '35px' : '45px' }}>
 
                 {/* Title & Type Badge Row */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
@@ -91,9 +91,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         fontSize: isCompact ? '13px' : '18px',
                         color: darkMode ? '#fff' : '#333',
                         lineHeight: 1.2,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
+                        display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
                     }}>
                         {job.title}
                     </Typography>
@@ -140,9 +138,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         fontSize: isCompact ? '10px' : '13px',
                         color: darkMode ? '#888' : '#333',
                         lineHeight: 1.2,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
+                        display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden'
                     }}>
                         {job.company}
                     </Typography>
@@ -156,10 +152,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         fontWeight: 400,
                         fontSize: isCompact ? '10px' : '13px',
                         color: '#888',
-                        lineHeight: 1.2,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
+                        lineHeight: 1.2
                     }}>
                         {isCompact ? job.location.split(',')[0] : job.location}
                     </Typography>
@@ -172,10 +165,8 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                     fontSize: isCompact ? '10px' : '12px',
                     color: '#888',
                     mb: isCompact ? '4px' : '8px',
-                    lineHeight: 1.2,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
+                    lineHeight: 1.4,
+                    display: { xs: 'none', sm: '-webkit-box' }, WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
                 }}>
                     Lorem ipsum dolor sit amet consectetur ipsum dolor sit amet
                 </Typography>

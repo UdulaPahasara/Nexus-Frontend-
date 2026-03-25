@@ -61,7 +61,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: selectedJobId ? '1100px' : '706px' },
+            maxWidth: { xs: '100%', md: '580px', lg: '780px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',
@@ -70,7 +70,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
         }}>
             {/* --- LEFT JOBS LIST COLUMN --- */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '400px' : '100%' },
+                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '320px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
@@ -80,52 +80,60 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                 border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                 overflow: 'hidden',
                 flexShrink: 0,
-                transition: 'width 0.3s ease'
+                transition: 'all 0.3s ease'
             }}>
                 {/* ---- HEADER ---- */}
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>
                     {/* Upper Bar: Country, Date Posted, Fixed|Hourly toggle, Sort */}
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: '15px' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            {/* Country Selector */}
-                            <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
-                                <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                                {showCountryDropdown && (
-                                    <Country darkMode={darkMode} onClose={() => setShowCountryDropdown(false)} onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }} />
-                                )}
-                            </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        mb: '15px',
+                        overflowX: 'auto',
+                        width: '100%',
+                        pb: '5px',
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        scrollbarWidth: 'none'
+                    }}>
+                        {/* Country Selector */}
+                        <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative', flexShrink: 0 }}>
+                            <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            {showCountryDropdown && (
+                                <Country darkMode={darkMode} onClose={() => setShowCountryDropdown(false)} onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }} />
+                            )}
+                        </Box>
 
-                            {/* Date Posted */}
-                            <Box onClick={() => setShowDateFilter(!showDateFilter)} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '15px', py: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </Box>
+                        {/* Date Posted */}
+                        <Box onClick={() => setShowDateFilter(!showDateFilter)} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '15px', py: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
+                            <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Date Posted</Typography>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </Box>
 
-                            {/* Fixed | Hourly Toggle — freelance specific */}
-                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#f0f0f0', borderRadius: '20px', p: '2px', gap: '2px' }}>
-                                {['Fixed', 'Hourly'].map(mode => (
-                                    <Box
-                                        key={mode}
-                                        onClick={() => setRateMode(mode.toLowerCase())}
-                                        sx={{
-                                            px: '10px', py: '3px', borderRadius: '20px', cursor: 'pointer', transition: 'all 0.2s',
-                                            bgcolor: rateMode === mode.toLowerCase() ? '#000' : 'transparent',
-                                            color: rateMode === mode.toLowerCase() ? '#fff' : '#555',
-                                        }}
-                                    >
-                                        <Typography sx={{ fontSize: '11px', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{mode}</Typography>
-                                    </Box>
-                                ))}
-                            </Box>
+                        {/* Fixed | Hourly Toggle — freelance specific */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#f0f0f0', borderRadius: '20px', p: '2px', gap: '2px', flexShrink: 0 }}>
+                            {['Fixed', 'Hourly'].map(mode => (
+                                <Box
+                                    key={mode}
+                                    onClick={() => setRateMode(mode.toLowerCase())}
+                                    sx={{
+                                        px: '10px', py: '3px', borderRadius: '20px', cursor: 'pointer', transition: 'all 0.2s',
+                                        bgcolor: rateMode === mode.toLowerCase() ? '#000' : 'transparent',
+                                        color: rateMode === mode.toLowerCase() ? '#fff' : '#555',
+                                    }}
+                                >
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{mode}</Typography>
+                                </Box>
+                            ))}
                         </Box>
 
                         {/* Sort button */}
-                        <Box sx={{ position: 'relative' }}>
+                        <Box sx={{ position: 'relative', flexShrink: 0, ml: '4px' }}>
                             <svg onClick={() => setShowSortPopup(!showSortPopup)} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" style={{ cursor: 'pointer' }}>
                                 <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16"></path>
                             </svg>
@@ -209,7 +217,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                     boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                     border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                     overflow: 'hidden',
-                    height: '800px',
+                    height: { xs: 'auto', md: '800px' },
                 }}>
                     <FreelanceJobDetail
                         darkMode={darkMode}

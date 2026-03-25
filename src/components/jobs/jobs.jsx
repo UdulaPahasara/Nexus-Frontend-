@@ -53,7 +53,7 @@ const JOB_DATA = [
 const JobCard = ({ job, darkMode }) => (
     <Box sx={{
         width: '100%',
-        maxWidth: '661px',
+        maxWidth: '100%',
         height: 'auto',
         minHeight: '85px',
         display: 'flex',
@@ -247,7 +247,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
     return (
         <Box sx={{
             width: '100%',
-            maxWidth: '706px',
+            maxWidth: { xs: '100%', md: '580px', lg: '780px' },
             minHeight: { xs: '100vh', md: '812px' },
             height: { xs: 'auto', md: '812px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',

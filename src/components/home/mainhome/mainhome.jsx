@@ -88,11 +88,13 @@ const MainHome = () => {
 
                 {/* ── LEFT: Desktop Sidebar ── */}
                 <Box sx={{
-                    display: { xs: 'none', lg: 'block' },
-                    width: '230px',
+                    display: { xs: 'none', sm: 'flex' },
+                    flexDirection: 'column',
+                    width: { md: '200px', lg: '230px' },
                     flexShrink: 0,
-                    position: { lg: 'sticky' },
-                    top: '20px'
+                    position: { md: 'sticky' },
+                    top: '20px',
+                    zIndex: 10
                 }}>
                     <ProfileSidebar
                         darkMode={darkMode}
@@ -222,12 +224,12 @@ const MainHome = () => {
                             selectedJobId={selectedJobId}
                         />
 
-                        {!((jobsView === 'parttime' || jobsView === 'fulltime' || jobsView === 'freelance' || jobsView === 'internship') && selectedJobId) && jobsView !== 'apply' && jobsView !== 'apply-internship' && (
+                        {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && (
                             <Box sx={{
-                                display: { xs: 'none', lg: 'flex' },
+                                display: { xs: 'none', md: 'flex' },
                                 flexDirection: 'column',
                                 gap: '20px',
-                                width: '372px',
+                                width: { md: '300px', lg: '372px' },
                                 flexShrink: 0,
                             }}>
                                 {jobsView === 'main' ? (
@@ -249,7 +251,7 @@ const MainHome = () => {
                         {/* ── CENTER: Main Content Feed ── */}
                         <Box sx={{
                             width: '100%',
-                            maxWidth: { xs: '100%', md: '650px', lg: '706px' },
+                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
                             flexGrow: 1,
                             bgcolor: darkMode ? 'rgba(255,255,255,0.03)' : '#fff',
                             borderRadius: '15px',

@@ -54,11 +54,11 @@ const SectionTitle = ({ children, darkMode }) => (
 
 // ── Key-value row used in Project Overview 
 const InfoRow = ({ label, children, darkMode }) => (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', mb: '8px' }}>
-        <Typography sx={{ fontSize: '12px', fontWeight: 600, color: darkMode ? '#888' : '#444', fontFamily: 'Poppins', minWidth: '100px' }}>
+    <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '4px', sm: '8px' }, mb: '12px' }}>
+        <Typography sx={{ fontSize: '12px', fontWeight: 600, color: darkMode ? '#888' : '#444', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '100px' } }}>
             {label}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
             {children}
         </Box>
     </Box>
@@ -216,14 +216,14 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 </Box>
 
                 {/* Save + Apply Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '8px', flexWrap: 'wrap' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '12px', flexWrap: 'wrap', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
                     <Button
                         variant="contained"
                         startIcon={<BookmarkBorderIcon sx={{ fontSize: '15px !important' }} />}
                         sx={{
                             bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8',
                             color: darkMode ? '#fff' : '#000',
-                            borderRadius: '10px', fontWeight: 600, fontSize: '11px',
+                            borderRadius: '10px', fontWeight: 600, fontSize: { xs: '10px', sm: '11px' },
                             textTransform: 'none', px: '14px', py: '5px',
                             boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
                             '&:hover': { bgcolor: '#ddd', boxShadow: 'none' }
@@ -236,15 +236,15 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                         startIcon={<Box component="img" src={easyApplyIcon} sx={{ width: '20px', height: '17px' }} />}
                         sx={{
                             bgcolor: '#000', color: '#fff',
-                            borderRadius: '100px', fontWeight: 700, fontSize: '13px',
-                            textTransform: 'none', px: '28px', py: '5px',
+                            borderRadius: '100px', fontWeight: 700, fontSize: { xs: '11px', sm: '13px' },
+                            textTransform: 'none', px: { xs: '20px', sm: '28px' }, py: '5px',
                             boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
                             '&:hover': { bgcolor: 'rgba(0,0,0,0.8)', boxShadow: 'none' }
                         }}>
                         APPLY NOW
                     </Button>
 
-                    <Typography sx={{ fontSize: '11px', color: '#00EA8E', fontFamily: 'Poppins', fontWeight: 600, whiteSpace: 'nowrap', ml: 'auto' }}>
+                    <Typography sx={{ fontSize: '11px', color: '#00EA8E', fontFamily: 'Poppins', fontWeight: 600, whiteSpace: 'nowrap', ml: { xs: '0', sm: 'auto' }, width: { xs: '100%', sm: 'auto' }, textAlign: { xs: 'center', sm: 'left' }, mt: { xs: '5px', sm: '0' } }}>
                         ✦ Apply within 8 days
                     </Typography>
                 </Box>
@@ -318,7 +318,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                         Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
                     </Typography>
 
-                    <Box sx={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', gap: { xs: '20px', sm: '40px' }, flexWrap: 'wrap', flexDirection: { xs: 'column', sm: 'row' } }}>
                         {/* Tools list */}
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             {[
