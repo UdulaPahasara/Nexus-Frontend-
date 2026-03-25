@@ -21,7 +21,6 @@ import posterPic from '../../../assets/Home/sevice/chats/messegeprofilepic/mp5.w
 
 /**
  * FREELANCE JOBS DATA
- * Each job has a `rating`, `ratingCount`, and `budget` field specific to freelance.
  */
 const FREELANCE_JOB_DATA = [
     { id: 1, title: 'UI/UX Design for Web App', company: 'Roodwave Pvt Ltd', location: 'Colombo, Sri Lanka | Onsite', time: '2 hours ago', icon: compCNN, type: 'Freelance', status: 'easy-apply', rating: 4, ratingCount: '20k+', budget: '550,000', projectTitle: 'Project Freeze Web Application Lorem Lipsum Isom', poster: posterPic },
@@ -35,12 +34,6 @@ const FREELANCE_JOB_DATA = [
 
 /**
  * Freelance Component
- *
- * Uses the same responsive split-view layout as FullTime.
- * Key differences:
- *   - Filter chips: Fixed | Hourly toggle, Easy Apply, Remote, Duration
- *   - JobCard shows star rating + budget instead of Easy Apply tag
- *   - Pill badge is purple with a star icon
  */
 const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId }) => {
     const [favorites, setFavorites] = useState([2]);
