@@ -23,6 +23,7 @@ import FullTime from './fulltimejob/fulltime';
 import Freelance from './freelance/freelance';
 import Internship from './internship/internship';
 import ApplyInternship from './applyjob/ApplyInternship';
+import Volunteer from './volunteer/volunteer';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -244,6 +245,10 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         return <ApplyInternship darkMode={darkMode} onBack={() => setView('internship')} />;
     }
 
+    if (view === 'volunteer') {
+        return <Volunteer darkMode={darkMode} onBack={() => setView('main')} />;
+    }
+
     return (
         <Box sx={{
             width: '100%',
@@ -285,6 +290,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                             if (btn.label === 'Fulltime') setView('fulltime');
                             if (btn.label === 'Freelance') setView('freelance');
                             if (btn.label === 'Internship') setView('internship');
+                            if (btn.label === 'Volunteer') setView('volunteer');
                         }}
                         sx={{
                             display: 'flex',
@@ -335,6 +341,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                             if (pill === 'Full time') setView('fulltime');
                             if (pill === 'Freelance') setView('freelance');
                             if (pill === 'Internship') setView('internship');
+                            if (pill === 'Volunteers') setView('volunteer');
                         }}
                         sx={{
                             px: '15px',
