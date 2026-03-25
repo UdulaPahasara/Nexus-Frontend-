@@ -224,7 +224,7 @@ const MainHome = () => {
                             selectedJobId={selectedJobId}
                         />
 
-                        {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && (
+                        {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && !selectedJobId && (
                             <Box sx={{
                                 display: { xs: 'none', md: 'flex' },
                                 flexDirection: 'column',

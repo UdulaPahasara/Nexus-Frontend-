@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import PartTime from './partime/parttime';
+import Volunteer from './volunteer/volunteer';
 
 // Header icons
 import fulltimeIcon from '../../assets/Home/sevice/fulltime.webp';
@@ -9,7 +10,6 @@ import freelanceIcon from '../../assets/Home/sevice/freelance.webp';
 import cvIcon from '../../assets/Home/sevice/cv.webp';
 import internshipIcon from '../../assets/Home/sevice/internship.webp';
 import volunteerIcon from '../../assets/Home/sevice/volunteer.webp';
-import easyApplyIcon from '../../assets/login/login.webp';
 
 // Company icons
 import comp1 from '../../assets/jobs/company1.webp';
@@ -24,7 +24,6 @@ import FullTime from './fulltimejob/fulltime';
 import Freelance from './freelance/freelance';
 import Internship from './internship/internship';
 import ApplyInternship from './applyjob/ApplyInternship';
-import Volunteer from './volunteer/volunteer';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -146,8 +145,8 @@ const JobCard = ({ job, darkMode }) => (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '8px', sm: '15px' }, mt: '6px', flexWrap: 'wrap' }}>
                     <Typography sx={{ fontSize: '11px', color: '#999', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{job.time}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <Box component="img" src={easyApplyIcon} sx={{ width: '13px', height: '13px', objectFit: 'contain' }} />
-                        <Typography sx={{ fontSize: '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Easy Apply</Typography>
+                        <Box sx={{ width: '14px', height: '14px', bgcolor: 'rgba(0, 231, 131, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(0, 231, 131, 1)', fontSize: '10px' }}>✓</Box>
+                        <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 500, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Easy Apply</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Box sx={{ width: '14px', height: '14px', bgcolor: 'rgba(0, 231, 131, 1)', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '10px' }}>✓</Box>
@@ -238,6 +237,13 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         />;
     }
 
+    if (view === 'volunteer') {
+        return <Volunteer
+            darkMode={darkMode}
+            onBack={() => setView('main')}
+        />;
+    }
+
     if (view === 'apply') {
         return <ApplyJob darkMode={darkMode} onBack={() => setView('parttime')} />;
     }
@@ -246,14 +252,10 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         return <ApplyInternship darkMode={darkMode} onBack={() => setView('internship')} />;
     }
 
-    if (view === 'volunteer') {
-        return <Volunteer darkMode={darkMode} onBack={() => setView('main')} />;
-    }
-
     return (
         <Box sx={{
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: '780px' },
+            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1200px' : '780px' },
             minHeight: { xs: '100vh', md: '812px' },
             height: { xs: 'auto', md: '812px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',

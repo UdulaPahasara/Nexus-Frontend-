@@ -61,7 +61,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: '780px' },
+            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1100px' : '780px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',
@@ -70,7 +70,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
         }}>
             {/* --- LEFT JOBS LIST COLUMN --- */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '320px' : '100%' },
+                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '400px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
@@ -84,96 +84,158 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             }}>
                 {/* ---- HEADER ---- */}
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>
-                    {/* Upper Bar: Country, Date Posted, Fixed|Hourly toggle, Sort */}
+                    {/* Upper Bar (Row 1): Switch-based layout */}
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
-                        mb: '15px',
-                        overflowX: 'auto',
+                        justifyContent: 'space-between',
+                        mb: '18px',
                         width: '100%',
-                        pb: '5px',
-                        '&::-webkit-scrollbar': { display: 'none' },
-                        scrollbarWidth: 'none'
                     }}>
-                        {/* Country Selector */}
-                        <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative', flexShrink: 0 }}>
-                            <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                            {showCountryDropdown && (
-                                <Country darkMode={darkMode} onClose={() => setShowCountryDropdown(false)} onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }} />
-                            )}
+                        {/* Row 1 Left: Flag + Date Posted */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                            <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
+                                <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                {showCountryDropdown && (
+                                    <Country darkMode={darkMode} onClose={() => setShowCountryDropdown(false)} onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }} />
+                                )}
+                            </Box>
+
+                            <Box onClick={() => setShowDateFilter(!showDateFilter)} sx={{
+                                border: '1px solid #e0e0e0',
+                                borderRadius: '25px',
+                                px: '14px',
+                                py: '5px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                boxShadow: '0px 1px 3px rgba(0,0,0,0.02)'
+                            }}>
+                                <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
+                            </Box>
                         </Box>
 
-                        {/* Date Posted */}
-                        <Box onClick={() => setShowDateFilter(!showDateFilter)} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '15px', py: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
-                            <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>Date Posted</Typography>
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </Box>
-
-                        {/* Fixed | Hourly Toggle — freelance specific */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#f0f0f0', borderRadius: '20px', p: '2px', gap: '2px', flexShrink: 0 }}>
-                            {['Fixed', 'Hourly'].map(mode => (
+                        {/* Row 1 Right: Fixed [Switch] Hourly + Sort */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Typography sx={{ fontSize: '12px', fontWeight: 600, color: rateMode === 'fixed' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Fixed</Typography>
                                 <Box
-                                    key={mode}
-                                    onClick={() => setRateMode(mode.toLowerCase())}
+                                    onClick={() => setRateMode(rateMode === 'fixed' ? 'hourly' : 'fixed')}
                                     sx={{
-                                        px: '10px', py: '3px', borderRadius: '20px', cursor: 'pointer', transition: 'all 0.2s',
-                                        bgcolor: rateMode === mode.toLowerCase() ? '#000' : 'transparent',
-                                        color: rateMode === mode.toLowerCase() ? '#fff' : '#555',
+                                        width: '44px',
+                                        height: '24px',
+                                        bgcolor: rateMode === 'hourly' ? '#00EA8E' : '#E0E0E0',
+                                        borderRadius: '15px',
+                                        position: 'relative',
+                                        cursor: 'pointer',
+                                        transition: 'background-color 0.3s ease'
                                     }}
                                 >
-                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{mode}</Typography>
+                                    <Box sx={{
+                                        position: 'absolute',
+                                        top: '3px',
+                                        left: rateMode === 'hourly' ? '23px' : '3px',
+                                        width: '18px',
+                                        height: '18px',
+                                        bgcolor: '#fff',
+                                        borderRadius: '50%',
+                                        transition: 'left 0.3s ease',
+                                        boxShadow: '0px 1px 3px rgba(0,0,0,0.2)'
+                                    }} />
                                 </Box>
-                            ))}
-                        </Box>
+                                <Typography sx={{ fontSize: '12px', fontWeight: 600, color: rateMode === 'hourly' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Hourly</Typography>
+                            </Box>
 
-                        {/* Sort button */}
-                        <Box sx={{ position: 'relative', flexShrink: 0, ml: '4px' }}>
-                            <svg onClick={() => setShowSortPopup(!showSortPopup)} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" style={{ cursor: 'pointer' }}>
-                                <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16"></path>
-                            </svg>
-                            {showSortPopup && (
-                                <UpDownArrowBtn darkMode={darkMode} onClose={() => setShowSortPopup(false)} onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }} selectedSort={selectedSort} />
-                            )}
+                            <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                <svg onClick={() => setShowSortPopup(!showSortPopup)} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="3" style={{ cursor: 'pointer' }}>
+                                    <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16"></path>
+                                </svg>
+                                {showSortPopup && (
+                                    <UpDownArrowBtn darkMode={darkMode} onClose={() => setShowSortPopup(false)} onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }} selectedSort={selectedSort} />
+                                )}
+                            </Box>
                         </Box>
                     </Box>
 
-                    {/* Filter Chips */}
+                    {/* Lower Bar (Row 2): Filter, Heart, All [LEFT] ... Easy/Remote/Duration [RIGHT] */}
                     <Box sx={{
-                        display: 'flex', alignItems: 'center', gap: '8px',
-                        overflowX: 'auto', width: '100%', pb: '5px',
-                        '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none'
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%',
                     }}>
-                        {/* Filter icon */}
-                        <Box sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5">
-                                <path d="M3 6h18M6 12h12M10 18h4"></path>
-                            </svg>
-                        </Box>
-
-                        {/* Favorites toggle */}
-                        <Box onClick={() => setShowOnlyFavorites(!showOnlyFavorites)} sx={{ bgcolor: '#f5f5f5', p: '8px', borderRadius: '50%', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill={showOnlyFavorites ? '#000' : 'none'} stroke="#000" strokeWidth="2.5">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                        </Box>
-
-                        {/* All pill */}
-                        <Box sx={{ bgcolor: '#efefef', px: '15px', py: '6px', borderRadius: '20px', fontSize: '13px', color: '#000', fontWeight: 600, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
-                            All
-                        </Box>
-
-                        {/* Freelance-specific chips */}
-                        {['Easy Apply', 'Remote', 'Duration'].map(label => (
-                            <Box key={label} sx={{ border: '1px solid #e0e0e0', borderRadius: '20px', px: '12px', py: '6px', cursor: 'pointer', bgcolor: '#fff', flexShrink: 0, whiteSpace: 'nowrap' }}>
-                                <Typography sx={{ fontSize: '13px', fontWeight: 500, color: '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>{label}</Typography>
+                        {/* Row 2 Left: Icons and All pill */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Box sx={{
+                                bgcolor: '#f0f0f0',
+                                width: '34px', height: '34px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                            }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.5">
+                                    <path d="M3 6h18M6 12h12M10 18h4"></path>
+                                </svg>
                             </Box>
-                        ))}
+                            <Box onClick={() => setShowOnlyFavorites(!showOnlyFavorites)} sx={{
+                                bgcolor: '#f0f0f0',
+                                width: '34px', height: '34px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                            }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill={showOnlyFavorites ? '#000' : 'none'} stroke="#000" strokeWidth="2.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </Box>
+                            <Box sx={{
+                                bgcolor: '#efefef',
+                                px: '16px', py: '6px',
+                                borderRadius: '20px',
+                                fontSize: '13px',
+                                color: '#000',
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                                fontFamily: 'Poppins',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                All
+                            </Box>
+                        </Box>
+
+                        {/* Row 2 Right: Easy Apply, Remote, Duration */}
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            overflowX: 'auto',
+                            scrollbarWidth: 'none',
+                            '&::-webkit-scrollbar': { display: 'none' }
+                        }}>
+                            {['Easy Apply', 'Remote', 'Duration'].map(label => (
+                                <Box key={label} sx={{
+                                    border: '1px solid #E0E0E0',
+                                    borderRadius: '25px',
+                                    px: '14px',
+                                    py: '5px',
+                                    cursor: 'pointer',
+                                    bgcolor: '#fff',
+                                    whiteSpace: 'nowrap'
+                                }}>
+                                    <Typography sx={{ fontSize: '13px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>{label}</Typography>
+                                </Box>
+                            ))}
+                        </Box>
                     </Box>
 
                     {selectedJobId && (

@@ -5,9 +5,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 // Assets
-import easyApplyIcon from '../../../../assets/login/login.webp';
-
-// Assets
 import comp1 from '../../../../assets/jobs/company1.webp';
 import comp2 from '../../../../assets/jobs/company2.webp';
 import comp3 from '../../../../assets/jobs/company3.webp';
@@ -134,8 +131,12 @@ const FeaturedJobItem = ({ job, darkMode, isLast }) => (
 
                 {job.easyApply && (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Box component="img" src={easyApplyIcon} sx={{ width: '12px', height: '12px', objectFit: 'contain' }} />
-                        <Typography sx={{ fontSize: '10px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', color: '#00EA8E' }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                            </svg>
+                        </Box>
+                        <Typography sx={{ fontSize: '10px', color: '#888', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
                     </Box>
                 )}
 

@@ -196,7 +196,7 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
                         <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#aaa', fontFamily: 'Poppins', whiteSpace: 'nowrap', flexShrink: 0 }}>{job.time}</Typography>
 
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
-                            <Box component="img" src={easyApplyIcon} sx={{ width: '13px', height: '13px', objectFit: 'contain' }} />
+                            <Box component="img" src={easyApplyIcon} sx={{ width: isCompact ? '10px' : '14px', height: isCompact ? '10px' : '14px', objectFit: 'contain' }} />
                             <Typography sx={{ fontSize: isCompact ? '9px' : '11px', color: '#555', fontWeight: 600, fontFamily: 'Poppins' }}>Easy Apply</Typography>
                         </Box>
 
