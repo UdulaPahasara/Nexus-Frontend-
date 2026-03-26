@@ -63,7 +63,7 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: selectedJobId ? '950px' : '700px', lg: selectedJobId ? '1300px' : '850px' },
+            maxWidth: { xs: '100%', md: selectedJobId ? '100%' : '700px', lg: selectedJobId ? '1300px' : '850px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',

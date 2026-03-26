@@ -47,7 +47,7 @@ const ProfileSidebar = ({ darkMode = false, isMobile = false, activeTab, onTabCh
 
     return (
         <Box sx={{
-            width: isMobile ? '100%' : { xs: '100%', md: '230px' },
+            width: '100%',
             minHeight: isMobile ? '100vh' : { xs: 'auto', md: '1990px' },
             borderRadius: isMobile ? 0 : { xs: 0, md: '15px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',

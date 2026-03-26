@@ -55,7 +55,7 @@ const Internship = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobI
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: selectedJobId ? '900px' : '700px', lg: selectedJobId ? '1200px' : '850px' },
+            maxWidth: { xs: '100%', md: selectedJobId ? '100%' : '700px', lg: selectedJobId ? '1200px' : '850px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',

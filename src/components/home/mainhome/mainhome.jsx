@@ -4,7 +4,10 @@ import SearchBar from '../searchbar/searchbar';
 import ProfileSidebar from '../proffun/profile';
 import Post from '../post/post';
 import Feed from '../feed/feed';
-import Service from '../service/service';
+import ServiceWidget from '../service/service';
+import ServicePage from '../../Service/service';
+import ServicesRoot from '../../Service/Services';
+import ServiceInfo from '../../Service/servicesinfo/info';
 import ForYou from './foryou/foryou';
 import News from './news/news';
 import FilterBar from '../../chat section/chatfilterbar/filterbar';
@@ -17,6 +20,7 @@ import CatchUp from '../../mynetwork/chatup';
 import Jobs from '../../jobs/jobs';
 import FeaturedJobs from '../../jobs/partime/rightsidebar/featuredjob';
 import TopRecruits from '../../jobs/partime/rightsidebar/toprecruiers';
+import ServicesRightSidebar from '../../Service/rightSideBar/Rightsidebar';
 
 
 
@@ -26,13 +30,14 @@ const MainHome = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [activeTab, setActiveTab] = useState('Home'); // Start at Home
     const [selectedChat, setSelectedChat] = useState(null);
+    const [servicesView, setServicesView] = useState('root');
     const [jobsView, setJobsView] = useState('main');
     const [selectedJobId, setSelectedJobId] = useState(null);
 
     // Scroll to top whenever the user switches an internal "tab" or "view"
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }, [activeTab, jobsView, selectedJobId, selectedChat]);
+    }, [activeTab, jobsView, servicesView, selectedJobId, selectedChat]);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -44,6 +49,9 @@ const MainHome = () => {
     const handleTabChange = (tab) => {
         if (tab === 'Jobs') {
             setJobsView('main');
+        }
+        if (tab === 'Services') {
+            setServicesView('root');
         }
         setActiveTab(tab);
     };
@@ -174,16 +182,16 @@ const MainHome = () => {
                 ) : activeTab === 'My Network' ? (
                     <Box sx={{
                         flexGrow: 1,
+                        minWidth: 0,
                         display: 'flex',
                         flexDirection: { xs: 'column', md: 'row' },
-                        gap: { xs: '10px', md: '10px', lg: '10px' },
+                        gap: { xs: '10px', md: '20px', lg: '20px' },
                         alignItems: 'flex-start',
                         width: '100%',
                     }}>
                         <Box sx={{
-                            width: '100%',
-                            maxWidth: { xs: '100%', md: '650px', lg: '701px' },
-                            flexGrow: 1,
+                            flex: 1,
+                            minWidth: 0,
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '20px',
@@ -198,13 +206,90 @@ const MainHome = () => {
                             flexDirection: 'column',
                             gap: '10px',
                             width: { md: '300px', lg: '372px' },
+                            minWidth: { md: '260px', lg: '300px' },
                             flexShrink: 0,
-                            position: { md: 'sticky' },
+                            position: 'sticky',
                             top: '20px'
                         }}>
                             <Feed darkMode={darkMode} />
                             <CatchUp darkMode={darkMode} />
                         </Box>
+                    </Box>
+                ) : activeTab === 'Services' ? (
+                    <Box sx={{
+                        flexGrow: 1,
+                        minWidth: 0,
+                        display: 'flex',
+                        width: '100%',
+                        gap: '20px',
+                    }}>
+                        <Box sx={{
+                            flexGrow: 1,
+                            minWidth: 0,
+                            maxWidth: '100%',
+                            display: 'flex',
+                            flexDirection: servicesView === 'info' ? { xs: 'column', md: 'row' } : 'row',
+                            gap: servicesView === 'info' ? { xs: '15px', md: '20px' } : '0px',
+                            transition: 'all 0.3s ease'
+                        }}>
+                            {(() => {
+                                switch (servicesView) {
+                                    case 'root':
+                                        return (
+                                            <Box sx={{ maxWidth: { xs: '100%', md: '706px' }, width: '100%' }}>
+                                                <ServicesRoot
+                                                    darkMode={darkMode}
+                                                    onCategoryClick={() => setServicesView('detail')}
+                                                    onViewDetails={() => setServicesView('info')}
+                                                    onBack={() => setActiveTab('Home')}
+                                                />
+                                            </Box>
+                                        );
+                                    case 'detail':
+                                        return (
+                                            <Box sx={{ maxWidth: { xs: '100%', md: '706px' }, width: '100%' }}>
+                                                <ServicePage
+                                                    darkMode={darkMode}
+                                                    onBack={() => setServicesView('root')}
+                                                    onViewDetails={() => setServicesView('info')}
+                                                />
+                                            </Box>
+                                        );
+                                    case 'info':
+                                        return (
+                                            <>
+                                                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                                                    <ServicePage
+                                                        darkMode={darkMode}
+                                                        onBack={() => setServicesView('root')}
+                                                        onViewDetails={() => setServicesView('info')}
+                                                        isSplit={true}
+                                                    />
+                                                </Box>
+                                                <ServiceInfo
+                                                    darkMode={darkMode}
+                                                    onBack={() => setServicesView('detail')}
+                                                />
+                                            </>
+                                        );
+                                    default:
+                                        return null;
+                                }
+                            })()}
+                        </Box>
+
+                        {/* ── RIGHT SIDEBAR ── */}
+                        {servicesView !== 'info' && (
+                            <Box sx={{
+                                display: { xs: 'none', md: 'flex' },
+                                flexDirection: 'column',
+                                gap: '20px',
+                                width: { md: '300px', lg: '372px' },
+                                flexShrink: 0,
+                            }}>
+                                <ServicesRightSidebar darkMode={darkMode} />
+                            </Box>
+                        )}
                     </Box>
                 ) : activeTab === 'Jobs' ? (
                     <Box sx={{
@@ -238,7 +323,7 @@ const MainHome = () => {
                                 {jobsView === 'main' ? (
                                     <>
                                         <Feed darkMode={darkMode} />
-                                        <Service darkMode={darkMode} />
+                                        <ServiceWidget darkMode={darkMode} />
                                     </>
                                 ) : (
                                     <>
@@ -295,7 +380,7 @@ const MainHome = () => {
                             top: '20px'
                         }}>
                             <Feed darkMode={darkMode} />
-                            <Service darkMode={darkMode} />
+                            <ServiceWidget darkMode={darkMode} />
                         </Box>
                     </>
                 )}

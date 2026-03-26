@@ -28,7 +28,7 @@ const RECRUITERS = [
 
 const RecruiterCard = ({ user, darkMode }) => (
     <Box sx={{
-        width: '115px',
+        width: '100%',
         height: '128.8px',
         flexShrink: 0,
         borderRadius: '10px',
@@ -163,7 +163,8 @@ const RecruiterCard = ({ user, darkMode }) => (
 const TopRecruits = ({ darkMode }) => {
     return (
         <Box sx={{
-            width: '372px',
+            width: '100%',
+            maxWidth: '372px',
             height: '338px',
             bgcolor: darkMode ? '#1e1e2e' : '#fff',
             borderRadius: '25px',

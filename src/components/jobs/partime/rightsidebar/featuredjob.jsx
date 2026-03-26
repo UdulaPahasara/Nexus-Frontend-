@@ -77,7 +77,9 @@ const FeaturedJobItem = ({ job, darkMode, isLast }) => (
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    maxWidth: '180px'
+                    flex: 1,
+                    minWidth: 0,
+                    mr: '8px'
                 }}>
                     {job.title}
                 </Typography>
@@ -98,12 +100,12 @@ const FeaturedJobItem = ({ job, darkMode, isLast }) => (
             </Box>
 
             {/* Company and Location Row */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', mb: '4px' }}>
-                <Typography sx={{ fontSize: '11px', fontWeight: 700, color: darkMode ? '#fff' : '#333', fontFamily: 'Poppins' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', mb: '4px', width: '100%', minWidth: 0 }}>
+                <Typography sx={{ fontSize: '11px', fontWeight: 700, color: darkMode ? '#fff' : '#333', fontFamily: 'Poppins', flexShrink: 0 }}>
                     {job.company}
                 </Typography>
-                <CheckCircleIcon sx={{ fontSize: '12px', color: '#0077B5' }} />
-                <Typography sx={{ fontSize: '11px', color: '#888', fontFamily: 'Poppins', fontWeight: 500 }}>
+                <CheckCircleIcon sx={{ fontSize: '12px', color: '#0077B5', flexShrink: 0 }} />
+                <Typography sx={{ fontSize: '11px', color: '#888', fontFamily: 'Poppins', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>
                     {job.location}
                 </Typography>
             </Box>
@@ -158,7 +160,8 @@ const FeaturedJobItem = ({ job, darkMode, isLast }) => (
 const FeaturedJobs = ({ darkMode }) => {
     return (
         <Box sx={{
-            width: '372px',
+            width: '100%',
+            maxWidth: '372px',
             bgcolor: darkMode ? '#1e1e2e' : '#fff',
             borderRadius: '25px',
             p: '24px',
