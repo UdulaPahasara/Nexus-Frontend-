@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PartTime from './partime/parttime';
 import Volunteer from './volunteer/volunteer';
 
@@ -180,7 +181,7 @@ const JobCard = ({ job, darkMode }) => (
     </Box>
 );
 
-const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJobId }) => {
+const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJobId, onBack }) => {
     const [activePill, setActivePill] = useState('All');
     const [view, setViewState] = useState('main');
 
@@ -258,7 +259,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
     return (
         <Box sx={{
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1200px' : '780px' },
+            maxWidth: { xs: '100%', md: '700px', lg: selectedJobId ? '1200px' : '850px' },
             minHeight: { xs: '100vh', md: '812px' },
             height: { xs: 'auto', md: '812px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',
@@ -277,52 +278,60 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
             <Box sx={{
                 width: '100%',
                 mt: '28px',
-                px: { xs: '10px', sm: '30px', md: '40px' },
+                px: { xs: '15px', sm: '30px', md: '40px' },
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: { xs: 'flex-start', sm: 'space-between' },
-                gap: { xs: '15px', sm: '49px' },
-                overflowX: 'auto',
-                boxSizing: 'border-box',
-                '&::-webkit-scrollbar': { display: 'none' },
-                scrollbarWidth: 'none'
+                gap: '15px'
             }}>
+                <ArrowBackIosNewIcon onClick={onBack} sx={{ fontSize: '18px', cursor: 'pointer', color: darkMode ? '#fff' : '#333' }} />
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: { xs: 'flex-start', sm: 'space-between' },
+                    gap: { xs: '15px', sm: '49px' },
+                    overflowX: 'auto',
+                    flex: 1,
+                    boxSizing: 'border-box',
+                    '&::-webkit-scrollbar': { display: 'none' },
+                    scrollbarWidth: 'none'
+                }}>
 
-                {HEADER_BUTTONS.map((btn) => (
-                    <Box
-                        key={btn.label}
-                        onClick={() => {
-                            if (btn.label === 'PartTime') setView('parttime');
-                            if (btn.label === 'Fulltime') setView('fulltime');
-                            if (btn.label === 'Freelance') setView('freelance');
-                            if (btn.label === 'Internship') setView('internship');
-                            if (btn.label === 'Volunteer') setView('volunteer');
-                        }}
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '10px',
-                            cursor: 'pointer',
-                            flexShrink: 0
-                        }}
-                    >
+                    {HEADER_BUTTONS.map((btn) => (
                         <Box
-                            component="img"
-                            src={btn.icon}
-                            sx={{ width: '40px', height: '40px', objectFit: 'contain' }}
-                        />
-                        <Typography sx={{
-                            fontFamily: 'Poppins',
-                            fontSize: '11px',
-                            fontWeight: 500,
-                            color: darkMode ? '#ccc' : '#333'
-                        }}>
-                            {btn.label}
-                        </Typography>
-                    </Box>
-                ))}
+                            key={btn.label}
+                            onClick={() => {
+                                if (btn.label === 'PartTime') setView('parttime');
+                                if (btn.label === 'Fulltime') setView('fulltime');
+                                if (btn.label === 'Freelance') setView('freelance');
+                                if (btn.label === 'Internship') setView('internship');
+                                if (btn.label === 'Volunteer') setView('volunteer');
+                            }}
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '10px',
+                                cursor: 'pointer',
+                                flexShrink: 0
+                            }}
+                        >
+                            <Box
+                                component="img"
+                                src={btn.icon}
+                                sx={{ width: '40px', height: '40px', objectFit: 'contain' }}
+                            />
+                            <Typography sx={{
+                                fontFamily: 'Poppins',
+                                fontSize: '11px',
+                                fontWeight: 500,
+                                color: darkMode ? '#ccc' : '#333'
+                            }}>
+                                {btn.label}
+                            </Typography>
+                        </Box>
+                    ))}
+                </Box>
             </Box>
 
             {/* Pill Filters Section */}

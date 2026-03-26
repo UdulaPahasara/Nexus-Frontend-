@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -61,7 +62,8 @@ const JobDetail = ({ darkMode, onBack, job, onApply }) => {
             }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Box onClick={handleBack} sx={{ cursor: 'pointer', color: darkMode ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}>
-                        <CloseIcon sx={{ fontSize: '18px' }} />
+                        <ArrowBackIosNewIcon sx={{ fontSize: { xs: '18px', md: '18px' }, display: { xs: 'block', md: 'none' } }} />
+                        <CloseIcon sx={{ fontSize: '18px', display: { xs: 'none', md: 'block' } }} />
                     </Box>
                     <Typography sx={{ fontSize: '11px', color: '#888', fontFamily: 'Poppins', fontWeight: 500 }}>
                         Jobs / Part time

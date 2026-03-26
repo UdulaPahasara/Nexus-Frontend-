@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 // --- Shared Components for Reusability ---
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DatePosted from '../partime/datePosted';
 import Country from '../partime/country';
 import UpDownArrowBtn from '../partime/updowArowbtn';
@@ -61,17 +62,18 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1100px' : '780px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',
             alignItems: 'flex-start',
-            transition: 'width 0.3s ease'
+            transition: 'all 0.3s ease',
+            minWidth: 0,
         }}>
             {/* --- LEFT JOBS LIST COLUMN --- */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '400px' : '100%' },
-                display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
+                width: { xs: '100%', md: selectedJobId ? '380px' : '100%', lg: selectedJobId ? '420px' : '100%' },
+                minWidth: 0,
+                flexShrink: selectedJobId ? 0 : 1,
                 flexDirection: 'column',
                 height: 'auto',
                 bgcolor: darkMode ? '#1e1e2e' : '#fff',
@@ -86,9 +88,10 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                 <Box sx={{ px: '25px', pt: '25px', pb: '10px' }}>
                     {/* Compact Header Layout (Mobile Optimized) */}
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px', mb: '15px' }}>
-                        {/* Row 1: Flag, Date, Sort */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        {/* Row 1: Flag, Date, Fixed/Hourly, Sort */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '5px' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '8px', sm: '12px' }, flexWrap: 'wrap' }}>
+                                <ArrowBackIosNewIcon onClick={onBack} sx={{ fontSize: '18px', cursor: 'pointer', color: darkMode ? '#fff' : '#333', mr: '5px' }} />
                                 <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
                                     <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
                                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
@@ -110,7 +113,37 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                                     gap: '6px',
                                     bgcolor: '#fff'
                                 }}>
-                                    <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, color: '#333', fontFamily: 'Poppins' }}>Date Posted</Typography>
+                                </Box>
+
+                                {/* Fixed / Hourly Switch */}
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', ml: { xs: '0', sm: '10px' } }}>
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, color: rateMode === 'fixed' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Fixed</Typography>
+                                    <Box
+                                        onClick={() => setRateMode(rateMode === 'fixed' ? 'hourly' : 'fixed')}
+                                        sx={{
+                                            width: '34px',
+                                            height: '18px',
+                                            bgcolor: rateMode === 'hourly' ? '#00EA8E' : '#E0E0E0',
+                                            borderRadius: '15px',
+                                            position: 'relative',
+                                            cursor: 'pointer',
+                                            transition: 'background-color 0.3s ease'
+                                        }}
+                                    >
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: '2px',
+                                            left: rateMode === 'hourly' ? '18px' : '2px',
+                                            width: '14px',
+                                            height: '14px',
+                                            bgcolor: '#fff',
+                                            borderRadius: '50%',
+                                            transition: 'left 0.3s ease',
+                                            boxShadow: '0px 1px 3px rgba(0,0,0,0.2)'
+                                        }} />
+                                    </Box>
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, color: rateMode === 'hourly' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Hourly</Typography>
                                 </Box>
                             </Box>
 
@@ -122,36 +155,6 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                                     <UpDownArrowBtn darkMode={darkMode} onClose={() => setShowSortPopup(false)} onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }} selectedSort={selectedSort} />
                                 )}
                             </Box>
-                        </Box>
-
-                        {/* Row 2: Fixed / Hourly Switch */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' }, gap: '12px' }}>
-                            <Typography sx={{ fontSize: '12px', fontWeight: 600, color: rateMode === 'fixed' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Fixed</Typography>
-                            <Box
-                                onClick={() => setRateMode(rateMode === 'fixed' ? 'hourly' : 'fixed')}
-                                sx={{
-                                    width: '44px',
-                                    height: '24px',
-                                    bgcolor: rateMode === 'hourly' ? '#00EA8E' : '#E0E0E0',
-                                    borderRadius: '15px',
-                                    position: 'relative',
-                                    cursor: 'pointer',
-                                    transition: 'background-color 0.3s ease'
-                                }}
-                            >
-                                <Box sx={{
-                                    position: 'absolute',
-                                    top: '3px',
-                                    left: rateMode === 'hourly' ? '23px' : '3px',
-                                    width: '18px',
-                                    height: '18px',
-                                    bgcolor: '#fff',
-                                    borderRadius: '50%',
-                                    transition: 'left 0.3s ease',
-                                    boxShadow: '0px 1px 3px rgba(0,0,0,0.2)'
-                                }} />
-                            </Box>
-                            <Typography sx={{ fontSize: '12px', fontWeight: 600, color: rateMode === 'hourly' ? '#333' : '#aaa', fontFamily: 'Poppins' }}>Hourly</Typography>
                         </Box>
 
                         {/* Row 3: Filter, Heart, and Pills (Horizontal Scroll) */}
@@ -224,6 +227,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             {selectedJobId && (
                 <Box sx={{
                     flex: 1,
+                    minWidth: 0,
                     display: { xs: 'flex', md: 'flex' },
                     flexDirection: 'column',
                     bgcolor: '#fff',
@@ -231,6 +235,7 @@ const Freelance = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                     boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                     border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                     overflow: 'hidden',
+                    minHeight: '800px',
                     height: { xs: 'auto', md: '800px' },
                 }}>
                     <FreelanceJobDetail

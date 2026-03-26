@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -45,17 +46,17 @@ const StarRow = ({ rating = 4, ratingCount = '20k+', size = 12, darkMode }) => (
     </Box>
 );
 
-// ── Section header 
+// ── Section header
 const SectionTitle = ({ children, darkMode }) => (
     <Typography sx={{ fontSize: '15px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins', mb: '12px' }}>
         {children}
     </Typography>
 );
 
-// ── Key-value row used in Project Overview 
+// ── Key-value row used in Project Overview
 const InfoRow = ({ label, children, darkMode }) => (
     <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '4px', sm: '8px' }, mb: '12px' }}>
-        <Typography sx={{ fontSize: '12px', fontWeight: 600, color: darkMode ? '#888' : '#444', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '100px' } }}>
+        <Typography sx={{ fontSize: '12px', fontWeight: 600, color: darkMode ? '#888' : '#444', fontFamily: 'Poppins', minWidth: { xs: 'auto', sm: '130px' } }}>
             {label}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
@@ -157,8 +158,9 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 flexShrink: 0,
             }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Box onClick={onBack} sx={{ cursor: 'pointer', color: darkMode ? '#fff' : '#000', display: 'flex' }}>
-                        <CloseIcon sx={{ fontSize: '18px' }} />
+                    <Box onClick={onBack} sx={{ cursor: 'pointer', color: darkMode ? '#fff' : '#000', display: 'flex', alignItems: 'center' }}>
+                        <ArrowBackIosNewIcon sx={{ fontSize: { xs: '18px', md: '18px' }, display: { xs: 'block', md: 'none' } }} />
+                        <CloseIcon sx={{ fontSize: '18px', display: { xs: 'none', md: 'block' } }} />
                     </Box>
                     <Typography sx={{ fontSize: '11px', color: '#888', fontFamily: 'Poppins', fontWeight: 500 }}>
                         Jobs / Freelance
@@ -172,19 +174,19 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
             <ShareJob anchorEl={shareAnchorEl} open={Boolean(shareAnchorEl)} onClose={() => setShareAnchorEl(null)} darkMode={darkMode} />
 
             {/* ── SCROLLABLE CONTENT ──────────────────────────────────────── */}
-            <Box sx={{ flex: 1, overflowY: 'auto', p: '20px', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
+            <Box sx={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', p: '20px', '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
 
                 {/* ── CLIENT PROFILE CARD ──────────────────────────────────── */}
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: '6px' }}>
-                    <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center', flex: 1, minWidth: 0 }}>
                         <Box component="img" src={currentJob.icon}
                             sx={{ width: '60px', height: '60px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0 }} />
-                        <Box>
+                        <Box sx={{ minWidth: 0 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px', mb: '2px' }}>
-                                <Typography sx={{ fontSize: '18px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins' }}>
+                                <Typography sx={{ fontSize: '18px', fontWeight: 700, color: darkMode ? '#fff' : '#111', fontFamily: 'Poppins', wordBreak: 'break-word' }}>
                                     {currentJob.company}
                                 </Typography>
-                                <CheckCircleIcon sx={{ fontSize: '16px', color: '#0077B5' }} />
+                                <CheckCircleIcon sx={{ fontSize: '16px', color: '#0077B5', flexShrink: 0 }} />
                             </Box>
                             <Typography sx={{ fontSize: '12px', color: '#888', fontFamily: 'Poppins', mb: '4px' }}>
                                 {currentJob.time}
@@ -198,7 +200,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 </Box>
 
                 {/* Description */}
-                <Typography sx={{ fontSize: '12px', color: '#888', lineHeight: 1.6, mb: '12px', fontFamily: 'Poppins' }}>
+                <Typography sx={{ fontSize: '12px', color: '#888', lineHeight: 1.6, mb: '12px', fontFamily: 'Poppins', wordBreak: 'break-word' }}>
                     Lorem ipsum dolor sit amet consectetur. Accumsan mi vulputate ut lorem non vivamus sit amet consectetur.
                     Accumsan mi vulputate ut lorem non vivamus sit
                 </Typography>
@@ -216,41 +218,43 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 </Box>
 
                 {/* Save + Apply Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', mb: '12px', flexWrap: 'wrap', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
-                    <Button
-                        variant="contained"
-                        startIcon={<BookmarkBorderIcon sx={{ fontSize: '15px !important' }} />}
-                        sx={{
-                            bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8',
-                            color: darkMode ? '#fff' : '#000',
-                            borderRadius: '10px', fontWeight: 600, fontSize: { xs: '10px', sm: '11px' },
-                            textTransform: 'none', px: '14px', py: '5px',
-                            boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
-                            '&:hover': { bgcolor: '#ddd', boxShadow: 'none' }
-                        }}>
-                        SAVE JOB
-                    </Button>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', mb: '16px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                        <Button
+                            variant="contained"
+                            startIcon={<BookmarkBorderIcon sx={{ fontSize: '15px !important' }} />}
+                            sx={{
+                                bgcolor: darkMode ? 'rgba(255,255,255,0.1)' : '#E8E8E8',
+                                color: darkMode ? '#fff' : '#000',
+                                borderRadius: '10px', fontWeight: 600, fontSize: '11px',
+                                textTransform: 'none', px: '14px', py: '5px',
+                                boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
+                                '&:hover': { bgcolor: '#ddd', boxShadow: 'none' }
+                            }}>
+                            SAVE JOB
+                        </Button>
 
-                    <Button
-                        variant="contained"
-                        startIcon={<Box component="img" src={easyApplyIcon} sx={{ width: '20px', height: '17px' }} />}
-                        sx={{
-                            bgcolor: '#000', color: '#fff',
-                            borderRadius: '100px', fontWeight: 700, fontSize: { xs: '11px', sm: '13px' },
-                            textTransform: 'none', px: { xs: '20px', sm: '28px' }, py: '5px',
-                            boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
-                            '&:hover': { bgcolor: 'rgba(0,0,0,0.8)', boxShadow: 'none' }
-                        }}>
-                        APPLY NOW
-                    </Button>
+                        <Button
+                            variant="contained"
+                            startIcon={<Box component="img" src={easyApplyIcon} sx={{ width: '20px', height: '17px' }} />}
+                            sx={{
+                                bgcolor: '#000', color: '#fff',
+                                borderRadius: '100px', fontWeight: 700, fontSize: '13px',
+                                textTransform: 'none', px: '28px', py: '5px',
+                                boxShadow: 'none', fontFamily: 'Poppins', whiteSpace: 'nowrap',
+                                '&:hover': { bgcolor: 'rgba(0,0,0,0.8)', boxShadow: 'none' }
+                            }}>
+                            APPLY NOW
+                        </Button>
+                    </Box>
 
-                    <Typography sx={{ fontSize: '11px', color: '#00EA8E', fontFamily: 'Poppins', fontWeight: 600, whiteSpace: 'nowrap', ml: { xs: '0', sm: 'auto' }, width: { xs: '100%', sm: 'auto' }, textAlign: { xs: 'center', sm: 'left' }, mt: { xs: '5px', sm: '0' } }}>
+                    <Typography sx={{ fontSize: '11px', color: '#00EA8E', fontFamily: 'Poppins', fontWeight: 600 }}>
                         ✦ Apply within 8 days
                     </Typography>
                 </Box>
 
                 {/* ── PROJECT OVERVIEW ─────────────────────────────────────── */}
-                <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '20px', mt: '16px', mb: '20px' }}>
+                <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '20px', mb: '20px' }}>
                     <SectionTitle darkMode={darkMode}>Project Overview</SectionTitle>
 
                     <InfoRow label="Position :" darkMode={darkMode}>
@@ -292,7 +296,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                     </InfoRow>
 
                     {/* Visa Sponsored badge */}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '4px' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: '10px' }}>
                         <Box sx={{
                             display: 'flex', alignItems: 'center', gap: '6px',
                             bgcolor: '#E8F5E9',
@@ -313,7 +317,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                 {/* ── ABOUT THE PROJECT ─────────────────────────────────────── */}
                 <Box sx={{ borderTop: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #efefef', pt: '20px', mb: '20px' }}>
                     <SectionTitle darkMode={darkMode}>About the Project</SectionTitle>
-                    <Typography sx={{ fontSize: '13px', color: '#888', lineHeight: 1.6, mb: '20px', fontFamily: 'Poppins' }}>
+                    <Typography sx={{ fontSize: '13px', color: '#888', lineHeight: 1.6, mb: '20px', fontFamily: 'Poppins', wordBreak: 'break-word' }}>
                         Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna hendrerit mauris id.
                         Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
                     </Typography>
@@ -398,7 +402,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                         </Typography>
                     </Box>
 
-                    <Typography sx={{ fontSize: '12px', color: '#888', lineHeight: 1.6, fontFamily: 'Poppins' }}>
+                    <Typography sx={{ fontSize: '12px', color: '#888', lineHeight: 1.6, fontFamily: 'Poppins', wordBreak: 'break-word' }}>
                         Lorem ipsum dolor sit amet consectetur. Non vitae nisl fringilla magna hendrerit mauris id.
                         Dignissim sit justo velit id mauris mollis. Quisque tortor blandit mattis est sodales tortor sit nulla.
                         Lorem ipsum dolor sit amet consectetur. Non vitae nisl. Dignissim sit justo velit id mauris mollis.
@@ -438,7 +442,7 @@ const FreelanceJobDetail = ({ darkMode, onBack, job }) => {
                                 fontFamily: 'Poppins', boxShadow: 'none', whiteSpace: 'nowrap', flexShrink: 0,
                                 '&:hover': { bgcolor: '#00d682', boxShadow: 'none' }
                             }}>
-                            SEND MASSAGE
+                            SEND MESSAGE
                         </Button>
                     </Box>
 

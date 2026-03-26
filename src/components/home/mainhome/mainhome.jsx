@@ -209,12 +209,14 @@ const MainHome = () => {
                 ) : activeTab === 'Jobs' ? (
                     <Box sx={{
                         flexGrow: 1,
+                        minWidth: 0,
                         display: 'flex',
                         flexDirection: { xs: 'column', md: 'row' },
                         gap: '20px',
                         alignItems: 'flex-start',
                         justifyContent: 'center',
                         width: '100%',
+                        overflow: 'hidden',
                     }}>
                         <Jobs
                             darkMode={darkMode}
@@ -222,6 +224,7 @@ const MainHome = () => {
                             forceView={jobsView}
                             onSelectionChange={setSelectedJobId}
                             selectedJobId={selectedJobId}
+                            onBack={() => setActiveTab('Home')}
                         />
 
                         {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && !selectedJobId && (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 // --- Shared Components for Reusability ---
 import DatePosted from '../partime/datePosted';
@@ -62,7 +63,7 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1100px' : '780px' },
+            maxWidth: { xs: '100%', md: selectedJobId ? '950px' : '700px', lg: selectedJobId ? '1300px' : '850px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',
@@ -71,7 +72,7 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
         }}>
             {/* --- LEFT (OR FULL-WIDTH) JOBS LIST COLUMN --- */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '400px' : '100%' },
+                width: { xs: '100%', md: selectedJobId ? '380px' : '100%', lg: selectedJobId ? '500px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
@@ -93,6 +94,7 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
                         mb: '18px'
                     }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                            <ArrowBackIosNewIcon onClick={onBack} sx={{ fontSize: '18px', cursor: 'pointer', color: darkMode ? '#fff' : '#333' }} />
                             <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)} sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
                                 <Box component="img" src={selectedCountry?.flag || saudiFlag} sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
@@ -247,7 +249,8 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
                     boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                     border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                     overflow: 'hidden',
-                    height: '800px',
+                    minHeight: '800px',
+                    height: { xs: 'auto', md: '800px' },
                 }}>
                     <JobDetail
                         darkMode={darkMode}

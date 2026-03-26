@@ -55,7 +55,7 @@ const Volunteer = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            maxWidth: { xs: '100%', md: '580px', lg: selectedJobId ? '1100px' : '780px' },
+            maxWidth: { xs: '100%', md: selectedJobId ? '950px' : '700px', lg: selectedJobId ? '1300px' : '850px' },
             gap: { xs: '0px', md: selectedJobId ? '20px' : '0px' },
             height: 'auto',
             minHeight: '800px',
@@ -64,7 +64,7 @@ const Volunteer = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
         }}>
             {/* List column */}
             <Box sx={{
-                width: { xs: '100%', md: selectedJobId ? '250px' : '100%', lg: selectedJobId ? '400px' : '100%' },
+                width: { xs: '100%', md: selectedJobId ? '380px' : '100%', lg: selectedJobId ? '500px' : '100%' },
                 display: { xs: selectedJobId ? 'none' : 'flex', md: 'flex' },
                 flexDirection: 'column',
                 height: 'auto',
@@ -163,7 +163,8 @@ const Volunteer = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId
                     boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
                     border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
                     overflow: 'hidden',
-                    height: '800px',
+                    minHeight: '800px',
+                    height: { xs: 'auto', md: '800px' },
                 }}>
                     <VolunteerDetail
                         darkMode={darkMode}
