@@ -96,7 +96,7 @@ const MainHome = () => {
 
                 {/* ── LEFT: Desktop Sidebar ── */}
                 <Box sx={{
-                    display: { xs: 'none', sm: 'flex' },
+                    display: { xs: 'none', md: 'flex' },
                     flexDirection: 'column',
                     width: { md: '200px', lg: '230px' },
                     flexShrink: 0,

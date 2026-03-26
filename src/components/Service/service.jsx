@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography, IconButton, Popover } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,7 +12,8 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 // Reused header popups from parttime
 import DatePosted from '../jobs/partime/datePosted';
 import Country from '../jobs/partime/country';
-import UpDownArrowBtn from '../jobs/partime/updowArowbtn';
+import ServiceTypePop from './popup/serviceType';
+import UpDownArrowPop from './popup/updownArrowPop';
 
 // Service card images
 import svc1 from '../../assets/Service/service/service1.webp';
@@ -76,7 +77,8 @@ const ServiceCard = ({ darkMode, service, onViewDetails, isSplit = false }) => {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            flexShrink: 0
+            flexShrink: 0,
+            boxSizing: 'border-box'
         }}>
             {/* ── Large image with overlaid action icons ── */}
             <Box sx={{ position: 'relative', width: '100%', height: '135px' }}>
@@ -145,11 +147,16 @@ const ServiceCard = ({ darkMode, service, onViewDetails, isSplit = false }) => {
 
 // ── Main Service Component ─────────────────────────────────
 const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false }) => {
-    const [showDateFilter, setShowDateFilter] = useState(false);
-    const [showCountryDropdown, setShowCountryDropdown] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
-    const [showSortPopup, setShowSortPopup] = useState(false);
-    const [selectedSort, setSelectedSort] = useState('recent');
+    const [selectedSort, setSelectedSort] = useState('relevance');
+    const [selectedServiceType, setSelectedServiceType] = useState('all');
+
+    // Anchor states for Popovers
+    const [countryAnchorEl, setCountryAnchorEl] = useState(null);
+    const [dateAnchorEl, setDateAnchorEl] = useState(null);
+    const [typeAnchorEl, setTypeAnchorEl] = useState(null);
+    const [sortAnchorEl, setSortAnchorEl] = useState(null);
+
     const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
     const [emergencyOnly, setEmergencyOnly] = useState(false);
 
@@ -177,47 +184,109 @@ const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false 
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     mb: isSplit ? '0px' : { xs: '12px', sm: '18px' },
-                    gap: '10px'
+                    gap: '10px',
+                    width: '100%',
+                    overflow: 'hidden'
                 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '10px', sm: '15px' }, flexGrow: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '6px', sm: '15px' }, flexGrow: 1, minWidth: 0 }}>
                         <ArrowBackIosNewIcon
                             onClick={onBack}
                             sx={{ fontSize: '18px', cursor: 'pointer', color: darkMode ? '#fff' : '#333' }}
                         />
 
                         {!isSplit && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '6px', sm: '12px' }, flexWrap: 'nowrap' }}>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: { xs: '8px', sm: '12px' },
+                                overflowX: 'auto',
+                                scrollbarWidth: 'none',
+                                '&::-webkit-scrollbar': { display: 'none' },
+                                flex: 1,
+                                minWidth: 0,
+                                py: '4px'
+                            }}>
                                 {/* Country dropdown */}
-                                <Box onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                                    sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative' }}>
+                                <Box onClick={(e) => setCountryAnchorEl(e.currentTarget)}
+                                    sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', position: 'relative', flexShrink: 0 }}>
                                     <Box component="img" src={selectedCountry?.flag || saudiFlag}
                                         sx={{ width: '28px', height: '18px', borderRadius: '2px', objectFit: 'cover' }} />
                                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
                                         <polyline points="6 9 12 15 18 9" />
                                     </svg>
-                                    {showCountryDropdown && (
-                                        <Country
-                                            darkMode={darkMode}
-                                            onClose={() => setShowCountryDropdown(false)}
-                                            onSelect={(c) => { setSelectedCountry(c); setShowCountryDropdown(false); }}
-                                        />
-                                    )}
                                 </Box>
+                                <Popover
+                                    open={Boolean(countryAnchorEl)}
+                                    anchorEl={countryAnchorEl}
+                                    onClose={() => setCountryAnchorEl(null)}
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                                    PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', overflow: 'visible', mt: { xs: '-28px', sm: '-35px' }, ml: { xs: '5px', sm: '20px' } } }}
+                                >
+                                    <Country
+                                        darkMode={darkMode}
+                                        onClose={() => setCountryAnchorEl(null)}
+                                        onSelect={(c) => { setSelectedCountry(c); setCountryAnchorEl(null); }}
+                                    />
+                                </Popover>
 
-                                {/* Service Type pill */}
-                                <Box sx={{
+                                {/* Date Posted pill */}
+                                <Box onClick={(e) => setDateAnchorEl(e.currentTarget)} sx={{
                                     border: darkMode ? '1px solid #444' : '1px solid #e0e0e0',
                                     borderRadius: '50px', px: { xs: '10px', sm: '14px' }, py: '5px',
                                     cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px',
-                                    bgcolor: darkMode ? 'transparent' : '#fff'
+                                    bgcolor: darkMode ? 'transparent' : '#fff',
+                                    flexShrink: 0
                                 }}>
                                     <Typography sx={{ fontSize: '11px', fontWeight: 600, color: darkMode ? '#ccc' : '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>
-                                        Service Type
+                                        Date Posted
                                     </Typography>
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
                                         <polyline points="6 9 12 15 18 9" />
                                     </svg>
                                 </Box>
+                                <Popover
+                                    open={Boolean(dateAnchorEl)}
+                                    anchorEl={dateAnchorEl}
+                                    onClose={() => setDateAnchorEl(null)}
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                    PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', overflow: 'visible', mt: '12px' } }}
+                                >
+                                    <DatePosted darkMode={darkMode} onClose={() => setDateAnchorEl(null)} onNext={() => setDateAnchorEl(null)} />
+                                </Popover>
+
+                                {/* Service Type pill */}
+                                <Box onClick={(e) => setTypeAnchorEl(e.currentTarget)} sx={{
+                                    border: darkMode ? '1px solid #444' : '1px solid #e0e0e0',
+                                    borderRadius: '50px', px: { xs: '10px', sm: '14px' }, py: '5px',
+                                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px',
+                                    bgcolor: darkMode ? 'transparent' : '#fff',
+                                    position: 'relative',
+                                    flexShrink: 0
+                                }}>
+                                    <Typography sx={{ fontSize: '11px', fontWeight: 600, color: darkMode ? '#ccc' : '#333', fontFamily: 'Poppins', whiteSpace: 'nowrap' }}>
+                                        {selectedServiceType === 'all' ? 'Service Type' : selectedServiceType.charAt(0).toUpperCase() + selectedServiceType.slice(1)}
+                                    </Typography>
+                                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="3">
+                                        <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                </Box>
+                                <Popover
+                                    open={Boolean(typeAnchorEl)}
+                                    anchorEl={typeAnchorEl}
+                                    onClose={() => setTypeAnchorEl(null)}
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                    PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', overflow: 'visible', mt: '12px' } }}
+                                >
+                                    <ServiceTypePop
+                                        darkMode={darkMode}
+                                        onClose={() => setTypeAnchorEl(null)}
+                                        onSelect={(type) => setSelectedServiceType(type)}
+                                        selectedType={selectedServiceType}
+                                    />
+                                </Popover>
                             </Box>
                         )}
                         {isSplit && (
@@ -228,25 +297,32 @@ const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false 
                     </Box>
 
                     {/* Sort icon / View All */}
-                    <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                         {isSplit ? (
                             <Typography sx={{ fontSize: '14px', color: darkMode ? '#aaa' : '#757575', cursor: 'pointer' }}>
                                 View All
                             </Typography>
                         ) : (
                             <>
-                                <svg onClick={() => setShowSortPopup(!showSortPopup)} width="16" height="16" viewBox="0 0 24 24"
+                                <svg onClick={(e) => setSortAnchorEl(e.currentTarget)} width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke={darkMode ? '#ccc' : '#222'} strokeWidth="3" style={{ cursor: 'pointer' }}>
                                     <path d="M7 20l-4-4m4 4l4-4M7 20V4M17 4l-4 4m4-4l4 4M17 4v16" />
                                 </svg>
-                                {showSortPopup && (
-                                    <UpDownArrowBtn
+                                <Popover
+                                    open={Boolean(sortAnchorEl)}
+                                    anchorEl={sortAnchorEl}
+                                    onClose={() => setSortAnchorEl(null)}
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                    PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', overflow: 'visible', mt: '12px' } }}
+                                >
+                                    <UpDownArrowPop
                                         darkMode={darkMode}
-                                        onClose={() => setShowSortPopup(false)}
-                                        onSelect={(sort) => { setSelectedSort(sort); setShowSortPopup(false); }}
+                                        onClose={() => setSortAnchorEl(null)}
+                                        onSelect={(sort) => { setSelectedSort(sort); setSortAnchorEl(null); }}
                                         selectedSort={selectedSort}
                                     />
-                                )}
+                                </Popover>
                             </>
                         )}
                     </Box>
@@ -257,11 +333,12 @@ const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false 
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justifyContent: 'flex-start',
                         width: '100%',
                         overflowX: 'auto',
                         '&::-webkit-scrollbar': { display: 'none' },
-                        gap: '12px'
+                        gap: { xs: '8px', sm: '12px' },
+                        pb: '5px'
                     }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
                             {/* Filter icon */}
@@ -329,12 +406,13 @@ const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false 
                 pb: '24px',
                 pt: '8px',
                 px: isSplit ? { xs: '15px', sm: '25px' } : { xs: '15px', sm: '0px' },
+                boxSizing: 'border-box',
                 display: 'grid',
                 gridTemplateColumns: isSplit
                     ? '1fr'
                     : {
                         xs: '1fr',
-                        sm: 'repeat(2, 1fr)',
+                        sm: 'repeat(3, 1fr)',
                         md: 'repeat(3, 1fr)'
                     },
                 alignContent: 'start',
@@ -349,16 +427,7 @@ const ServicePage = ({ darkMode = false, onBack, onViewDetails, isSplit = false 
                 ))}
             </Box>
 
-            {/* Date Posted modal */}
-            {showDateFilter && (
-                <Box sx={{
-                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    bgcolor: 'rgba(0,0,0,0.4)', zIndex: 2000,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', p: '10px'
-                }}>
-                    <DatePosted darkMode={darkMode} onClose={() => setShowDateFilter(false)} onNext={() => setShowDateFilter(false)} />
-                </Box>
-            )}
+            {/* Card Grid ends */}
         </Box>
     );
 };

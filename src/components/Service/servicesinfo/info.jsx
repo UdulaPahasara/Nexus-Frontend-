@@ -27,7 +27,7 @@ const ServiceInfo = ({ darkMode = false, onBack }) => {
             width: '100%',
             maxWidth: { xs: '100%', md: '706px' },
             height: '100%',
-            maxHeight: { xs: 'none', md: '1097px' }, 
+            maxHeight: { xs: 'none', md: '1097px' },
             bgcolor: darkMode ? '#1e1e2e' : '#fff',
             borderRadius: '15px',
             boxShadow: darkMode ? '0px 4px 20px rgba(0,0,0,0.5)' : '0px 4px 20px rgba(0,0,0,0.05)',
@@ -138,8 +138,8 @@ const ServiceInfo = ({ darkMode = false, onBack }) => {
                         p: '15px', borderRadius: '8px'
                     }}>
                         {[
-                            { label: 'Email Address', val: 'musthakmushthi@gmail.com', icon: <EmailIcon sx={{ fontSize: '16px' }} /> },
-                            { label: 'Phone Number', val: '+94 786 385 885', icon: <PhoneIcon sx={{ fontSize: '16px' }} /> },
+                            { label: 'Email Address', val: 'musthakmushthi@gmail.com', icon: <EmailIcon sx={{ fontSize: '16px' }} />, link: 'mailto:musthakmushthi@gmail.com' },
+                            { label: 'Phone Number', val: '+94 786 385 885', icon: <PhoneIcon sx={{ fontSize: '16px' }} />, link: 'tel:+94786385885' },
                             { label: 'Website', val: 'www.musthakmushthi.com', icon: <LanguageIcon sx={{ fontSize: '16px' }} /> },
                             { label: 'Address', val: '43 Al Khobar , Saudi Arabia', icon: <LocationOnIcon sx={{ fontSize: '16px' }} /> },
                             { label: 'Date Of Birth', val: '1997.04.23', icon: <CakeIcon sx={{ fontSize: '16px' }} /> },
@@ -154,10 +154,46 @@ const ServiceInfo = ({ darkMode = false, onBack }) => {
                                 <Typography sx={{ fontSize: '13px', fontWeight: 600, color: darkMode ? '#ccc' : '#444', width: { xs: '100%', sm: '120px' } }}>
                                     {row.label}
                                 </Typography>
-                                <Typography sx={{ fontSize: '13px', color: '#888', flex: 1, textAlign: 'left', pl: { xs: '0px', sm: '0px' } }}>
-                                    {row.val}
-                                </Typography>
-                                <Box sx={{ color: '#888' }}>{row.icon}</Box>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-start', sm: 'space-between' }, flex: 1, width: '100%', gap: '8px' }}>
+                                    <Typography sx={{ fontSize: '13px', color: '#888', textAlign: 'left' }}>
+                                        {row.link ? (
+                                            <Box component="a" href={row.link} sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+                                                {row.val}
+                                            </Box>
+                                        ) : (
+                                            row.val
+                                        )}
+                                    </Typography>
+
+                                    <Box sx={{ color: '#888', display: 'flex', alignItems: 'center' }}>
+                                        {row.link ? (
+                                            <IconButton
+                                                component="a"
+                                                href={row.link}
+                                                size="small"
+                                                sx={{
+                                                    color: 'inherit',
+                                                    p: 0,
+                                                    minWidth: 'auto',
+                                                    '&:hover': { color: darkMode ? '#fff' : '#111' }
+                                                }}
+                                            >
+                                                {row.icon}
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton
+                                                size="small"
+                                                sx={{
+                                                    color: 'inherit',
+                                                    p: 0,
+                                                    minWidth: 'auto',
+                                                }}
+                                            >
+                                                {row.icon}
+                                            </IconButton>
+                                        )}
+                                    </Box>
+                                </Box>
                             </Box>
                         ))}
                     </Box>
