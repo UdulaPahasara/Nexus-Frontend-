@@ -304,6 +304,8 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                     '&::-webkit-scrollbar': { display: 'none' },
                     scrollbarWidth: 'none'
                 }}>
+                    {/* Spacer for scroll start */}
+                    <Box sx={{ minWidth: { xs: '5px', sm: '0px' }, height: '1px' }} />
 
                     {HEADER_BUTTONS.map((btn) => (
                         <Box
@@ -341,6 +343,8 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                             </Typography>
                         </Box>
                     ))}
+                    {/* Spacer for scroll */}
+                    <Box sx={{ minWidth: '20px', height: '1px' }} />
                 </Box>
             </Box>
 
@@ -348,7 +352,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
             <Box sx={{
                 width: '100%',
                 mt: '35px',
-                px: { xs: '10px', sm: '30px' },
+                px: { xs: '15px', sm: '30px' },
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
@@ -357,6 +361,9 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                 '&::-webkit-scrollbar': { display: 'none' },
                 scrollbarWidth: 'none'
             }}>
+                {/* Spacer for scroll start */}
+                <Box sx={{ minWidth: { xs: '5px', sm: '0px' }, height: '1px' }} />
+
                 {PILL_FILTERS.map((pill) => (
                     <Box
                         key={pill}
@@ -388,6 +395,8 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                         {pill}
                     </Box>
                 ))}
+                {/* Spacer for scroll */}
+                <Box sx={{ minWidth: { xs: '15px', sm: '30px' }, height: '1px' }} />
             </Box>
 
             {/* Featured Postings Title */}
@@ -417,7 +426,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                     <JobCard key={job.id} job={job} darkMode={darkMode} />
                 ))}
             </Box>
-        </Box >
+        </Box>
     );
 };
 
