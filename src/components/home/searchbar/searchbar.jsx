@@ -206,6 +206,7 @@ const SearchBar = ({ darkMode = false, onToggle, onMenuClick, activeTab, onTabCh
                                 component="img"
                                 src={bellIcon}
                                 alt="Notifications"
+                                onClick={() => onTabChange && onTabChange('Notifications')}
                                 sx={{
                                     width: '22px',  // Same size as message
                                     height: '22px',

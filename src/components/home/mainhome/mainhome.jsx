@@ -21,6 +21,7 @@ import Jobs from '../../jobs/jobs';
 import FeaturedJobs from '../../jobs/partime/rightsidebar/featuredjob';
 import TopRecruits from '../../jobs/partime/rightsidebar/toprecruiers';
 import ServicesRightSidebar from '../../Service/rightSideBar/Rightsidebar';
+import Notification from '../../notification/notification';
 
 
 
@@ -333,6 +334,26 @@ const MainHome = () => {
                                 )}
                             </Box>
                         )}
+                    </Box>
+                ) : activeTab === 'Notifications' ? (
+                    <Box sx={{
+                        display: 'flex',
+                        gap: '30px',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}>
+                        <Notification darkMode={darkMode} />
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <ServiceWidget darkMode={darkMode} />
+                        </Box>
                     </Box>
                 ) : (
                     <>
