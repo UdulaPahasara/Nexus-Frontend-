@@ -25,6 +25,7 @@ import FullTime from './fulltimejob/fulltime';
 import Freelance from './freelance/freelance';
 import Internship from './internship/internship';
 import ApplyInternship from './applyjob/ApplyInternship';
+import CVPage from './cv/cv';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -248,6 +249,14 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
         />;
     }
 
+    if (view === 'cv') {
+        return <CVPage
+            darkMode={darkMode}
+            onSelectionChange={onSelectionChange}
+            selectedJobId={selectedJobId}
+        />;
+    }
+
     if (view === 'apply') {
         return <ApplyJob darkMode={darkMode} onBack={() => setView('parttime')} />;
     }
@@ -305,6 +314,7 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
                                 if (btn.label === 'Freelance') setView('freelance');
                                 if (btn.label === 'Internship') setView('internship');
                                 if (btn.label === 'Volunteer') setView('volunteer');
+                                if (btn.label === 'CV') setView('cv');
                             }}
                             sx={{
                                 display: 'flex',
