@@ -1,3 +1,4 @@
+"use no memo";
 import React from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,19 +7,19 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
+const SESSIONS = [
+    { device: 'I Phone 16 Pro', location: 'Colombo, Sri Lanka', status: 'Active', time: '5h ago', statusColor: '#00E783' },
+    { device: 'I Phone 14 Pro', location: 'Kandy, Sri Lanka', status: 'Offline', time: '1m ago', statusColor: '#E02424' },
+];
+
+const SOCIAL_LINKS = [
+    'https://www.twitter.com/in/nuwini-karunarathna',
+    'https://www.fiverr.com/in/nuwini-karunarathna',
+    'https://www.dribble.com/in/nuwini-karunarathna',
+    'https://www.behance.com/in/nuwini-karunarathna',
+];
+
 const SettingsRightSideBar = ({ darkMode = false }) => {
-    const sessions = [
-        { device: 'I Phone 16 Pro', location: 'Colombo, Sri Lanka', status: 'Active', time: '5h ago', statusColor: '#00E783' },
-        { device: 'I Phone 14 Pro', location: 'Kandy, Sri Lanka', status: 'Offline', time: '1m ago', statusColor: '#E02424' },
-    ];
-
-    const socialLinks = [
-        'https://www.twitter.com/in/nuwini-karunarathna',
-        'https://www.fiverr.com/in/nuwini-karunarathna',
-        'https://www.dribble.com/in/nuwini-karunarathna',
-        'https://www.behance.com/in/nuwini-karunarathna',
-    ];
-
     return (
         <Box sx={{
             width: { xs: '100%', md: '372px' },
@@ -62,7 +63,7 @@ const SettingsRightSideBar = ({ darkMode = false }) => {
                 </Box>
 
                 {/* Session Rows */}
-                {sessions.map((session, idx) => (
+                {SESSIONS.map((session, idx) => (
                     <Box key={idx} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '35px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <Box sx={{ width: '30px', height: '30px', borderRadius: '4px', border: '1px solid #ddd', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -123,7 +124,7 @@ const SettingsRightSideBar = ({ darkMode = false }) => {
 
                 {/* Social Links List */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {socialLinks.map((link, index) => (
+                    {SOCIAL_LINKS.map((link, index) => (
                         <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <Box sx={{
                                 width: '24px',

@@ -1,58 +1,46 @@
-import React from 'react';
-import { Box, Typography, IconButton, Switch, Button } from '@mui/material';
+"use no memo";
+import React, { useState } from 'react';
+import { Box, Typography, IconButton, Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const CustomToggle = ({ checked, onChange, labelLeft, labelRight, color = '#34D399' }) => (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        {labelLeft && (
-            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>
-                {labelLeft}
-            </Typography>
-        )}
-        <Switch
-            checked={checked}
-            onChange={onChange}
-            sx={{
-                width: 42,
-                height: 22,
-                padding: 0,
-                '& .MuiSwitch-switchBase': {
-                    padding: 0,
-                    margin: 2,
-                    transitionDuration: '300ms',
-                    '&.Mui-checked': {
-                        transform: 'translateX(20px)',
-                        color: '#fff',
-                        '& + .MuiSwitch-track': {
-                            backgroundColor: color,
-                            opacity: 1,
-                            border: 0,
-                        },
-                    },
-                },
-                '& .MuiSwitch-thumb': {
-                    boxSizing: 'border-box',
-                    width: 18,
-                    height: 18,
-                },
-                '& .MuiSwitch-track': {
-                    borderRadius: 22 / 2,
-                    backgroundColor: '#E5E7EB',
-                    opacity: 1,
-                },
-            }}
-        />
-        {labelRight && (
-            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>
-                {labelRight}
-            </Typography>
-        )}
+const CustomToggle = ({ checked, onChange, color = '#00E783' }) => (
+    <Box
+        onClick={onChange}
+        sx={{
+            width: '38px',
+            height: '20px',
+            bgcolor: checked ? color : '#D1D5DB',
+            borderRadius: '20px',
+            position: 'relative',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            px: '2px'
+        }}
+    >
+        <Box sx={{
+            width: '16px',
+            height: '16px',
+            bgcolor: '#fff',
+            borderRadius: '50%',
+            position: 'absolute',
+            left: checked ? '20px' : '2px',
+            transition: 'left 0.3s ease',
+            boxShadow: '0px 1px 3px rgba(0,0,0,0.2)'
+        }} />
     </Box>
 );
 
-const AccPreferance = ({ onBack, darkMode = false }) => {
+const AccPreferance = ({ onBack, darkMode = false, onToggle }) => {
+    console.log("Rendering AccPreferance, darkMode:", darkMode);
+
+    // Interactive states
+    const [soundOn, setSoundOn] = useState(true);
+    const [hibernateEnabled, setHibernateEnabled] = useState(false);
+
     return (
         <Box sx={{
             width: '100%',
@@ -128,7 +116,11 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             Theme
                         </Typography>
-                        <CustomToggle labelLeft="Light" labelRight="Dark" checked={darkMode} onChange={() => { }} />
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>Light</Typography>
+                            <CustomToggle checked={darkMode} onChange={onToggle} />
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>Dark</Typography>
+                        </Box>
                     </Box>
 
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
@@ -138,13 +130,17 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             Sound Effects
                         </Typography>
-                        <CustomToggle labelLeft="ON" labelRight="OFF" checked={true} onChange={() => { }} />
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>ON</Typography>
+                            <CustomToggle checked={soundOn} onChange={() => setSoundOn(!soundOn)} />
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>OFF</Typography>
+                        </Box>
                     </Box>
 
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
 
                     {/* People Unfollowed/Blocked */}
-                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer' }}>
+                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer', '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#f9f9f9' } }}>
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             People Unfollowed/Blocked
                         </Typography>
@@ -154,7 +150,7 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
 
                     {/* Account type */}
-                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer' }}>
+                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer', '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#f9f9f9' } }}>
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             Account type
                         </Typography>
@@ -164,7 +160,7 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
 
                     {/* Showing Profile and Details */}
-                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer' }}>
+                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px', cursor: 'pointer', '&:hover': { bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#f9f9f9' } }}>
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             Showing Profile and Details
                         </Typography>
@@ -178,7 +174,11 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                         <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
                             Hibernate Account
                         </Typography>
-                        <CustomToggle labelLeft="Enable" labelRight="Disable" checked={false} onChange={() => { }} color="#6B7280" />
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>Enable</Typography>
+                            <CustomToggle checked={hibernateEnabled} onChange={() => setHibernateEnabled(!hibernateEnabled)} color="#6B7280" />
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: '#888' }}>Disable</Typography>
+                        </Box>
                     </Box>
 
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
@@ -196,8 +196,9 @@ const AccPreferance = ({ onBack, darkMode = false }) => {
                                 textTransform: 'none',
                                 fontFamily: 'Poppins',
                                 fontSize: '12px',
-                                borderRadius: '10px',
+                                borderRadius: '25px', // More rounded as per Figma
                                 px: '20px',
+                                height: '30px',
                                 '&:hover': { bgcolor: '#a60b0b' }
                             }}
                         >

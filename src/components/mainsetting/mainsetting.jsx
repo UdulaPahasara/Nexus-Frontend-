@@ -1,5 +1,7 @@
-import React from 'react';
-import { Box, Typography, Grid } from '@mui/material';
+"use no memo";
+import React, { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import AccPreferance from './accpreferance/accPreferance.jsx';
 
 // Icons from assets/MainSetting
 import accountPrefIcon from '../../assets/MainSetting/Account Preferences.webp';
@@ -19,7 +21,24 @@ import chartIcon from '../../assets/Home/propffun/chart-line.webp';
 import searchIcon from '../../assets/Home/propffun/search.webp';
 import profilePic from '../../assets/Home/propffun/profilepic.webp';
 
-const MainSetting = ({ darkMode = false }) => {
+const MainSetting = ({ darkMode = false, onToggle }) => {
+    const [view, setView] = useState('main'); // 'main' or 'accPreferance'
+
+    const handleSettingClick = (label) => {
+        console.log("Setting clicked from MainSetting:", label);
+        if (label === 'Account Preferences') {
+            setView('accPreferance');
+        }
+    };
+
+    const handleBack = () => {
+        setView('main');
+    };
+
+    if (view === 'accPreferance') {
+        return <AccPreferance onBack={handleBack} darkMode={darkMode} onToggle={onToggle} />;
+    }
+
     const settings = [
         { label: 'Account Preferences', icon: accountPrefIcon },
         { label: 'Services Settings', icon: serviceSettingIcon },
@@ -132,24 +151,27 @@ const MainSetting = ({ darkMode = false }) => {
                 boxSizing: 'border-box'
             }}>
                 {settings.map((item, index) => (
-                    <Box key={index} sx={{
-                        width: '100%',
-                        maxWidth: '216px',
-                        height: '65px',
-                        borderRadius: '8px',
-                        border: '1px solid',
-                        borderColor: darkMode ? '#333' : '#eee',
-                        p: '15px 13px',
-                        boxSizing: 'border-box',
-                        display: 'flex',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        justifySelf: 'center',
-                        '&:hover': {
-                            bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#f9f9f9',
-                            borderColor: '#7B2FBE'
-                        }
-                    }}>
+                    <Box key={index}
+                        onClick={() => handleSettingClick(item.label)}
+                        sx={{
+                            width: '100%',
+                            maxWidth: '216px',
+                            height: '65px',
+                            borderRadius: '8px',
+                            border: '1px solid',
+                            borderColor: darkMode ? '#333' : '#eee',
+                            p: '15px 13px',
+                            boxSizing: 'border-box',
+                            display: 'flex',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            justifySelf: 'center',
+                            '&:hover': {
+                                bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : '#f9f9f9',
+                                borderColor: '#7B2FBE'
+                            }
+                        }}
+                    >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', height: '35px' }}>
                             <Box sx={{ width: '25px', height: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
                                 <Box component="img" src={item.icon} sx={{

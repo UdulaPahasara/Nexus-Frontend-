@@ -126,9 +126,10 @@ const MainHome = () => {
                 >
                     <ProfileSidebar
                         darkMode={darkMode}
-                        isMobile
+                        isMobile={true}
                         activeTab={activeTab}
                         onTabChange={handleTabChange}
+                        onTabClick={() => setDrawerOpen(false)}
                     />
                 </Drawer>
 
@@ -193,7 +194,7 @@ const MainHome = () => {
                         justifyContent: 'center',
                         width: '100%',
                     }}>
-                        <MainSetting darkMode={darkMode} />
+                        <MainSetting darkMode={darkMode} onToggle={() => setDarkMode(prev => !prev)} />
                         <Box sx={{
                             display: { xs: 'none', md: 'flex' },
                             flexDirection: 'column',
