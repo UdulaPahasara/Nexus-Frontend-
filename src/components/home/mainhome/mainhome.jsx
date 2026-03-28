@@ -22,6 +22,9 @@ import FeaturedJobs from '../../jobs/partime/rightsidebar/featuredjob';
 import TopRecruits from '../../jobs/partime/rightsidebar/toprecruiers';
 import ServicesRightSidebar from '../../Service/rightSideBar/Rightsidebar';
 import Notification from '../../notification/notification';
+import MainSetting from '../../mainsetting/mainsetting';
+import SettingsRightSideBar from '../../mainsetting/rightsidebar/rightSideBar';
+
 
 
 
@@ -48,6 +51,7 @@ const MainHome = () => {
     };
 
     const handleTabChange = (tab) => {
+        console.log("Tab changed to:", tab);
         if (tab === 'Jobs') {
             setJobsView('main');
         }
@@ -55,6 +59,7 @@ const MainHome = () => {
             setServicesView('root');
         }
         setActiveTab(tab);
+        setDrawerOpen(false); // Close drawer on selection (good for mobile)
     };
 
     return (
@@ -179,6 +184,25 @@ const MainHome = () => {
                                 <NoChat darkMode={darkMode} />
                             </Box>
                         )}
+                    </Box>
+                ) : (activeTab === 'Settings' || activeTab === 'Setting') ? (
+                    <Box sx={{
+                        display: 'flex',
+                        gap: '30px',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}>
+                        <MainSetting darkMode={darkMode} />
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                        }}>
+                            <SettingsRightSideBar darkMode={darkMode} />
+                        </Box>
                     </Box>
                 ) : activeTab === 'My Network' ? (
                     <Box sx={{
@@ -356,6 +380,7 @@ const MainHome = () => {
                         </Box>
                     </Box>
                 ) : (
+
                     <>
                         {/* ── CENTER: Main Content Feed ── */}
                         <Box sx={{
@@ -407,7 +432,7 @@ const MainHome = () => {
                 )}
 
             </Box>
-        </Box>
+        </Box >
     );
 };
 
