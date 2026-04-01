@@ -24,6 +24,7 @@ import ServicesRightSidebar from '../../Service/rightSideBar/Rightsidebar';
 import Notification from '../../notification/notification';
 import MainSetting from '../../mainsetting/mainsetting';
 import SettingsRightSideBar from '../../mainsetting/rightsidebar/rightSideBar';
+import MarketPlace from '../../macketPlace/marcketPlace';
 
 
 
@@ -316,6 +317,20 @@ const MainHome = () => {
                                 <ServicesRightSidebar darkMode={darkMode} />
                             </Box>
                         )}
+                    </Box>
+                ) : activeTab === 'Marketplace' ? (
+                    <Box sx={{
+                        flexGrow: 1,
+                        minWidth: 0,
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: '20px',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '100%',
+                        overflow: 'hidden',
+                    }}>
+                        <MarketPlace darkMode={darkMode} onTabChange={setActiveTab} />
                     </Box>
                 ) : activeTab === 'Jobs' ? (
                     <Box sx={{

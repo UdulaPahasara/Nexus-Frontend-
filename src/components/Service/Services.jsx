@@ -211,27 +211,31 @@ const ServicesRoot = ({ darkMode = false, onCategoryClick, onViewDetails }) => {
                             key={idx}
                             onClick={() => cat.name === 'Cleaning' && onCategoryClick()}
                             sx={{
-                                width: '72px', height: '101px',
+                                width: '100%',
+                                maxWidth: '72px',
                                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start',
                                 gap: '9px', cursor: 'pointer',
-                                '&:hover': { opacity: 0.8 }
+                                '&:hover': { opacity: 0.8 },
+                                mx: 'auto'
                             }}
                         >
                             {/* Icon Container */}
                             <Box sx={{
-                                width: '72px', height: '72px',
+                                width: '100%',
+                                aspectRatio: '1/1',
                                 borderRadius: '8px',
                                 border: darkMode ? '1px solid #333' : '1px solid #A4CBFA',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 overflow: 'hidden',
                                 bgcolor: darkMode ? 'rgba(255,255,255,0.03)' : 'transparent'
                             }}>
-                                <Box component="img" src={cat.icon} sx={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+                                <Box component="img" src={cat.icon} sx={{ width: '65%', height: '65%', objectFit: 'contain' }} />
                             </Box>
                             {/* Title text */}
                             <Typography sx={{
-                                fontFamily: 'Poppins', fontSize: '10px', fontWeight: 500,
-                                color: darkMode ? '#bbb' : '#444', textAlign: 'center', lineHeight: 1.1
+                                fontFamily: 'Poppins', fontSize: { xs: '9px', sm: '10px' }, fontWeight: 500,
+                                color: darkMode ? '#bbb' : '#444', textAlign: 'center', lineHeight: 1.1,
+                                width: '100%', wordBreak: 'break-word', hyphens: 'auto'
                             }}>
                                 {cat.name}
                             </Typography>
