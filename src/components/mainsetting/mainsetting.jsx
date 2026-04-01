@@ -1,6 +1,7 @@
 "use no memo";
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import AccPreferance from './accpreferance/accPreferance.jsx';
 
 // Icons from assets/MainSetting
@@ -24,10 +25,14 @@ import profilePic from '../../assets/Home/propffun/profilepic.webp';
 const MainSetting = ({ darkMode = false, onToggle }) => {
     const [view, setView] = useState('main'); // 'main' or 'accPreferance'
 
+    const navigate = useNavigate();
+
     const handleSettingClick = (label) => {
         console.log("Setting clicked from MainSetting:", label);
         if (label === 'Account Preferences') {
             setView('accPreferance');
+        } else if (label === 'Sign Out') {
+            navigate('/login');
         }
     };
 

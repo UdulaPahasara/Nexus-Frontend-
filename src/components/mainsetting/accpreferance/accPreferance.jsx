@@ -1,6 +1,7 @@
 "use no memo";
 import React, { useState } from 'react';
 import { Box, Typography, IconButton, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -40,6 +41,7 @@ const AccPreferance = ({ onBack, darkMode = false, onToggle }) => {
     // Interactive states
     const [soundOn, setSoundOn] = useState(true);
     const [hibernateEnabled, setHibernateEnabled] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <Box sx={{
@@ -184,21 +186,40 @@ const AccPreferance = ({ onBack, darkMode = false, onToggle }) => {
                     <Box sx={{ width: '100%', height: '1px', bgcolor: darkMode ? '#333' : '#eee' }} />
 
                     {/* Deactivate / Delete account */}
-                    <Box sx={{ width: '100%', height: '55px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '10px' }}>
-                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', color: '#888' }}>
+                    <Box sx={{
+                        width: '100%',
+                        minHeight: '55px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        px: { xs: '5px', sm: '10px' },
+                        py: { xs: '10px', sm: 0 },
+                        gap: '10px'
+                    }}>
+                        <Typography sx={{
+                            fontFamily: 'Poppins',
+                            fontSize: { xs: '13px', sm: '14px' },
+                            color: '#888',
+                            flex: 1,
+                            lineHeight: 1.3
+                        }}>
                             Deactivate / Delete account
                         </Typography>
                         <Button
                             variant="contained"
+                            onClick={() => navigate('/login')}
                             sx={{
                                 bgcolor: '#C80E0E',
                                 color: '#fff',
                                 textTransform: 'none',
                                 fontFamily: 'Poppins',
-                                fontSize: '12px',
-                                borderRadius: '25px', // More rounded as per Figma
-                                px: '20px',
+                                fontSize: { xs: '11px', sm: '12px' },
+                                borderRadius: '25px',
+                                px: { xs: '12px', sm: '20px' },
                                 height: '30px',
+                                flexShrink: 0,
+                                whiteSpace: 'nowrap',
+                                minWidth: 'fit-content',
                                 '&:hover': { bgcolor: '#a60b0b' }
                             }}
                         >
