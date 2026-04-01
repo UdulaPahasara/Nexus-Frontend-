@@ -18,7 +18,7 @@ import easyApplyIcon from '../../../assets/login/login.webp';
  * @param {boolean} isCompact - Responsive boolean to condense the card's styling matrix for smaller container widths.
  * @param {string} forcedType - Optional override to explicitly set the job type rendering metric (e.g., 'Full-Time').
  */
-const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive, isCompact, forcedType }) => {
+const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActive, isCompact, forcedType, onCompanyClick }) => {
     const jobTypeLabel = forcedType || job.type || 'Part-Time';
     const isFullTime = jobTypeLabel === 'Full-Time';
     const isFreelance = jobTypeLabel === 'Freelance';
@@ -134,14 +134,23 @@ const JobCard = ({ job, darkMode, isFavorite, onToggleFavorite, onClick, isActiv
 
                 {/* Company & Location Row */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Box
+                        onClick={(e) => {
+                            if (onCompanyClick) {
+                                e.stopPropagation();
+                                onCompanyClick(job.company);
+                            }
+                        }}
+                        sx={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: onCompanyClick ? 'pointer' : 'default' }}
+                    >
                         <Typography sx={{
                             fontFamily: 'Poppins',
                             fontWeight: 600,
                             fontSize: isCompact ? '10px' : '13px',
                             color: darkMode ? '#888' : '#333',
                             lineHeight: 1.2,
-                            display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                            display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                            '&:hover': { color: onCompanyClick ? '#0077B5' : 'inherit' }
                         }}>
                             {job.company}
                         </Typography>

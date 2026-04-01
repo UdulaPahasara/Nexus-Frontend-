@@ -33,7 +33,7 @@ const FULLTIME_JOB_DATA = [
 ];
 
 // FullTime Component
-const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId }) => {
+const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId, onCompanyClick }) => {
     const navigate = useNavigate();
 
     // --- Local State Handling ---
@@ -233,6 +233,7 @@ const FullTime = ({ darkMode, onBack, onSelectionChange, onApply, selectedJobId 
                             onClick={() => handleJobSelect(job.id)}
                             isActive={selectedJobId === job.id}
                             isCompact={!!selectedJobId}
+                            onCompanyClick={onCompanyClick}
                         />
                     ))}
                 </Box>

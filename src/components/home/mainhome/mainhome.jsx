@@ -338,7 +338,7 @@ const MainHome = () => {
                             onBack={() => setActiveTab('Home')}
                         />
 
-                        {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && !selectedJobId && (
+                        {activeTab === 'Jobs' && jobsView !== 'apply' && jobsView !== 'apply-internship' && jobsView !== 'company_profile' && !selectedJobId && (
                             <Box sx={{
                                 display: { xs: 'none', md: 'flex' },
                                 flexDirection: 'column',

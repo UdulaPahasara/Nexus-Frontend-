@@ -26,6 +26,7 @@ import Freelance from './freelance/freelance';
 import Internship from './internship/internship';
 import ApplyInternship from './applyjob/ApplyInternship';
 import CVPage from './cv/cv';
+import CompanyProfile from '../CompanyProfile/CompanyProfile';
 
 // Reaction icon for heart
 import heartIcon from '../../assets/Home/post/reaction_icon/hart_blck.webp';
@@ -185,6 +186,7 @@ const JobCard = ({ job, darkMode }) => (
 const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJobId, onBack }) => {
     const [activePill, setActivePill] = useState('All');
     const [view, setViewState] = useState('main');
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
     useEffect(() => {
         if (forceView) {
@@ -216,6 +218,18 @@ const Jobs = ({ darkMode, onViewChange, forceView, onSelectionChange, selectedJo
             onSelectionChange={onSelectionChange}
             onApply={() => setView('apply')}
             selectedJobId={selectedJobId}
+            onCompanyClick={(company) => {
+                setSelectedCompany(company);
+                setView('company_profile');
+            }}
+        />;
+    }
+
+    if (view === 'company_profile') {
+        return <CompanyProfile
+            darkMode={darkMode}
+            onBack={() => setView('fulltime')}
+            companyName={selectedCompany}
         />;
     }
 
