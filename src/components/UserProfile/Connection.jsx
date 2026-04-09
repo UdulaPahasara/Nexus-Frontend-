@@ -10,7 +10,7 @@ import profile4 from '../../assets/Home/feed/profile4.webp';
 import profile5 from '../../assets/Home/feed/profile5.webp';
 import profile6 from '../../assets/Home/feed/profile6.webp';
 import profile7 from '../../assets/Home/feed/profile7.webp';
-//data
+
 const connectionsData = [
     { id: 1, name: 'Anura Deshan Jayathilaka', bio: 'Full Stack Developer | IOT Enthusiast | Graphic Designer | Software Engineer', pic: profile1, followBack: true },
     { id: 2, name: 'Anura Deshan Jayathilaka', bio: 'Full Stack Developer | Graphic Designer | Software Engineer', pic: profile2, followBack: false },
