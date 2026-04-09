@@ -38,6 +38,7 @@ const MainHome = ({ initialTab = 'Home' }) => {
     const [jobsView, setJobsView] = useState('main');
     const [selectedJobId, setSelectedJobId] = useState(null);
     const [showDetailSidebar, setShowDetailSidebar] = useState(false);
+    const [currentProfileView, setCurrentProfileView] = useState('profile');
 
     // Scroll to top whenever the user switches an internal "tab" or "view"
     useEffect(() => {
@@ -97,8 +98,9 @@ const MainHome = ({ initialTab = 'Home' }) => {
                 pb: '30px',
                 boxSizing: 'border-box',
                 position: 'relative',
-                justifyContent: 'center',
-                alignItems: { xs: 'center', md: 'flex-start' }
+                justifyContent: activeTab === 'UserProfilePage' && currentProfileView !== 'profile' ? 'flex-start' : 'center',
+                alignItems: { xs: 'center', md: 'flex-start' },
+                pl: activeTab === 'UserProfilePage' && currentProfileView !== 'profile' ? { md: '40px', lg: '70px' } : { xs: '0', md: '0' }
             }}>
 
                 {/* ── LEFT: Desktop Sidebar ── */}
@@ -400,7 +402,7 @@ const MainHome = ({ initialTab = 'Home' }) => {
                         {/* ── CENTER: User Profile ── */}
                         <Box sx={{
                             width: '100%',
-                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
+                            maxWidth: currentProfileView === 'profile' ? { xs: '100%', md: '580px', lg: '706px' } : '701px',
                             flexGrow: 1,
                             display: 'flex',
                             flexDirection: 'column',
@@ -408,28 +410,34 @@ const MainHome = ({ initialTab = 'Home' }) => {
                             boxSizing: 'border-box',
                             transition: 'all 0.3s ease'
                         }}>
-                            <UserProfile darkMode={darkMode} onNameClick={() => setShowDetailSidebar(!showDetailSidebar)} />
+                            <UserProfile
+                                darkMode={darkMode}
+                                onNameClick={() => setShowDetailSidebar(!showDetailSidebar)}
+                                onViewChange={setCurrentProfileView}
+                            />
                         </Box>
 
-                        {/* ── RIGHT: Feed & Service (or UserDetail) ── */}
-                        <Box sx={{
-                            display: { xs: 'none', md: 'flex' },
-                            flexDirection: 'column',
-                            gap: '20px',
-                            width: { md: '300px', lg: '372px' },
-                            flexShrink: 0,
-                            position: { md: 'sticky' },
-                            top: '20px'
-                        }}>
-                            {showDetailSidebar ? (
-                                <UserDeatil darkMode={darkMode} />
-                            ) : (
-                                <>
-                                    <Feed darkMode={darkMode} />
-                                    <ServiceWidget darkMode={darkMode} />
-                                </>
-                            )}
-                        </Box>
+                        {/* ── RIGHT: Feed & Service (or UserDetail) — Hidden in social views ── */}
+                        {currentProfileView === 'profile' && (
+                            <Box sx={{
+                                display: { xs: 'none', md: 'flex' },
+                                flexDirection: 'column',
+                                gap: '20px',
+                                width: { md: '300px', lg: '372px' },
+                                flexShrink: 0,
+                                position: { md: 'sticky' },
+                                top: '20px'
+                            }}>
+                                {showDetailSidebar ? (
+                                    <UserDeatil darkMode={darkMode} />
+                                ) : (
+                                    <>
+                                        <Feed darkMode={darkMode} />
+                                        <ServiceWidget darkMode={darkMode} />
+                                    </>
+                                )}
+                            </Box>
+                        )}
                     </>
                 ) : (
 

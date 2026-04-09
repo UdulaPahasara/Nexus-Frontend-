@@ -94,16 +94,16 @@ const Connection = ({ darkMode, onClose }) => {
 
     return (
         <Box sx={{
-            width: { xs: '100vw', md: '100%' },
+            width: '100%',
             maxWidth: '701px',
-            height: { xs: '100vh', md: '661px' },
             bgcolor: bg,
-            borderRadius: { xs: 0, md: '15px' },
+            borderRadius: '15px',
             p: { xs: '16px', sm: '24px' },
             boxSizing: 'border-box',
-            boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.08)',
+            boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.05)',
             display: 'flex',
             flexDirection: 'column',
+            minHeight: '661px'
         }}>
             {/* Header Tabs */}
             <Box sx={{ display: 'flex', alignItems: 'center', mb: '24px', flexShrink: 0 }}>

@@ -26,13 +26,24 @@ import UserAboout from './UserAboout';
 import Followers from './Followers';
 import Connection from './Connection';
 import UserDeatil from './UserDeatil';
+import UprofilePop from './Popups/UprofilePop';
 import Modal from '@mui/material/Modal';
+import Popover from '@mui/material/Popover';
 
-const UserProfile = ({ darkMode, onNameClick }) => {
+const UserProfile = ({ darkMode, onNameClick, onViewChange }) => {
     const [currentTab, setCurrentTab] = useState('Activity');
-    const [showFollowers, setShowFollowers] = useState(false);
-    const [showConnections, setShowConnections] = useState(false);
+    const [view, setView] = useState('profile'); // 'profile', 'followers', 'connections'
+
+    // Notify parent of view changes to manage sidebar visibility
+    React.useEffect(() => {
+        if (onViewChange) onViewChange(view);
+    }, [view, onViewChange]);
     const [showUserDetail, setShowUserDetail] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
+    const handleCloseMenu = () => setAnchorEl(null);
+    const isMenuOpen = Boolean(anchorEl);
 
     const handleNameClick = () => {
         // On mobile: open as modal; on desktop: delegate to parent
@@ -52,29 +63,24 @@ const UserProfile = ({ darkMode, onNameClick }) => {
         post1, post2, post3, post4, post5, post6
     ];
 
+    if (view === 'followers') {
+        return (
+            <Box sx={{ width: '100%', maxWidth: '706px', height: '100%' }}>
+                <Followers darkMode={darkMode} onClose={() => setView('profile')} />
+            </Box>
+        );
+    }
+
+    if (view === 'connections') {
+        return (
+            <Box sx={{ width: '100%', maxWidth: '706px', height: '100%' }}>
+                <Connection darkMode={darkMode} onClose={() => setView('profile')} />
+            </Box>
+        );
+    }
+
     return (
         <>
-            {/* Followers Modal */}
-            <Modal
-                open={showFollowers}
-                onClose={() => setShowFollowers(false)}
-                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: { xs: 0, sm: 2 } }}
-            >
-                <Box sx={{ outline: 'none', width: '100%', maxWidth: '656px', height: { xs: '100%', sm: 'auto' } }}>
-                    <Followers darkMode={darkMode} onClose={() => setShowFollowers(false)} />
-                </Box>
-            </Modal>
-
-            {/* Connections Modal */}
-            <Modal
-                open={showConnections}
-                onClose={() => setShowConnections(false)}
-                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: { xs: 0, sm: 2 } }}
-            >
-                <Box sx={{ outline: 'none', width: '100%', maxWidth: '701px', height: { xs: '100%', sm: 'auto' } }}>
-                    <Connection darkMode={darkMode} onClose={() => setShowConnections(false)} />
-                </Box>
-            </Modal>
 
             {/* UserDeatil Modal — mobile only */}
             <Modal
@@ -91,6 +97,18 @@ const UserProfile = ({ darkMode, onNameClick }) => {
                     <UserDeatil darkMode={darkMode} onClose={() => setShowUserDetail(false)} />
                 </Box>
             </Modal>
+
+            {/* Profile Options Popover */}
+            <Popover
+                open={isMenuOpen}
+                anchorEl={anchorEl}
+                onClose={handleCloseMenu}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                slotProps={{ paper: { sx: { borderRadius: '10px', mt: '5px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' } } }}
+            >
+                <UprofilePop darkMode={darkMode} onClose={handleCloseMenu} />
+            </Popover>
 
             <Box sx={{
                 width: '100%',
@@ -141,20 +159,30 @@ const UserProfile = ({ darkMode, onNameClick }) => {
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                        <Box onClick={() => setShowFollowers(true)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                        <Box onClick={() => setView('followers')} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
                             <Typography sx={{ fontSize: '15px', fontWeight: 700, color: textColor, lineHeight: 1 }}>1,576</Typography>
                             <Typography sx={{ fontSize: '12px', color: subTextColor }}>Followers</Typography>
                         </Box>
-                        <Box onClick={() => setShowConnections(true)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                        <Box onClick={() => setView('connections')} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
                             <Typography sx={{ fontSize: '15px', fontWeight: 700, color: textColor, lineHeight: 1 }}>1,456</Typography>
                             <Typography sx={{ fontSize: '12px', color: subTextColor }}>Connections</Typography>
                         </Box>
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: 'flex', gap: '6px' }}>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px' }}>
+                            <IconButton
+                                component="a"
+                                href="mailto:nuwinikaru122@gmail.com"
+                                size="small"
+                                sx={{ bgcolor: infoBg, borderRadius: '8px' }}
+                            >
                                 <MailOutlineIcon sx={{ fontSize: '20px', color: textColor }} />
                             </IconButton>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px' }}>
+                            <IconButton
+                                component="a"
+                                href="tel:+94789987885"
+                                size="small"
+                                sx={{ bgcolor: infoBg, borderRadius: '8px' }}
+                            >
                                 <PhoneIcon sx={{ fontSize: '20px', color: textColor }} />
                             </IconButton>
                         </Box>
@@ -178,19 +206,29 @@ const UserProfile = ({ darkMode, onNameClick }) => {
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                        <Box onClick={() => setShowFollowers(true)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                        <Box onClick={() => setView('followers')} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
                             <Typography sx={{ fontSize: '14px', fontWeight: 700, color: textColor, lineHeight: 1 }}>1,576</Typography>
                             <Typography sx={{ fontSize: '11px', color: subTextColor }}>Followers</Typography>
                         </Box>
-                        <Box onClick={() => setShowConnections(true)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                        <Box onClick={() => setView('connections')} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
                             <Typography sx={{ fontSize: '14px', fontWeight: 700, color: textColor, lineHeight: 1 }}>1,456</Typography>
                             <Typography sx={{ fontSize: '11px', color: subTextColor }}>Connections</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', gap: '6px' }}>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px' }}>
+                            <IconButton
+                                component="a"
+                                href="mailto:nuwinikaru122@gmail.com"
+                                size="small"
+                                sx={{ bgcolor: infoBg, borderRadius: '8px' }}
+                            >
                                 <MailOutlineIcon sx={{ fontSize: '18px', color: textColor }} />
                             </IconButton>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px' }}>
+                            <IconButton
+                                component="a"
+                                href="tel:+94789987885"
+                                size="small"
+                                sx={{ bgcolor: infoBg, borderRadius: '8px' }}
+                            >
                                 <PhoneIcon sx={{ fontSize: '18px', color: textColor }} />
                             </IconButton>
                         </Box>
@@ -266,7 +304,10 @@ const UserProfile = ({ darkMode, onNameClick }) => {
                             }}>
                             Message
                         </Button>
-                        <IconButton sx={{ color: textColor }}>
+                        <IconButton
+                            onClick={handleOpenMenu}
+                            sx={{ color: textColor }}
+                        >
                             <MoreVertIcon />
                         </IconButton>
                     </Box>

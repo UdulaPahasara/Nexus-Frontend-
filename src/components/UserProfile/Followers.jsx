@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box, Typography, Button, IconButton, Avatar } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CloseIcon from '@mui/icons-material/Close';
+import Popover from '@mui/material/Popover';
+import FollowPop from './Popups/FollowPop';
 
 import profile1 from '../../assets/Home/feed/profile1.webp';
 import profile2 from '../../assets/Home/feed/profile2.webp';
@@ -25,7 +27,7 @@ const followersData = [
 ];
 
 // Reusable single follower/following row card
-export const FollowerCard = ({ name, bio, pic, darkMode }) => {
+export const FollowerCard = ({ name, bio, pic, darkMode, onMenuOpen }) => {
     const textColor = darkMode ? '#fff' : '#000';
     const subColor = darkMode ? '#aaa' : '#555';
     const btnBg = darkMode ? '#2a2a3c' : '#f0f0f0';
@@ -80,7 +82,11 @@ export const FollowerCard = ({ name, bio, pic, darkMode }) => {
                 flexShrink: 0,
                 '&:hover': { bgcolor: darkMode ? '#3a3a55' : '#e0e0e0' }
             }}>Message</Button>
-            <IconButton size="small" sx={{ color: subColor, flexShrink: 0, p: { xs: '2px', sm: '4px' } }}>
+            <IconButton
+                size="small"
+                onClick={(e) => onMenuOpen(e.currentTarget)}
+                sx={{ color: subColor, flexShrink: 0, p: { xs: '2px', sm: '4px' } }}
+            >
                 <MoreVertIcon sx={{ fontSize: '18px' }} />
             </IconButton>
         </Box>
@@ -90,6 +96,11 @@ export const FollowerCard = ({ name, bio, pic, darkMode }) => {
 // Full Followers page component
 const Followers = ({ darkMode, onClose }) => {
     const [activeTab, setActiveTab] = useState('Followers');
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleOpenMenu = (element) => setAnchorEl(element);
+    const handleCloseMenu = () => setAnchorEl(null);
+    const isMenuOpen = Boolean(anchorEl);
     const bg = darkMode ? '#1e1e2e' : '#fff';
     const textColor = darkMode ? '#fff' : '#000';
     const subColor = darkMode ? '#aaa' : '#777';
@@ -97,16 +108,16 @@ const Followers = ({ darkMode, onClose }) => {
 
     return (
         <Box sx={{
-            width: { xs: '100vw', md: '100%' },
-            maxWidth: '656px',
-            height: { xs: '100vh', md: 'auto' },
+            width: '100%',
+            maxWidth: '701px',
             bgcolor: bg,
-            borderRadius: { xs: 0, md: '15px' },
+            borderRadius: '15px',
             p: { xs: '16px', sm: '24px' },
             boxSizing: 'border-box',
-            boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.08)',
+            boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.05)',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            minHeight: '661px'
         }}>
             {/* Header */}
             <Box sx={{ display: 'flex', alignItems: 'center', mb: '24px' }}>
@@ -140,6 +151,18 @@ const Followers = ({ darkMode, onClose }) => {
                 )}
             </Box>
 
+            {/* Follower Options Popover */}
+            <Popover
+                open={isMenuOpen}
+                anchorEl={anchorEl}
+                onClose={handleCloseMenu}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                slotProps={{ paper: { sx: { borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' } } }}
+            >
+                <FollowPop darkMode={darkMode} onClose={handleCloseMenu} />
+            </Popover>
+
             {/* Follower List */}
             <Box sx={{
                 flexGrow: 1,
@@ -158,6 +181,7 @@ const Followers = ({ darkMode, onClose }) => {
                         bio={user.bio}
                         pic={user.pic}
                         darkMode={darkMode}
+                        onMenuOpen={handleOpenMenu}
                     />
                 ))}
             </Box>
