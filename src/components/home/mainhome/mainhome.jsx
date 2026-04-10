@@ -27,6 +27,10 @@ import SettingsRightSideBar from '../../mainsetting/rightsidebar/rightSideBar';
 import MarketPlace from '../../macketPlace/marcketPlace';
 import UserProfile from '../../UserProfile/UserProfile';
 import UserDeatil from '../../UserProfile/UserDeatil';
+import MyProfile from '../../MyProfile/MyProfile';
+import MyDetail from '../../MyProfile/MyDetail';
+import ServiceRightSidebar from '../../MyProfile/ServiceRightSidebar';
+import CompanyViewAll from '../../MyProfile/CompanyViewAll';
 
 const MainHome = ({ initialTab = 'Home' }) => {
     // darkMode lives here — controls the entire page
@@ -125,6 +129,8 @@ const MainHome = ({ initialTab = 'Home' }) => {
                     anchor="left"
                     open={drawerOpen}
                     onClose={toggleDrawer(false)}
+                    disableEnforceFocus
+                    disableRestoreFocus
                     sx={{ '& .MuiDrawer-paper': { width: '250px', bgcolor: darkMode ? '#1e1e2e' : '#fff' } }}
                 >
                     <ProfileSidebar
@@ -397,6 +403,41 @@ const MainHome = ({ initialTab = 'Home' }) => {
                             <ServiceWidget darkMode={darkMode} />
                         </Box>
                     </Box>
+                ) : activeTab === 'Profile' ? (
+                    <>
+                        {/* ── CENTER: My Profile ── */}
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
+                            flexGrow: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            boxSizing: 'border-box',
+                            transition: 'all 0.3s ease'
+                        }}>
+                            <MyProfile darkMode={darkMode} onBack={() => setActiveTab('Home')} onViewChange={setCurrentProfileView} />
+                        </Box>
+
+                        {/* ── RIGHT Side ── */}
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: currentProfileView === 'company-view-all' ? { md: '580px', lg: '706px' } : { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px'
+                        }}>
+                            {currentProfileView === 'company-view-all' ? (
+                                <CompanyViewAll darkMode={darkMode} onCancel={() => setCurrentProfileView('profile')} />
+                            ) : currentProfileView === 'service-about' || currentProfileView === 'activity-section' ? (
+                                <ServiceRightSidebar darkMode={darkMode} />
+                            ) : (
+                                <MyDetail darkMode={darkMode} />
+                            )}
+                        </Box>
+                    </>
                 ) : activeTab === 'UserProfilePage' ? (
                     <>
                         {/* ── CENTER: User Profile ── */}
