@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const ScrollToTop = () => {
+const ScrollToTop = ({ watch = [] }) => {
     const { pathname, search, hash } = useLocation();
 
     useLayoutEffect(() => {
@@ -39,7 +39,7 @@ const ScrollToTop = () => {
             clearInterval(intervalId);
             clearTimeout(timeoutId);
         };
-    }, [pathname, search, hash]);
+    }, [pathname, search, hash, ...watch]);
 
     return null;
 };

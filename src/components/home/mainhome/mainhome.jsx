@@ -31,6 +31,7 @@ import MyProfile from '../../MyProfile/MyProfile';
 import MyDetail from '../../MyProfile/MyDetail';
 import ServiceRightSidebar from '../../MyProfile/ServiceRightSidebar';
 import CompanyViewAll from '../../MyProfile/CompanyViewAll';
+import ScrollToTop from '../../shared/ScrollToTop';
 
 const MainHome = ({ initialTab = 'Home' }) => {
     // darkMode lives here — controls the entire page
@@ -44,10 +45,6 @@ const MainHome = ({ initialTab = 'Home' }) => {
     const [showDetailSidebar, setShowDetailSidebar] = useState(false);
     const [currentProfileView, setCurrentProfileView] = useState('profile');
 
-    // Scroll to top whenever the user switches an internal "tab" or "view"
-    useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }, [activeTab, jobsView, servicesView, selectedJobId, selectedChat]);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -78,6 +75,9 @@ const MainHome = ({ initialTab = 'Home' }) => {
             boxSizing: 'border-box',
             transition: 'background 0.25s'
         }}>
+            {/* ── SEARCHBAR & TABS ── */}
+            <ScrollToTop watch={[activeTab, jobsView, servicesView, selectedJobId, selectedChat, currentProfileView]} />
+
             {/* ── TOP: Search Bar ── */}
             <SearchBar
                 darkMode={darkMode}
@@ -94,17 +94,18 @@ const MainHome = ({ initialTab = 'Home' }) => {
                 flexDirection: { xs: 'column', md: 'row' },
                 flex: 1,
                 width: '100%',
-                maxWidth: '1440px',
+                maxWidth: currentProfileView === 'company-view-all' ? '1800px' : '1440px',
                 mx: 'auto',
-                gap: { xs: '15px', md: '20px', lg: '30px' },
-                px: { xs: '10px', sm: '15px', md: '20px' },
+                gap: currentProfileView === 'company-view-all' ? '20px' : { xs: '15px', md: '20px', lg: '30px' },
+                px: currentProfileView === 'company-view-all' ? { xs: '15px', md: '40px' } : { xs: '10px', sm: '15px', md: '20px' },
                 pt: '20px',
                 pb: '30px',
                 boxSizing: 'border-box',
                 position: 'relative',
-                justifyContent: activeTab === 'UserProfilePage' && currentProfileView !== 'profile' ? 'flex-start' : 'center',
+                overflowX: 'visible',
+                justifyContent: (activeTab === 'UserProfilePage' && currentProfileView !== 'profile') || currentProfileView === 'company-view-all' ? 'flex-start' : 'center',
                 alignItems: { xs: 'center', md: 'flex-start' },
-                pl: activeTab === 'UserProfilePage' && currentProfileView !== 'profile' ? { md: '40px', lg: '70px' } : { xs: '0', md: '0' }
+                pl: currentProfileView === 'company-view-all' ? '20px' : ((activeTab === 'UserProfilePage' && currentProfileView !== 'profile') ? { md: '20px', lg: '40px' } : { xs: '0', md: '0' })
             }}>
 
                 {/* ── LEFT: Desktop Sidebar ── */}
@@ -408,8 +409,8 @@ const MainHome = ({ initialTab = 'Home' }) => {
                         {/* ── CENTER: My Profile ── */}
                         <Box sx={{
                             width: '100%',
-                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
-                            flexGrow: 1,
+                            maxWidth: currentProfileView === 'company-view-all' ? '396px' : { xs: '100%', md: '580px', lg: '706px' },
+                            flexGrow: 0,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -421,13 +422,14 @@ const MainHome = ({ initialTab = 'Home' }) => {
 
                         {/* ── RIGHT Side ── */}
                         <Box sx={{
-                            display: { xs: 'none', md: 'flex' },
                             flexDirection: 'column',
                             gap: '20px',
-                            width: currentProfileView === 'company-view-all' ? { md: '580px', lg: '706px' } : { md: '300px', lg: '372px' },
                             flexShrink: 0,
                             position: { md: 'sticky' },
-                            top: '20px'
+                            top: '20px',
+                            display: { xs: 'none', md: 'flex' },
+                            width: currentProfileView === 'company-view-all' ? { md: '706px', lg: '706px' } : { md: '300px', lg: '372px' },
+                            overflow: 'visible'
                         }}>
                             {currentProfileView === 'company-view-all' ? (
                                 <CompanyViewAll darkMode={darkMode} onCancel={() => setCurrentProfileView('profile')} />

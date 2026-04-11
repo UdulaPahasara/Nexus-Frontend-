@@ -51,6 +51,12 @@ const MyProfile = ({ darkMode, onBack, onViewChange }) => {
     const accentColor = '#00E87F';
 
     const handleViewChange = (newView) => {
+        // If it's company-view-all, we don't switch to it internally 
+        // because it should appear side-by-side in the main layout
+        if (newView === 'company-view-all') {
+            if (onViewChange) onViewChange(newView);
+            return;
+        }
         setView(newView);
         if (onViewChange) {
             onViewChange(newView);
@@ -96,6 +102,7 @@ const MyProfile = ({ darkMode, onBack, onViewChange }) => {
             </Box>
         );
     }
+
 
 
     const statsRow = [
@@ -165,14 +172,14 @@ const MyProfile = ({ darkMode, onBack, onViewChange }) => {
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     minHeight: '80px',
                     pl: { xs: 0, sm: '155px' }, // Offset to the right of the 120px avatar
                     flexWrap: 'wrap',
-                    gap: '15px'
+                    gap: '20px'
                 }}>
-                    {/* Location & Stats in a row */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
+                    {/* Location & Stats in a flex container */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px', flexWrap: 'wrap', minWidth: '150px' }}>
                         {/* Location */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <LocationOnIcon sx={{ fontSize: '15px', color: textColor }} />
@@ -201,60 +208,56 @@ const MyProfile = ({ darkMode, onBack, onViewChange }) => {
                         </Box>
                     </Box>
 
-                </Box>
-            </Box>
-
-            {/* Right Side Floating Icons & Status */}
-            <Box sx={{
-                position: 'absolute',
-                top: '170px',
-                right: '23px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '15px',
-                zIndex: 2
-            }}>
-                {/* Contact Icons */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="mailto:nuwinikaru122@gmail.com">
-                        <MailOutlineIcon sx={{ fontSize: '18px', color: textColor }} />
-                    </IconButton>
-                    <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="tel:+94789987885">
-                        <PhoneIcon sx={{ fontSize: '18px', color: textColor }} />
-                    </IconButton>
-                </Box>
-
-                {/* Circular Status */}
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 54,
-                    height: 54,
-                }}>
-                    {/* The Progress Ring */}
+                    {/* Right Side Icons & Status (Now fully responsive and un-floated) */}
                     <Box sx={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: '50%',
-                        background: `conic-gradient(from 0deg, ${accentColor} 0deg, ${accentColor} 150deg, #e0e0e0 150deg, #e0e0e0 360deg)`,
-                        position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        '&::before': {
-                            content: '""',
-                            position: 'absolute',
-                            width: '50px',
-                            height: '50px',
-                            bgcolor: boxBg,
-                            borderRadius: '50%'
-                        }
+                        gap: '20px',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center'
                     }}>
-                        <Box sx={{ position: 'relative', textAlign: 'center', zIndex: 1 }}>
-                            <Typography sx={{ fontSize: '7.5px', color: '#888', lineHeight: 1, fontFamily: 'Poppins', fontWeight: 500 }}>Status</Typography>
-                            <Typography sx={{ fontSize: '9px', fontWeight: 700, color: accentColor, lineHeight: 1.1, fontFamily: 'Poppins' }}>Good</Typography>
+                        {/* Contact Icons */}
+                        <Box sx={{ display: 'flex', gap: '10px' }}>
+                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="mailto:nuwinikaru122@gmail.com">
+                                <MailOutlineIcon sx={{ fontSize: '18px', color: textColor }} />
+                            </IconButton>
+                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="tel:+94789987885">
+                                <PhoneIcon sx={{ fontSize: '18px', color: textColor }} />
+                            </IconButton>
+                        </Box>
+
+                        {/* Circular Status */}
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 54,
+                            height: 54,
+                        }}>
+                            {/* The Progress Ring */}
+                            <Box sx={{
+                                width: '100%',
+                                height: '100%',
+                                borderRadius: '50%',
+                                background: `conic-gradient(from 0deg, ${accentColor} 0deg, ${accentColor} 150deg, #e0e0e0 150deg, #e0e0e0 360deg)`,
+                                position: 'relative',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                '&::before': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    width: '50px',
+                                    height: '50px',
+                                    bgcolor: boxBg,
+                                    borderRadius: '50%'
+                                }
+                            }}>
+                                <Box sx={{ position: 'relative', textAlign: 'center', zIndex: 1 }}>
+                                    <Typography sx={{ fontSize: '7.5px', color: '#888', lineHeight: 1, fontFamily: 'Poppins', fontWeight: 500 }}>Status</Typography>
+                                    <Typography sx={{ fontSize: '9px', fontWeight: 700, color: accentColor, lineHeight: 1.1, fontFamily: 'Poppins' }}>Good</Typography>
+                                </Box>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
