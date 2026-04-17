@@ -37,11 +37,11 @@ const BannerPop = ({ open, onClose, darkMode }) => {
             PaperProps={{
                 sx: {
                     width: '100%',
-                    maxWidth: '597px', // Match requirement
+                    maxWidth: '597px', 
                     height: 'auto',
-                    minHeight: '295px', // Match requirement
+                    minHeight: '295px',
                     bgcolor: boxBg,
-                    borderRadius: '15px', // Match requirement
+                    borderRadius: '15px', 
                     boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
                     overflow: 'hidden'
                 }
