@@ -34,7 +34,7 @@ import comp6 from '../../assets/jobs/company6.webp';
 // Country flag placeholder
 import saudiFlag from '../../assets/jobs/county/france.webp';
 
-const SERVICE_DATA = [
+export const SERVICE_DATA = [
     { id: 1, title: 'AC Repair & AC Installation lorem', provider: 'BrightPath Foundation', rating: 4.2, reviews: 43, location: 'Damman, SA', image: svc1, logo: comp1 },
     { id: 2, title: 'AC Repair & AC Installation lorem', provider: 'BrightPath Foundation', rating: 4.2, reviews: 43, location: 'Damman, SA', image: svc2, logo: comp2 },
     { id: 3, title: 'AC Repair & AC Installation lorem', provider: 'BrightPath Foundation', rating: 4.2, reviews: 43, location: 'Damman, SA', image: svc3, logo: comp3 },
@@ -44,7 +44,7 @@ const SERVICE_DATA = [
 ];
 
 // ── Service Card ──────────────────────────────────────────
-const ServiceCard = ({ darkMode, service, onViewDetails, isSplit = false }) => {
+export const ServiceCard = ({ darkMode, service, onViewDetails, isSplit = false }) => {
     const [liked, setLiked] = useState(false);
 
     const overlayBtnSx = {
