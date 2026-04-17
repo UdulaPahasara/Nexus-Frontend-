@@ -94,7 +94,8 @@ const Ai = ({ darkMode = false, onBack }) => {
                         <Typography key={i} sx={{
                             color: '#ccc', fontFamily: 'Poppins', fontWeight: 400, fontSize: '13px',
                             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                            cursor: 'pointer', '&:hover': { color: '#fff' }
+                            cursor: 'pointer', '&:hover': { color: '#fff' },
+                            flexShrink: 0,
                         }}>
                             {text}
                         </Typography>
