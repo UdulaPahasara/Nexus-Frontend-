@@ -83,7 +83,7 @@ const postsData = [
     }
 ];
 
-const PostCard = ({ post, darkMode }) => {
+const PostCard = ({ post, darkMode, hideFooter }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(false);
     const [openLikes, setOpenLikes] = useState(false);
@@ -146,7 +146,8 @@ const PostCard = ({ post, darkMode }) => {
                                 </Typography>
                                 <Typography sx={{
                                     fontFamily: 'Poppins', fontWeight: 400, fontSize: '10px',
-                                    color: darkMode ? '#aaa' : '#888'
+                                    color: darkMode ? '#aaa' : '#888',
+                                    whiteSpace: 'nowrap'
                                 }}>
                                     • 15 h
                                 </Typography>
@@ -326,74 +327,78 @@ const PostCard = ({ post, darkMode }) => {
                 </Box>
 
                 {/* Final Footer Row (Liked/Commented by) */}
-                <Box sx={{
-                    width: '100%',
-                    mt: '5px',
-                    pt: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        {/* Overlapping Avatars */}
-                        <Box sx={{ display: 'flex', position: 'relative', width: '45px', height: '30px' }}>
-                            <Box
-                                component="img"
-                                src={compic1}
-                                sx={{
-                                    width: '28px',
-                                    height: '28px',
-                                    borderRadius: '50%',
-                                    border: darkMode ? '2px solid #1e1e2e' : '2px solid #fff',
-                                    position: 'absolute',
-                                    left: 0,
-                                    zIndex: 1
-                                }}
-                            />
-                            <Box
-                                component="img"
-                                src={compic2}
-                                sx={{
-                                    width: '28px',
-                                    height: '28px',
-                                    borderRadius: '50%',
-                                    border: darkMode ? '2px solid #1e1e2e' : '2px solid #fff',
-                                    position: 'absolute',
-                                    left: '16px',
-                                    zIndex: 0
-                                }}
-                            />
+                {!hideFooter && (
+                    <Box sx={{
+                        width: '100%',
+                        mt: '5px',
+                        pt: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            {/* Overlapping Avatars */}
+                            <Box sx={{ display: 'flex', position: 'relative', width: '45px', height: '30px' }}>
+                                <Box
+                                    component="img"
+                                    src={compic1}
+                                    sx={{
+                                        width: '28px',
+                                        height: '28px',
+                                        borderRadius: '50%',
+                                        border: darkMode ? '2px solid #1e1e2e' : '2px solid #fff',
+                                        position: 'absolute',
+                                        left: 0,
+                                        zIndex: 1
+                                    }}
+                                />
+                                <Box
+                                    component="img"
+                                    src={compic2}
+                                    sx={{
+                                        width: '28px',
+                                        height: '28px',
+                                        borderRadius: '50%',
+                                        border: darkMode ? '2px solid #1e1e2e' : '2px solid #fff',
+                                        position: 'absolute',
+                                        left: '16px',
+                                        zIndex: 0
+                                    }}
+                                />
+                            </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography sx={{
+                                    fontFamily: 'Poppins',
+                                    fontWeight: 500,
+                                    fontSize: '11px',
+                                    color: darkMode ? '#fff' : '#333'
+                                }}>
+                                    "{post.commentBy}"
+                                </Typography>
+                                <Typography sx={{
+                                    fontFamily: 'Poppins',
+                                    fontWeight: 400,
+                                    fontSize: '9px',
+                                    color: darkMode ? '#888' : '#999'
+                                }}>
+                                    Lorem ipsum dolor sit amet
+                                </Typography>
+                            </Box>
                         </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography sx={{
-                                fontFamily: 'Poppins',
-                                fontWeight: 500,
-                                fontSize: '11px',
-                                color: darkMode ? '#fff' : '#333'
-                            }}>
-                                "{post.commentBy}"
-                            </Typography>
-                            <Typography sx={{
-                                fontFamily: 'Poppins',
-                                fontWeight: 400,
-                                fontSize: '9px',
-                                color: darkMode ? '#888' : '#999'
-                            }}>
-                                Lorem ipsum dolor sit amet
-                            </Typography>
+                        {/* Three dots menu */}
+                        <Box sx={{ color: darkMode ? '#888' : '#666', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center' }}>
+                            ⋮
                         </Box>
                     </Box>
-                    {/* Three dots menu */}
-                    <Box sx={{ color: darkMode ? '#888' : '#666', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center' }}>
-                        ⋮
-                    </Box>
-                </Box>
+                )}
             </Box>
         </Box>
     );
 };
 
-const ForYou = ({ darkMode }) => {
+const ForYou = ({ darkMode, limit, hideFooter }) => {
+    const displayedPosts = limit ? postsData.slice(0, limit) : postsData;
+
     return (
         <Box sx={{
             width: '100%',
@@ -404,8 +409,8 @@ const ForYou = ({ darkMode }) => {
             mt: '10px',
             boxSizing: 'border-box'
         }}>
-            {postsData.map(post => (
-                <PostCard key={post.id} post={post} darkMode={darkMode} />
+            {displayedPosts.map(post => (
+                <PostCard key={post.id} post={post} darkMode={darkMode} hideFooter={hideFooter} />
             ))}
         </Box>
     );

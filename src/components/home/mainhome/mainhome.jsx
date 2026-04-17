@@ -12,6 +12,7 @@ import ForYou from './foryou/foryou';
 import News from './news/news';
 import FilterBar from '../../chat section/chatfilterbar/filterbar';
 import NoChat from '../../chat section/chatfilterbar/nochat';
+import Ai from '../../AI/Ai';
 import MessageArea from '../../chat section/messagingarea/messageArea';
 import Invitation from '../../mynetwork/invitation';
 import ManageNetwork from '../../mynetwork/managenetwork';
@@ -32,6 +33,9 @@ import MyDetail from '../../MyProfile/MyDetail';
 import ServiceRightSidebar from '../../MyProfile/ServiceRightSidebar';
 import CompanyViewAll from '../../MyProfile/CompanyViewAll';
 import ScrollToTop from '../../shared/ScrollToTop';
+import PeopleSearch from '../../Search/People';
+import CompanySearch from '../../Search/Company';
+import Filter from '../../Search/Filter';
 
 const MainHome = ({ initialTab = 'Home' }) => {
     // darkMode lives here — controls the entire page
@@ -69,11 +73,12 @@ const MainHome = ({ initialTab = 'Home' }) => {
         <Box sx={{
             width: '100%',
             minHeight: '100vh',
-            bgcolor: darkMode ? '#121212' : '#f5f5f5',
+            bgcolor: activeTab === 'AI' ? '#121212' : (darkMode ? '#121212' : '#f5f5f5'),
             display: 'flex',
             flexDirection: 'column',
             boxSizing: 'border-box',
-            transition: 'background 0.25s'
+            transition: 'background 0.25s',
+            px: 0
         }}>
             {/* ── SEARCHBAR & TABS ── */}
             <ScrollToTop watch={[activeTab, jobsView, servicesView, selectedJobId, selectedChat, currentProfileView]} />
@@ -83,8 +88,9 @@ const MainHome = ({ initialTab = 'Home' }) => {
                 darkMode={darkMode}
                 onToggle={() => setDarkMode(prev => !prev)}
                 onMenuClick={() => setDrawerOpen(true)}
-                activeTab={activeTab === 'forYou' || activeTab === 'news' ? activeTab : 'forYou'}
+                activeTab={activeTab}
                 onTabChange={handleTabChange}
+                onAdvanceSearch={() => setActiveTab('PeopleSearch')}
             />
 
             {/* ── BODY: Responsive Container ── */}
@@ -94,23 +100,24 @@ const MainHome = ({ initialTab = 'Home' }) => {
                 flexDirection: { xs: 'column', md: 'row' },
                 flex: 1,
                 width: '100%',
-                maxWidth: currentProfileView === 'company-view-all' ? '1800px' : '1440px',
+                maxWidth: activeTab === 'AI' ? '100%' : (currentProfileView === 'company-view-all' ? '1800px' : '1440px'),
                 mx: 'auto',
-                gap: currentProfileView === 'company-view-all' ? '20px' : { xs: '15px', md: '20px', lg: '30px' },
-                px: currentProfileView === 'company-view-all' ? { xs: '15px', md: '40px' } : { xs: '10px', sm: '15px', md: '20px' },
-                pt: '20px',
+                gap: activeTab === 'AI' ? '0px' : (currentProfileView === 'company-view-all' ? '20px' : { xs: '15px', md: '20px', lg: '30px' }),
+                px: activeTab === 'AI' ? '0px' : (currentProfileView === 'company-view-all' ? { xs: '15px', md: '40px' } : { xs: '10px', sm: '15px', md: '0px' }),
+                pt: activeTab === 'AI' ? '0px' : '20px',
                 pb: '30px',
+                bgcolor: activeTab === 'AI' ? '#121212' : 'transparent',
                 boxSizing: 'border-box',
                 position: 'relative',
                 overflowX: 'visible',
-                justifyContent: (activeTab === 'UserProfilePage' && currentProfileView !== 'profile') || currentProfileView === 'company-view-all' ? 'flex-start' : 'center',
+                justifyContent: activeTab === 'AI' ? 'center' : 'flex-start',
                 alignItems: { xs: 'center', md: 'flex-start' },
-                pl: currentProfileView === 'company-view-all' ? '20px' : ((activeTab === 'UserProfilePage' && currentProfileView !== 'profile') ? { md: '20px', lg: '40px' } : { xs: '0', md: '0' })
+                pl: activeTab === 'AI' ? '0px' : (currentProfileView === 'company-view-all' ? '20px' : ((activeTab === 'UserProfilePage' && currentProfileView !== 'profile') ? { md: '20px', lg: '40px' } : { xs: '0', md: '0px' }))
             }}>
 
                 {/* ── LEFT: Desktop Sidebar ── */}
                 <Box sx={{
-                    display: { xs: 'none', md: 'flex' },
+                    display: activeTab === 'AI' ? 'none' : { xs: 'none', md: 'flex' },
                     flexDirection: 'column',
                     width: { md: '200px', lg: '230px' },
                     flexShrink: 0,
@@ -144,7 +151,11 @@ const MainHome = ({ initialTab = 'Home' }) => {
                 </Drawer>
 
                 {/* ── CENTER & RIGHT Content ── */}
-                {activeTab === 'Messages' ? (
+                {activeTab === 'AI' ? (
+                    <Box sx={{ flexGrow: 1, minWidth: 0, width: '100%', minHeight: '100vh', bgcolor: '#121212', display: 'flex', flexDirection: 'column' }}>
+                        <Ai darkMode={darkMode} onBack={() => handleTabChange('Home')} />
+                    </Box>
+                ) : activeTab === 'Messages' ? (
                     <Box sx={{
                         flexGrow: 1,
                         display: 'flex',
@@ -438,6 +449,121 @@ const MainHome = ({ initialTab = 'Home' }) => {
                             ) : (
                                 <MyDetail darkMode={darkMode} />
                             )}
+                        </Box>
+                    </>
+                ) : activeTab === 'PeopleSearch' ? (
+                    <>
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
+                            flexGrow: 1,
+                            minWidth: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '16px',
+                            pt: '20px',
+                            pb: '30px',
+                            boxSizing: 'border-box'
+                        }}>
+                            <PeopleSearch
+                                darkMode={darkMode}
+                                onBack={() => setActiveTab('Home')}
+                                onTabChange={(tab) => {
+                                    if (tab === 'Companies') setActiveTab('CompanySearch');
+                                }}
+                                onFilterClick={() => setActiveTab('Filter')}
+                            />
+                        </Box>
+
+                        {/* ── RIGHT Side ── */}
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px',
+                            mr: { md: '10px', lg: '20px' }
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <ServiceWidget darkMode={darkMode} />
+                        </Box>
+                    </>
+                ) : activeTab === 'Filter' ? (
+                    <>
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
+                            flexGrow: 1,
+                            minWidth: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '16px',
+                            pt: '0px',
+                            pb: '30px',
+                            boxSizing: 'border-box'
+                        }}>
+                            <Filter
+                                darkMode={darkMode}
+                                onBack={() => setActiveTab('PeopleSearch')}
+                            />
+                        </Box>
+
+                        {/* ── RIGHT: Feed & Service ── */}
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px',
+                            mr: { md: '10px', lg: '20px' }
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <ServiceWidget darkMode={darkMode} />
+                        </Box>
+                    </>
+                ) : activeTab === 'CompanySearch' ? (
+                    <>
+                        <Box sx={{
+                            width: '100%',
+                            maxWidth: { xs: '100%', md: '580px', lg: '706px' },
+                            flexGrow: 1,
+                            minWidth: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '16px',
+                            pt: '20px',
+                            pb: '30px',
+                            boxSizing: 'border-box'
+                        }}>
+                            <CompanySearch
+                                darkMode={darkMode}
+                                onBack={() => setActiveTab('Home')}
+                                onTabChange={(tab) => {
+                                    if (tab === 'People' || tab === 'PeopleSearch') setActiveTab('PeopleSearch');
+                                }}
+                            />
+                        </Box>
+
+                        {/* ── RIGHT Side ── */}
+                        <Box sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: { md: '300px', lg: '372px' },
+                            flexShrink: 0,
+                            position: { md: 'sticky' },
+                            top: '20px',
+                            mr: { md: '10px', lg: '20px' }
+                        }}>
+                            <Feed darkMode={darkMode} />
+                            <ServiceWidget darkMode={darkMode} />
                         </Box>
                     </>
                 ) : activeTab === 'UserProfilePage' ? (

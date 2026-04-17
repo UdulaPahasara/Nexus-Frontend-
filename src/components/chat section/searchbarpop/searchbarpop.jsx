@@ -50,7 +50,7 @@ const categories = [
 
 // ─── Component ─────────────────────────────────────────────────────────────
 
-const SearchBarPopup = ({ darkMode = false, onClose }) => {
+const SearchBarPopup = ({ darkMode = false, onClose, onAdvanceSearch }) => {
     const bg = darkMode ? '#1e1e2e' : '#FFFFFF';
     const textPrimary = darkMode ? '#fff' : '#000';
     const textSecondary = darkMode ? '#aaa' : '#444';
@@ -251,6 +251,10 @@ const SearchBarPopup = ({ darkMode = false, onClose }) => {
                 {/* ── Advance Search CTA ──────────────────────────────── */}
                 <Box sx={{ px: '12px', display: 'flex', justifyContent: 'flex-end', mt: '12px' }}>
                     <Button
+                        onClick={() => {
+                            onAdvanceSearch && onAdvanceSearch();
+                            onClose && onClose();
+                        }}
                         disableRipple
                         sx={{
                             bgcolor: '#00E783',
