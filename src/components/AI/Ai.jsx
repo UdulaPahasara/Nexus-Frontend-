@@ -34,17 +34,17 @@ const Ai = ({ darkMode = false, onBack }) => {
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: { xs: 'column', lg: 'row' },
+            flexDirection: { xs: 'column', md: 'row' },
             width: '100%',
             height: { xs: '100dvh', md: 'auto' },
             justifyContent: 'center',
-            alignItems: { xs: 'stretch', lg: 'flex-start' },
+            alignItems: { xs: 'stretch', md: 'flex-start' },
             gap: '30px',
-            pt: { xs: 0, lg: '10px' },
-            pb: { xs: 0, lg: '30px' },
+            pt: { xs: 0, md: '10px' },
+            pb: { xs: 0, md: '30px' },
             boxSizing: 'border-box',
             position: 'relative',
-            overflow: { xs: 'hidden', lg: 'visible' },
+            overflow: { xs: 'hidden', md: 'visible' },
         }}>
 
             {/* Left Sidebar (Chat History) - desktop only */}
@@ -105,8 +105,8 @@ const Ai = ({ darkMode = false, onBack }) => {
 
             {/* ── CENTER: Chat Card ── */}
             <Box sx={{
-                flex: { xs: 1, lg: 'unset' },
-                width: { xs: '100%', lg: '744px' },
+                flex: 1,
+                width: '100%',
                 maxWidth: '744px',
                 height: { xs: '100%', md: '656px' },
                 borderRadius: { xs: 0, sm: '15px' },
