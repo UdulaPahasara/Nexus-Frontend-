@@ -2,8 +2,20 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShareIcon from '@mui/icons-material/Share';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import easyApplyIcon from '../../../assets/login/login.webp';
 
 const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
+    // "Starts in X Days" — use job.startsInDays if provided, else default to 5
+    const startsInDays = job?.startsInDays ?? 5;
+
+    // Badge definitions
+    const tags = [
+        { label: `Starts in ${startsInDays} Days`, isTimer: true },
+        { label: job?.category ?? 'Environment' },
+        { label: 'Volunteer', isVolunteer: true },
+    ];
+
     return (
         <Box
             onClick={onClick}
@@ -20,7 +32,7 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
                 '&:hover': { transform: isCompact ? 'none' : 'translateY(-2px)', bgcolor: darkMode ? '#3d3d4d' : '#f9f9f9' }
             }}
         >
-            {/* Top Section: Background Image with Overlay */}
+            {/* Top Section: Background Image */}
             <Box sx={{
                 width: '100%',
                 height: isCompact ? '120px' : { xs: '150px', sm: '180px' },
@@ -30,14 +42,10 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
                 <Box
                     component="img"
                     src={job.backgroundImg}
-                    sx={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                    }}
+                    sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
 
-                {/* Company Logo Overlay (Top Left) */}
+                {/* Company Logo (Top Left) */}
                 <Box sx={{
                     position: 'absolute',
                     top: '12px',
@@ -65,25 +73,19 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
                         gap: '10px'
                     }}>
                         <Box sx={{
-                            width: '32px',
-                            height: '32px',
+                            width: '32px', height: '32px',
                             bgcolor: 'rgba(255,255,255,0.9)',
                             borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
                             cursor: 'pointer'
                         }}>
                             <ShareIcon sx={{ fontSize: '18px', color: '#333' }} />
                         </Box>
                         <Box sx={{
-                            width: '32px',
-                            height: '32px',
+                            width: '32px', height: '32px',
                             bgcolor: 'rgba(255,255,255,0.9)',
                             borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
                             cursor: 'pointer'
                         }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -96,55 +98,98 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
 
             {/* Bottom Section: Content */}
             <Box sx={{ p: isCompact ? '12px 15px' : '20px' }}>
-                {/* Title and Tags Row */}
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: isCompact ? '8px' : '12px', flexWrap: isCompact ? 'nowrap' : 'wrap', gap: '10px' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: isCompact ? '4px' : '6px' }}>
+
+                {/* Title Row: Title | Badges (inline) | Duration & Price */}
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    mb: isCompact ? '6px' : '8px',
+                    gap: '8px',
+                    flexWrap: 'wrap'
+                }}>
+                    {/* Title and Badges Container */}
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        flexWrap: 'wrap',
+                        flex: 1,
+                        minWidth: '200px'
+                    }}>
+                        {/* Title */}
                         <Typography sx={{
                             fontFamily: 'Poppins',
                             fontWeight: 700,
-                            fontSize: isCompact ? '15px' : '18px',
+                            fontSize: isCompact ? '14px' : '16px',
                             color: darkMode ? '#fff' : '#111',
-                            lineHeight: 1.2
+                            lineHeight: 1.2,
+                            whiteSpace: 'normal',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
                         }}>
                             {job.title}
                         </Typography>
 
-                        <Box sx={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                            {['Environment', 'Volunteer'].map((tag, idx) => (
+                        {/* Badges Container */}
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            flexWrap: 'wrap'
+                        }}>
+                            {tags.map((tag, idx) => (
                                 <Box key={idx} sx={{
-                                    bgcolor: idx === 1 ? 'rgba(0, 234, 142, 0.15)' : (darkMode ? 'rgba(255,255,255,0.05)' : '#F5F7F9'),
-                                    color: idx === 1 ? '#00EA8E' : (darkMode ? '#aaa' : '#666'),
-                                    px: '8px',
+                                    bgcolor: tag.isTimer
+                                        ? (darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)')
+                                        : (darkMode ? '#2E7D32' : '#3DAA5C'),
+                                    color: tag.isTimer
+                                        ? (darkMode ? '#ccc' : '#444')
+                                        : '#fff',
+                                    px: '7px',
                                     py: '2px',
-                                    borderRadius: '10px',
-                                    fontSize: isCompact ? '9px' : '10px',
+                                    borderRadius: '50px',
+                                    fontSize: '9px',
                                     fontWeight: 600,
                                     fontFamily: 'Poppins',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '4px'
+                                    gap: '3px',
+                                    border: tag.isTimer
+                                        ? `0.6px solid ${darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)'}`
+                                        : 'none',
+                                    whiteSpace: 'nowrap',
+                                    lineHeight: 1.4,
                                 }}>
-                                    {idx === 1 && <Box sx={{ width: '5px', height: '5px', borderRadius: '50%', bgcolor: '#00EA8E' }} />}
-                                    {tag}
+                                    {tag.isTimer && (
+                                        <AccessTimeIcon sx={{ fontSize: '9px', color: darkMode ? '#ccc' : '#444' }} />
+                                    )}
+                                    {!tag.isTimer && (
+                                        <Box sx={{ width: '4px', height: '4px', borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.8)', flexShrink: 0 }} />
+                                    )}
+                                    {tag.label}
                                 </Box>
                             ))}
                         </Box>
                     </Box>
 
+                    {/* Duration & Price */}
                     {!isCompact && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '13px', fontWeight: 600, color: darkMode ? '#eee' : '#111' }}>
-                                Duration: <span style={{ fontWeight: 700 }}>3 Months</span>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1px', flexShrink: 0, mt: '2px' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '11.5px', fontWeight: 700, color: darkMode ? '#eee' : '#111', whiteSpace: 'nowrap' }}>
+                                Duration: <span style={{ fontWeight: 800 }}>3 Months</span>
                             </Typography>
-                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '12px', color: darkMode ? '#aaa' : '#666' }}>
+                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '10.5px', color: darkMode ? '#aaa' : '#555', whiteSpace: 'nowrap' }}>
                                 Price: <span style={{ fontWeight: 600 }}>SAR. 90/ Per Person</span>
                             </Typography>
                         </Box>
                     )}
                 </Box>
 
-                {/* Company & Info Row */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', mb: isCompact ? '0px' : '12px' }}>
+                {/* Subtitle: Company | Verified | Location */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', mb: isCompact ? '8px' : '10px' }}>
                     <Typography sx={{ fontFamily: 'Poppins', fontSize: isCompact ? '12px' : '13px', fontWeight: 600, color: darkMode ? '#fff' : '#111' }}>
                         {job.company}
                     </Typography>
@@ -155,6 +200,8 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
                         </Typography>
                     )}
                 </Box>
+
+
 
                 {/* Description Snippet (Hidden in Compact) */}
                 {!isCompact && (
@@ -169,28 +216,50 @@ const VolunteerJobCard = ({ job, darkMode, isCompact, isActive, onClick }) => {
                     </Typography>
                 )}
 
-                {/* Footer: Time, Profile, Easy Apply */}
+                {/* Footer: Time + Avatar + Easy Apply — all in one left-aligned row */}
                 <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
+                    gap: '10px',
                     borderTop: isCompact ? 'none' : (darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid #F0F0F0'),
                     pt: isCompact ? '8px' : '15px',
-                    mt: isCompact ? '8px' : '0px'
+                    mt: isCompact ? '8px' : '0px',
+                    flexWrap: 'wrap',
                 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <Typography sx={{ fontSize: isCompact ? '10px' : '11px', color: '#aaa', fontFamily: 'Poppins' }}>5d ago</Typography>
-                        {!isCompact && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <Box component="img" src={job.postedByAvatar} sx={{ width: '20px', height: '20px', borderRadius: '50%' }} />
-                                <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 500, fontFamily: 'Poppins' }}>Anuruddha Perera</Typography>
-                            </Box>
-                        )}
-                    </Box>
+                    {/* Time ago */}
+                    <Typography sx={{ fontSize: isCompact ? '10px' : '11px', color: '#aaa', fontFamily: 'Poppins', flexShrink: 0 }}>5d ago</Typography>
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <CheckCircleIcon sx={{ fontSize: '14px', color: '#00EA8E' }} />
-                        <Typography sx={{ fontSize: isCompact ? '11px' : '12px', color: '#00EA8E', fontWeight: 700, fontFamily: 'Poppins' }}>Volunteer</Typography>
+                    {/* Avatar + name (non-compact) */}
+                    {!isCompact && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <Box component="img" src={job.postedByAvatar} sx={{ width: '20px', height: '20px', borderRadius: '50%' }} />
+                            <Typography sx={{ fontSize: '11px', color: '#888', fontWeight: 500, fontFamily: 'Poppins' }}>
+                                Anuruddha Perera <span style={{ color: '#aaa', fontWeight: 400 }}>works here</span>
+                            </Typography>
+                        </Box>
+                    )}
+
+                    {/* Easy Apply — inline, right after "works here" */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '1px', flexShrink: 0 }}>
+                        <Box
+                            component="img"
+                            src={easyApplyIcon}
+                            sx={{
+                                width: isCompact ? '12px' : '14px',
+                                height: isCompact ? '12px' : '14px',
+                                objectFit: 'contain',
+                            }}
+                        />
+                        <Typography sx={{
+                            fontSize: isCompact ? '9.5px' : '11px',
+                            fontWeight: 600,
+                            color: darkMode ? '#ccc' : '#333',
+                            fontFamily: 'Poppins',
+                            whiteSpace: 'nowrap',
+                            lineHeight: 1,
+                        }}>
+                            Easy Apply
+                        </Typography>
                     </Box>
                 </Box>
             </Box>

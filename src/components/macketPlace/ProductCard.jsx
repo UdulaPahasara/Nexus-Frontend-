@@ -4,17 +4,19 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-const ProductCard = ({ darkMode, product, onClick }) => {
+const ProductCard = ({ darkMode, product, onClick, isCompact = false }) => {
     const [liked, setLiked] = useState(false);
+
+    const res = (mobile, desktop) => isCompact ? desktop : { xs: mobile, sm: desktop };
 
     return (
         <Box
             onClick={() => onClick && onClick(product)}
             sx={{
                 width: '100%',
-                height: { xs: '380px', sm: 'auto' },
-                aspectRatio: { xs: 'auto', sm: '155 / 180' },
-                borderRadius: { xs: '14px', sm: '9.07px' },
+                height: res('380px', 'auto'),
+                aspectRatio: isCompact ? '155 / 180' : { xs: 'auto', sm: '155 / 180' },
+                borderRadius: res('14px', '9.07px'),
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
@@ -40,10 +42,10 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 }}
                 sx={{
                     position: 'absolute',
-                    top: { xs: '14px', sm: '8px' },
-                    right: { xs: '14px', sm: '8px' },
-                    width: { xs: '36px', sm: '24px' },
-                    height: { xs: '36px', sm: '24px' },
+                    top: res('14px', '8px'),
+                    right: res('14px', '8px'),
+                    width: res('36px', '24px'),
+                    height: res('36px', '24px'),
                     borderRadius: '50%',
                     bgcolor: 'rgba(255,255,255,0.95)',
                     display: 'flex',
@@ -56,19 +58,19 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 }}
             >
                 {liked ? (
-                    <FavoriteIcon sx={{ fontSize: { xs: '20px', sm: '14px' }, color: '#000000ff' }} />
+                    <FavoriteIcon sx={{ fontSize: res('20px', '14px'), color: '#000000ff' }} />
                 ) : (
-                    <FavoriteBorderIcon sx={{ fontSize: { xs: '20px', sm: '14px' }, color: '#000' }} />
+                    <FavoriteBorderIcon sx={{ fontSize: res('20px', '14px'), color: '#000' }} />
                 )}
             </Box>
 
             {/* Left Logo (32px) */}
             <Box sx={{
                 position: 'absolute',
-                top: { xs: '14px', sm: '8px' },
-                left: { xs: '14px', sm: '8px' },
-                width: { xs: '44px', sm: '32px' },
-                height: { xs: '44px', sm: '32px' },
+                top: res('14px', '8px'),
+                left: res('14px', '8px'),
+                width: res('44px', '32px'),
+                height: res('44px', '32px'),
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -83,12 +85,12 @@ const ProductCard = ({ darkMode, product, onClick }) => {
             {/* New Tag - Positioned just above the detail box */}
             <Box sx={{
                 position: 'absolute',
-                bottom: { xs: '100px', sm: '64px' },
-                right: { xs: '14px', sm: '8px' },
+                bottom: res('100px', '64px'),
+                right: res('14px', '8px'),
                 bgcolor: '#059F1B',
                 color: '#fff',
-                px: { xs: '14px', sm: '12px' },
-                py: { xs: '6px', sm: '4px' },
+                px: res('14px', '12px'),
+                py: res('6px', '4px'),
                 borderRadius: '50px',
                 zIndex: 2,
                 display: 'flex',
@@ -96,7 +98,7 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 justifyContent: 'center',
                 boxShadow: '0px 2px 6px rgba(0,0,0,0.2)'
             }}>
-                <Typography sx={{ fontSize: { xs: '13px', sm: '10px' }, fontWeight: 600, fontFamily: 'Poppins' }}>New</Typography>
+                <Typography sx={{ fontSize: res('13px', '10px'), fontWeight: 600, fontFamily: 'Poppins' }}>New</Typography>
             </Box>
 
             {/* Detail Section (58px height) - Absolute bottom overlay */}
@@ -104,12 +106,12 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
-                height: { xs: '90px', sm: '58px' },
+                height: res('90px', '58px'),
                 width: '100%',
                 background: darkMode ? 'rgba(0,0,0,0.45)' : 'linear-gradient(to bottom, rgba(232, 232, 232, 0.75), rgba(200, 200, 200, 0.85))',
                 backdropFilter: 'blur(8px)',
-                px: { xs: '16px', sm: '8px' },
-                py: { xs: '12px', sm: '6px' },
+                px: res('16px', '8px'),
+                py: res('12px', '6px'),
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -120,7 +122,7 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 <Typography sx={{
                     fontFamily: 'Poppins',
                     fontWeight: 700,
-                    fontSize: { xs: '17px', sm: '10.5px' },
+                    fontSize: res('17px', '10.5px'),
                     color: darkMode ? '#fff' : '#111',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
@@ -132,7 +134,7 @@ const ProductCard = ({ darkMode, product, onClick }) => {
 
                 <Typography sx={{
                     fontFamily: 'Poppins',
-                    fontSize: { xs: '12px', sm: '7.5px' },
+                    fontSize: res('12px', '7.5px'),
                     color: darkMode ? '#ccc' : '#444',
                     lineHeight: 1.1,
                     display: '-webkit-box',
@@ -147,10 +149,10 @@ const ProductCard = ({ darkMode, product, onClick }) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 'auto' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {[...Array(5)].map((_, i) => (
-                            <StarIcon key={i} sx={{ fontSize: { xs: '15px', sm: '10px' }, color: '#000', ml: -0.2 }} />
+                            <StarIcon key={i} sx={{ fontSize: res('15px', '10px'), color: '#000', ml: -0.2 }} />
                         ))}
                     </Box>
-                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: { xs: '14px', sm: '9px' }, color: '#111', ml: '2px' }}>
+                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: res('14px', '9px'), color: '#111', ml: '2px' }}>
                         {product.rating ? product.rating.split(' ')[1] : '26k+'}
                     </Typography>
                 </Box>
