@@ -168,108 +168,92 @@ const MyProfile = ({ darkMode, onBack, onViewChange }) => {
             </Box>
 
             {/* ── INFO SECTION ── */}
-            <Box sx={{ px: '35px', pt: '10px', display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    minHeight: '80px',
-                    pl: { xs: 0, sm: '155px' }, // Offset to the right of the 120px avatar
-                    flexWrap: 'wrap',
-                    gap: '20px'
-                }}>
-                    {/* Location & Stats in a flex container */}
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px', flexWrap: 'wrap', minWidth: '150px' }}>
-                        {/* Location */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <LocationOnIcon sx={{ fontSize: '15px', color: textColor }} />
-                            <Typography sx={{ fontSize: '13px', color: textColor, fontWeight: 500, fontFamily: 'Poppins' }}>Al Khobar , Saudi Arabia</Typography>
+            <Box sx={{ px: '35px', pt: '15px', pb: '15px', position: 'relative' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
+                    {/* Left Column Data */}
+                    <Box sx={{ flex: 1 }}>
+                        <Box sx={{ pl: { xs: 0, sm: '155px' }, height: '35px', display: 'flex', alignItems: 'center' }}>
+                            {/* Location */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <LocationOnIcon sx={{ fontSize: '18px', color: textColor }} />
+                                <Typography sx={{ fontSize: '14px', color: textColor, fontWeight: 500, fontFamily: 'Poppins' }}>Al Khobar , Saudi Arabia</Typography>
+                            </Box>
                         </Box>
 
-                        {/* Social Stats */}
-                        <Box sx={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
-                            <Box
-                                sx={{ textAlign: 'center', cursor: 'pointer' }}
-                                onClick={() => handleViewChange('connections')}
-                            >
-                                <Typography sx={{ fontSize: '16px', fontWeight: 700, color: textColor }}>3,000</Typography>
-                                <Typography sx={{ fontSize: '11px', color: subTextColor }}>Followers</Typography>
-                            </Box>
-                            <Box
-                                sx={{ textAlign: 'center', cursor: 'pointer' }}
-                                onClick={() => handleViewChange('followers')}
-                            >
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Typography sx={{ fontSize: '16px', fontWeight: 700, color: textColor }}>3K+</Typography>
-                                    <Typography sx={{ bgcolor: accentColor, color: '#000', fontSize: '9px', fontWeight: 700, px: '4px', borderRadius: '3px' }}>1,250</Typography>
-                                </Box>
-                                <Typography sx={{ fontSize: '11px', color: subTextColor }}>Connections</Typography>
-                            </Box>
+                        <Box sx={{ mt: '35px', mb: '10px' }}>
+                            {/* Identity Block */}
+                            <Typography sx={{ fontSize: '26px', fontWeight: 700, color: textColor, fontFamily: 'Poppins', lineHeight: 1.1 }}>Nirmal Adithya</Typography>
+                            <Typography sx={{ fontSize: '14px', color: subTextColor, fontFamily: 'Poppins', fontWeight: 500, mb: '8px' }}>UI/UX Designer</Typography>
+                            <Typography sx={{ fontSize: '14px', color: textColor, fontWeight: 500, fontFamily: 'Poppins' }}>
+                                Al Ghaith Oilfields & Supplies Co. <span style={{ opacity: 0.7 }}>- University of Gloucestershire</span>
+                            </Typography>
                         </Box>
                     </Box>
 
-                    {/* Right Side Icons & Status (Now fully responsive and un-floated) */}
-                    <Box sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '20px',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center'
-                    }}>
-                        {/* Contact Icons */}
-                        <Box sx={{ display: 'flex', gap: '10px' }}>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="mailto:nuwinikaru122@gmail.com">
-                                <MailOutlineIcon sx={{ fontSize: '18px', color: textColor }} />
-                            </IconButton>
-                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} component="a" href="tel:+94789987885">
-                                <PhoneIcon sx={{ fontSize: '18px', color: textColor }} />
-                            </IconButton>
+                    {/* Right Column Data */}
+                    <Box sx={{ display: 'flex', gap: { xs: '15px', sm: '30px' }, pt: '5px' }}>
+                        {/* Followers */}
+                        <Box sx={{ textAlign: 'left', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => handleViewChange('connections')}>
+                            <Typography sx={{ fontSize: '18px', fontWeight: 700, color: textColor, lineHeight: 1, mb: '4px' }}>3,000</Typography>
+                            <Typography sx={{ fontSize: '12px', color: subTextColor, lineHeight: 1 }}>Followers</Typography>
                         </Box>
 
-                        {/* Circular Status */}
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: 54,
-                            height: 54,
-                        }}>
-                            {/* The Progress Ring */}
+                        {/* Connections & Status */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                            <Box sx={{ textAlign: 'left', cursor: 'pointer', display: 'flex', flexDirection: 'column', width: '100%' }} onClick={() => handleViewChange('followers')}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px', mb: '4px' }}>
+                                    <Typography sx={{ fontSize: '18px', fontWeight: 700, color: textColor, lineHeight: 1 }}>3K+</Typography>
+                                    <Box sx={{ bgcolor: accentColor, color: '#000', fontSize: '10px', fontWeight: 700, px: '6px', py: '2px', borderRadius: '4px', lineHeight: 1 }}>3,286</Box>
+                                </Box>
+                                <Typography sx={{ fontSize: '12px', color: subTextColor, lineHeight: 1 }}>Connections</Typography>
+                            </Box>
+
+                            {/* Circular Status */}
                             <Box sx={{
-                                width: '100%',
-                                height: '100%',
-                                borderRadius: '50%',
-                                background: `conic-gradient(from 0deg, ${accentColor} 0deg, ${accentColor} 150deg, #e0e0e0 150deg, #e0e0e0 360deg)`,
-                                position: 'relative',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                '&::before': {
-                                    content: '""',
-                                    position: 'absolute',
-                                    width: '50px',
-                                    height: '50px',
-                                    bgcolor: boxBg,
-                                    borderRadius: '50%'
-                                }
+                                width: 64,
+                                height: 64,
                             }}>
-                                <Box sx={{ position: 'relative', textAlign: 'center', zIndex: 1 }}>
-                                    <Typography sx={{ fontSize: '7.5px', color: '#888', lineHeight: 1, fontFamily: 'Poppins', fontWeight: 500 }}>Status</Typography>
-                                    <Typography sx={{ fontSize: '9px', fontWeight: 700, color: accentColor, lineHeight: 1.1, fontFamily: 'Poppins' }}>Good</Typography>
+                                {/* The Progress Ring */}
+                                <Box sx={{
+                                    width: '100%',
+                                    height: '100%',
+                                    borderRadius: '50%',
+                                    background: `conic-gradient(from 0deg, ${accentColor} 0deg, ${accentColor} 180deg, #e0e0e0 180deg, #e0e0e0 360deg)`,
+                                    position: 'relative',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    '&::before': {
+                                        content: '""',
+                                        position: 'absolute',
+                                        width: '56px',
+                                        height: '56px',
+                                        bgcolor: boxBg,
+                                        borderRadius: '50%'
+                                    }
+                                }}>
+                                    <Box sx={{ position: 'relative', textAlign: 'center', zIndex: 1, mt: '2px' }}>
+                                        <Typography sx={{ fontSize: '9px', color: subTextColor, lineHeight: 1, fontFamily: 'Poppins', fontWeight: 500 }}>Status</Typography>
+                                        <Typography sx={{ fontSize: '11px', fontWeight: 700, color: accentColor, lineHeight: 1.2, fontFamily: 'Poppins' }}>Good</Typography>
+                                    </Box>
                                 </Box>
                             </Box>
                         </Box>
+
+                        {/* Contact Icons Column */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '50%', width: '40px', height: '40px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', '&:hover': { bgcolor: '#f0f0f0' } }} component="a" href="mailto:nuwinikaru122@gmail.com">
+                                <MailOutlineIcon sx={{ fontSize: '20px', color: textColor }} />
+                            </IconButton>
+                            <IconButton size="small" sx={{ bgcolor: infoBg, borderRadius: '50%', width: '40px', height: '40px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', '&:hover': { bgcolor: '#f0f0f0' } }} component="a" href="tel:+94789987885">
+                                <PhoneIcon sx={{ fontSize: '20px', color: textColor }} />
+                            </IconButton>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-
-            {/* Identity Block */}
-            <Box sx={{ mt: '5px', mb: '20px', pl: '35px', pr: '80px' }}>
-                <Typography sx={{ fontSize: '26px', fontWeight: 700, color: textColor, fontFamily: 'Poppins', lineHeight: 1.1 }}>Nirmal Adithya</Typography>
-                <Typography sx={{ fontSize: '14px', color: subTextColor, fontFamily: 'Poppins', fontWeight: 500, mb: '8px' }}>UI/UX Designer</Typography>
-                <Typography sx={{ fontSize: '13px', color: textColor, fontWeight: 500, fontFamily: 'Poppins' }}>
-                    Al Ghaith Oilfields & Supplies Co. <span style={{ opacity: 0.7 }}> - University of Gloucestershire</span>
-                </Typography>
             </Box>
 
             {/* ── STATS ROW ── */}
